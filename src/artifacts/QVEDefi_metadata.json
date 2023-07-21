@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.18+commit.87f61d96"
+		"version": "0.8.20+commit.a1b79de6"
 	},
 	"language": "Solidity",
 	"output": {
@@ -207,7 +207,7 @@
 		"compilationTarget": {
 			"src/QVEDefi.sol": "QVEDefi"
 		},
-		"evmVersion": "paris",
+		"evmVersion": "shanghai",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -412,19 +412,19 @@
 			]
 		},
 		"src/QVEDefi.sol": {
-			"keccak256": "0x37ef3476f61b1fee6bb833b93cffca5916df7a1f1c5ea8e3999dff9ac107767c",
+			"keccak256": "0x8b5da55e4f0ad3b18da208720bac13b6b35ccd0f4bc57357fcee326936713bb9",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://d515565cfc8009c081b9f9e8f4161f1ce8b9a20e5ac6b49164240f99e18d0243",
-				"dweb:/ipfs/QmekeAPCq5nPGd29BiWzJQYRTZerd87tALew5cfubgkien"
+				"bzz-raw://247da045ea370a34eaa9c905cacbaa54c492f6253c620a2e59af1548b5001562",
+				"dweb:/ipfs/QmUo3v5bTgSdg11YfVpaJau6yZTxwr7mmQtKoPT7B7fLBF"
 			]
 		},
 		"src/QVEnft.sol": {
-			"keccak256": "0xebd6e315e3be4ea48081d2ec6e359281acbd8c2d37d9349ec5f988550262a0d7",
+			"keccak256": "0x9a33582ef73599ebc45bd072aa1abdce4b85ace7dd8902ddc814153fc8ff4333",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://05926776df6dba5cf35bbfd800d94f84ab4f24b9048cc49bc343d3c913a5ed1a",
-				"dweb:/ipfs/QmPmUprGqH2EHEHGwZkEL6c3g1kJKJzeFv1Wm4ozCFE3vt"
+				"bzz-raw://eb5b7b68f9b54389dc00a82fd5e9f51d212581dc24e24a6e4d26cc9212d549c1",
+				"dweb:/ipfs/QmRR1TBQj1gWGQsimf8G8Mg1vhYyo55oghpNzXjTr8EWh1"
 			]
 		},
 		"src/QVEtoken.sol": {
