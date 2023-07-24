@@ -6,17 +6,19 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
-import "./QVEtoken.sol";
+import "./tokens/QVEtoken.sol";
 import "./QVEnft.sol";
 
 contract QVEDefi is Ownable{
 
-    // [------ variables, struct -------] //
     using SafeMath for uint;
     using Counters for Counters.Counter;
     using Strings for *;
     Counters.Counter private stakeCount;
 
+
+    // [------ variables, struct -------] //
+    uint8 private constant ESCROWRATIO = 40;
     QVEtoken public qvetoken;
     QVEnft public qvenft;
 
@@ -25,12 +27,12 @@ contract QVEDefi is Ownable{
         uint256 at;
     }
 
-    struct QVEliquidityChunk{                 // ether 단위
+    struct liquidityChunk{                 // ether 단위
         uint256 balance;
         uint256 at;
     }
 
-    struct Stake {
+    struct QVEStake {
         uint72 tokenAmount;                   // 스테이킹에 락된 물량                                                            
         uint24 lockingPeriodInBlocks;         // 보상을 지급할 임의의 시간                                   
         uint32 startBlock;                    // 스테이킹 시작 시간                                                                           
@@ -48,19 +50,16 @@ contract QVEDefi is Ownable{
 
     // [------ QVE Liquidity pool / ETH staking pool ------] //
     // QVE : ether unit     // ETHVault : wei unit
-    QVEliquidityChunk public QVEliquidityPool;
+    liquidityChunk public QVEliquidityPool;
+    liquidityChunk public esQVEliquidityPool;
+
     mapping (address => ETHstakingChunk) ETHstakingVault;
 
-    // [------ Stake Pool ------] //
-    /// @notice Active stakes for each user
-    mapping (address => Stake) public stakes;
-    /// @notice "Reward points" each user earned (would be relative to totalRewardPoints to get the percentage)
+    // [------ about QVE Stake ------] //
+    mapping (address => QVEStake) public QVEstakes;
     mapping (address => uint256) public rewardPointsEarned;
-    /// @notice Total "reward points" all users earned
     uint256 public totalRewardPoints;
-    /// @notice Block when Staking Program ends          
     uint256 immutable public stakingProgramEndsBlock;
-    /// @notice Amount of Staking Bonus Fund (500 000 OIL), Oiler funds must be here, approved and ready to be transferredFrom
     uint256 immutable public stakingFundAmount;
 
 
@@ -101,21 +100,32 @@ contract QVEDefi is Ownable{
         return true;
     }
 
+    // [------ Shorten Lockup ------] //
     function shortenLockup(uint256 qveAmount) public returns(bool){
         require(qvenft.shortenLockup(qveAmount, address(this)), "shorten error");
         _addLiquidity(qveAmount);
         return true;
     }
 
+    // [------ Burn staking Guarantee NFT ------ ] // 
     function burnStakingGuarantee(uint tokenId) public returns(bool){
         qvenft.burn(tokenId);
         require(_sendQVEFromLiquidity(msg.sender, ETHstakingVault[msg.sender].balance), "Burn QVE transfer error");
         return true;
     }
 
-    function getStakeCount() external view returns(uint256){
+    // [------ Getters ------ ] //
+    function getStakeCount_() external view returns(uint256){
         return stakeCount.current();
     } 
+
+    function getNFTbalance_() external view returns(uint){
+        return qvenft.balanceOf(msg.sender);
+    }
+
+    function getNfts_() external view returns(NFTFragment[] memory){
+        return nftVault[msg.sender].fragment;
+    }
 
     // [------ internal Functions ------] //
     function _botAddress() internal pure returns(address payable) {
@@ -160,13 +170,5 @@ contract QVEDefi is Ownable{
 
    
 
-    // [------ external Functions ------] //
-
-    function _getNFTbalance() external view returns(uint){
-        return qvenft.balanceOf(msg.sender);
-    }
-
-    function _searchNfts() external view returns(NFTFragment[] memory){
-        return nftVault[msg.sender].fragment;
-    }
+   
 }

@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
-import "./QVEtoken.sol";
+import "./tokens/QVEtoken.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 contract QVEnft is ERC721Burnable{
