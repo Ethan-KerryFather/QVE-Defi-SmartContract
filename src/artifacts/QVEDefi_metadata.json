@@ -73,6 +73,37 @@
 			},
 			{
 				"inputs": [],
+				"name": "_searchNfts",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "tokenId",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "at",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct QVEDefi.NFTFragment[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
 				"name": "burnStakingGuarantee",
 				"outputs": [
 					{
@@ -501,19 +532,19 @@
 			]
 		},
 		"src/QVEDefi.sol": {
-			"keccak256": "0x7866c24e4160f3ff13d17243a39f94ccaf9716e067074675b2a37118d378043a",
+			"keccak256": "0xaeb87e221c83ffd5ea0abafc234ca779a34c8d7925fc3c4c8ed591e974e7cd7d",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://06b4d2946353ebc26b1bae81ec2318f62e3d675b8ba8c1e3092aec3edd5f0b91",
-				"dweb:/ipfs/QmZQzqL5ik7QzLWVKYhmdzdqBe5W4Z3mCLtZeRHqhNZAJ9"
+				"bzz-raw://0b32ec544846aacc2c940a5ba4af2c21e16ab6ab466bb4ac7ed79c4b57055c5e",
+				"dweb:/ipfs/QmcCSwG5eqsky75VbTQzDUNksmyyVRuyJn3knxRwZUeXaP"
 			]
 		},
 		"src/QVEnft.sol": {
-			"keccak256": "0x56e6b14858433fa49cc54711752b4f49785072d03f8bd06dc253eb30ac0c5d65",
+			"keccak256": "0x6c64047d97ffc360a86aec34d45c1a9f58cb512d64bcf9827e4fdbeb70b3873a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ac5e7f84e32fcb5579ec873fd9679194e15583afc81eedc9b18da8b032ea3895",
-				"dweb:/ipfs/QmX4dpnQGuJHakQhXskGctfV1ebwSspCM5Fc79fJ53kzbk"
+				"bzz-raw://d09ede5beccc9161ac888e7ba2ab0adb3737a410e60f28606faaf444e9377551",
+				"dweb:/ipfs/QmTt2PECDQhGH9CSWqJiTtqpEivAj1yJam5dG8fGrv5oGf"
 			]
 		},
 		"src/QVEtoken.sol": {

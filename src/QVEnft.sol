@@ -100,7 +100,7 @@ contract QVEnft is ERC721Burnable{
     }
 
     // [------ test functions ------] //
-    
+  
 
 }
 

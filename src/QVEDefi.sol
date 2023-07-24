@@ -107,13 +107,12 @@ contract QVEDefi is Ownable{
         return true;
     }
 
-    function burnStakingGuarantee() public returns(bool){
-        
+    function burnStakingGuarantee(uint tokenId) public returns(bool){
+        qvenft.burn(tokenId);
         require(_sendQVEFromLiquidity(msg.sender, ETHstakingVault[msg.sender].balance), "Burn QVE transfer error");
         return true;
     }
 
-    
     function getStakeCount() external view returns(uint256){
         return stakeCount.current();
     } 
@@ -159,8 +158,15 @@ contract QVEDefi is Ownable{
         return true;
     }
 
+   
+
+    // [------ external Functions ------] //
+
     function _getNFTbalance() external view returns(uint){
         return qvenft.balanceOf(msg.sender);
     }
 
+    function _searchNfts() external view returns(NFTFragment[] memory){
+        return nftVault[msg.sender].fragment;
+    }
 }
