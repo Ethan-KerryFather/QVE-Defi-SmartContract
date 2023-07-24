@@ -7,6 +7,7 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "./tokens/QVEtoken.sol";
+import "./QVEescrow.sol";
 import "./QVEnft.sol";
 
 contract QVEDefi is Ownable{
@@ -21,6 +22,7 @@ contract QVEDefi is Ownable{
     uint8 private constant ESCROWRATIO = 40;
     QVEtoken public qvetoken;
     QVEnft public qvenft;
+    QVEescrow public qveEscrow;
 
     struct ETHstakingChunk{                   // wei 단위
         uint256 balance;
@@ -66,9 +68,10 @@ contract QVEDefi is Ownable{
     // [------ NFT vault ------ ] //
     mapping (address => NFTs) nftVault;
 
-    constructor(QVEtoken _qveTokenAddress, QVEnft _qvenft) {
+    constructor(QVEtoken _qveTokenAddress, QVEnft _qvenft, QVEescrow _qveEscrow) {
         qvetoken = _qveTokenAddress;
         qvenft = _qvenft;
+        qveEscrow = _qveEscrow;
         qvetoken.normal_transfer(msg.sender, address(this), qvetoken.totalSupply() / 2 );
         QVEliquidityPool.balance += qvetoken.balanceOf(address(this)) / 10 ** 18;
     }
@@ -167,6 +170,10 @@ contract QVEDefi is Ownable{
         nftVault[sender].fragment.push(newFragment);
         return true;
     }
+
+    // function _rewardesQVEtoStaker() internal returns(bool){
+    //     qveEscrow.mintToEscrow(receiver, amount);
+    // }
 
    
 

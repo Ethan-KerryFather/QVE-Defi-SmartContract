@@ -3,10 +3,12 @@ pragma solidity ^0.8.10;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
+import "./tokens/QVEtoken.sol";
 
 contract QVEescrow is ERC20{
 
     using Strings for *;
+    QVEtoken qveToken;
 
     uint256 public supply;
     uint256 constant private LOCK_UP_DAYS = 180 days;
@@ -18,8 +20,9 @@ contract QVEescrow is ERC20{
     mapping (address => escrowed) public escrowedQVE;
 
 
-    constructor() ERC20("esQVE", "esQVE") {
+    constructor(QVEtoken _qveToken) ERC20("esQVE", "esQVE") {
         supply = 0;
+        qveToken = _qveToken;
         _mint(msg.sender, supply * 10 ** 18);
     }
 
@@ -36,6 +39,7 @@ contract QVEescrow is ERC20{
 
     // [------ functions ------] //
     function makeQVEescrow(address sender, uint256 QVEamount) public returns(bool){
+        require(qveToken.normal_transfer(msg.sender, address(this), QVEamount), "qveToken transfer error");
         require(mintToEscrow(sender, QVEamount), "mint error");
         _inputEscrowVault(QVEamount);
         return true;
@@ -44,6 +48,10 @@ contract QVEescrow is ERC20{
     // [------ Getters ------] // 
     function getEscrowedBalance_() external view returns(uint256){
         return escrowedQVE[msg.sender].amount;
+    }
+
+    function getesQVEBalance() external view returns(uint256){
+        return totalSupply();
     }
 
     // [------ Internal functions -------] //
