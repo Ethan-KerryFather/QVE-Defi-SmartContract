@@ -10,8 +10,11 @@ import "./QVEtoken.sol";
 import "./QVEnft.sol";
 
 contract QVEDefi is Ownable{
+
+    // [------ variables, struct -------] //
     using SafeMath for uint;
     using Counters for Counters.Counter;
+    using Strings for *;
     Counters.Counter private stakeCount;
 
     QVEtoken public qvetoken;
@@ -29,6 +32,7 @@ contract QVEDefi is Ownable{
         uint256 at;
     }
 
+    // [------ QVE Liquidity pool / ETH staking pool ------] //
     // 큐브 유동성 풀           ether단위로 관리
     QVEliquidityChunk public QVEliquidityPool;
     // 이더리움 스테이킹 풀       wei단위로 관리
@@ -53,6 +57,8 @@ contract QVEDefi is Ownable{
         */}
         
         stakeEth(assetAmount);
+        string memory assetString = string(abi.encodePacked("This nft guarantees : ", assetAmount.toString(), "ETH"));
+        qvenft.setMetadata("Staking Guarantee Card", assetString, "https://ipfs.io/ipfs/QmWEgQskBctQJUarEycv6cxPnM3Wr4aHz6rGoq2QmTvwUc?filename=QVEwarranty.png");
         return true;
     }
 
