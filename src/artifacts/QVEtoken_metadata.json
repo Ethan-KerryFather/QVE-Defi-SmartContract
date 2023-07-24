@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.20+commit.a1b79de6"
+		"version": "0.8.21+commit.d9974bed"
 	},
 	"language": "Solidity",
 	"output": {
@@ -539,11 +539,11 @@
 			]
 		},
 		"src/QVEtoken.sol": {
-			"keccak256": "0x71f75f36727d982b4f3ee75812f2b5cae9d236d039cd00159e39927b974c3ea1",
+			"keccak256": "0xb84a8695fe950e8a216a7fdb03b1bd6bc4fb94a068004aa780d4913145fa62b9",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://dc7e507b4f3f5fdd2833f69224deedf292c1755443d83ca556d5cf20becb10eb",
-				"dweb:/ipfs/QmSCxwkJX9W96jeGcJwi358DcBDvW1bKMa25DCkq6XazsU"
+				"bzz-raw://c3d992c9ba5d9e18c6a1044d8e9d1bc5ec366c05e4e03814dbc5bf9cb2487271",
+				"dweb:/ipfs/QmV7S29s1rbif7w5sku43mqx5iBtiLLoVa7afHtcun8iKh"
 			]
 		}
 	},

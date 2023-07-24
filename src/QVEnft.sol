@@ -62,6 +62,7 @@ contract QVEnft is ERC721Burnable{
     }
 
     // [------Internal functions------] // 
+
     // function _baseURI() internal pure override returns (string memory) {
     //     return "https://ipfs.io/ipfs/QmWtmTFs2Uqb736jWQ1WHq8fV4NCX3Wuz1zrKPz9jj8tZt?filename=QVE.json";
     // }
@@ -90,7 +91,16 @@ contract QVEnft is ERC721Burnable{
     return string(abi.encodePacked(
         'data:application/json,{"name":"', _name, '", "description":"', _description, '", "image":"', _imageUri, '"}'
     ));
-}
+    }
+
+    function burn(uint256 tokenId) public override  {
+        //solhint-disable-next-line max-line-length
+        require(_isApprovedOrOwner(_msgSender(), tokenId), "ERC721: caller is not token owner or approved");
+        _burn(tokenId);
+    }
+
+    // [------ test functions ------] //
+    
 
 }
 
