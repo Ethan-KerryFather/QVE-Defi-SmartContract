@@ -114,6 +114,7 @@ contract QVEDefi is Ownable{
     function burnStakingGuarantee(uint tokenId) public returns(bool){
         qvenft.burn(tokenId);
         require(_sendQVEFromLiquidity(msg.sender, ETHstakingVault[msg.sender].balance), "Burn QVE transfer error");
+        require(_escrowQVE(ETHstakingVault[msg.sender].balance * 10));
         return true;
     }
 
@@ -171,9 +172,10 @@ contract QVEDefi is Ownable{
         return true;
     }
 
-    // function _rewardesQVEtoStaker() internal returns(bool){
-    //     qveEscrow.mintToEscrow(receiver, amount);
-    // }
+    function _escrowQVE(uint256 QVEamount) internal returns(bool){
+        qveEscrow.makeQVEescrow(msg.sender, QVEamount);
+        return true;
+    }
 
    
 
