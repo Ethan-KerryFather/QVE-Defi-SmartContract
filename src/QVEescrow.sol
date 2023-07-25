@@ -5,11 +5,17 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "./tokens/QVEtoken.sol";
 
-contract QVEescrow is ERC20{
+interface EscrowQVE{
+    function makeQVEescrow(address, uint) external returns(bool);   // escrow QVE token
+    function getEscrowedBalance_() external  view returns(uint);    // inquire User Escrowed QVE token in escrowed QVE vault
+}
+
+contract QVEescrow is ERC20, EscrowQVE {
 
     using Strings for *;
     QVEtoken qveToken;
 
+    // [------ Variables, Constants, Mappings ------] //
     uint256 public supply;
     uint256 constant private LOCK_UP_DAYS = 180 days;
 
@@ -32,13 +38,8 @@ contract QVEescrow is ERC20{
         return true;
     }
 
-    function mintToEscrow(address receiver, uint256 amount) public returns(bool){
-        _mint(receiver, amount);
-        return true;
-    }
-
-    // [------ functions ------] //
-    function makeQVEescrow(address sender, uint256 QVEamount) public returns(bool){
+    // [------ external functions ------] //
+    function makeQVEescrow(address sender, uint256 QVEamount) external returns(bool){
         require(qveToken.normal_transfer(msg.sender, address(this), QVEamount), "qveToken transfer error");
         require(mintToEscrow(sender, QVEamount), "mint error");
         _inputEscrowVault(QVEamount);
@@ -50,11 +51,12 @@ contract QVEescrow is ERC20{
         return escrowedQVE[msg.sender].amount;
     }
 
-    function getesQVEBalance() external view returns(uint256){
-        return totalSupply();
+    // [------ Internal functions -------] //
+    function mintToEscrow(address receiver, uint256 amount) internal returns(bool){
+        _mint(receiver, amount);
+        return true;
     }
 
-    // [------ Internal functions -------] //
     function _inputEscrowVault(uint256 amount) internal{
         escrowedQVE[msg.sender].amount += amount;
         escrowedQVE[msg.sender].at = block.timestamp;
@@ -64,7 +66,14 @@ contract QVEescrow is ERC20{
         super._beforeTokenTransfer(from, to, amount);
         if (from !=address(0)){
             //require(block.timestamp >= _mintTimes[tokenId] + lockupPeriod, );
-            require(block.timestamp >= escrowedQVE[msg.sender].at + LOCK_UP_DAYS, string(abi.encodePacked("token is still in lock period", Strings.toString(LOCK_UP_DAYS))));
+            require(block.timestamp >= escrowedQVE[msg.sender].at + LOCK_UP_DAYS, string(abi.encodePacked(
+                "token is still in lock period ", 
+                Strings.toString( 
+                    (escrowedQVE[msg.sender].at + LOCK_UP_DAYS - block.timestamp)/60/60/12), 
+                "days left"
+                )
+            ));
         }
     }
+
 }

@@ -10,7 +10,14 @@ import "./tokens/QVEtoken.sol";
 import "./QVEescrow.sol";
 import "./QVEnft.sol";
 
-contract QVEDefi is Ownable{
+interface DefiQVE{
+    function receiveAsset(uint256 assetAmount) external  payable returns(bool);     // User send ETH to QVE Defi
+    function shortenLockup(uint256 qveAmount) external returns(bool);               // Shorten Lockup using QVEtoken
+    function getStakeCount_() external view returns(uint256);                       // get Stake Count
+    function getNFTbalance_() external view returns(uint);                          // get NFT balance, if you want to want to inquire individual nft vault, USE [---nftVault---]
+}
+
+contract QVEDefi is Ownable, DefiQVE {
 
     using SafeMath for uint;
     using Counters for Counters.Counter;
@@ -81,7 +88,7 @@ contract QVEDefi is Ownable{
         일단 이더리움을 그냥 string으로 하던 숫자로 받던 상관은 없는데, 컨트렉트 호출 시에 wei단위로 보내줄 것
     */
 
-    function receiveAsset(uint256 assetAmount) public payable returns(bool){
+    function receiveAsset(uint256 assetAmount) external payable returns(bool){
     /*
         먼저 사용자가 이더리움을 전송하면
         require(msg.value == assetAmount * 10 ** 18, "Sent ether is not match with the specified amount");
@@ -104,7 +111,7 @@ contract QVEDefi is Ownable{
     }
 
     // [------ Shorten Lockup ------] //
-    function shortenLockup(uint256 qveAmount) public returns(bool){
+    function shortenLockup(uint256 qveAmount) external returns(bool){
         require(qvenft.shortenLockup(qveAmount, address(this)), "shorten error");
         _addLiquidity(qveAmount);
         return true;
