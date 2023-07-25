@@ -10,14 +10,14 @@ import "./tokens/QVEtoken.sol";
 import "./QVEescrow.sol";
 import "./QVEnft.sol";
 
-interface DefiQVE{
-    function receiveAsset(uint256 assetAmount) external  payable returns(bool);     // User send ETH to QVE Defi
-    function shortenLockup(uint256 qveAmount) external returns(bool);               // Shorten Lockup using QVEtoken
-    function getStakeCount_() external view returns(uint256);                       // get Stake Count
-    function getNFTbalance_() external view returns(uint);                          // get NFT balance, if you want to want to inquire individual nft vault, USE [---nftVault---]
-}
+// interface DefiQVE{
+//     function receiveAsset(uint256 assetAmount) external  payable returns(bool);     // User send ETH to QVE Defi
+//     function shortenLockup(uint256 qveAmount) external returns(bool);               // Shorten Lockup using QVEtoken
+//     function getStakeCount_() external view returns(uint256);                       // get Stake Count
+//     function getNFTbalance_() external view returns(uint);                          // get NFT balance, if you want to want to inquire individual nft vault, USE [---nftVault---]
+// }
 
-contract QVEDefi is Ownable, DefiQVE {
+contract QVEDefi is Ownable {
 
     using SafeMath for uint;
     using Counters for Counters.Counter;
@@ -62,7 +62,7 @@ contract QVEDefi is Ownable, DefiQVE {
     liquidityChunk public QVEliquidityPool;
     liquidityChunk public esQVEliquidityPool;
 
-    mapping (address => ETHstakingChunk) ETHstakingVault;
+    mapping (address => ETHstakingChunk) public ETHstakingVault;
 
     // [------ about QVE Stake ------] //
     mapping (address => QVEStake) public QVEstakes;
@@ -79,7 +79,7 @@ contract QVEDefi is Ownable, DefiQVE {
         qvetoken = _qveTokenAddress;
         qvenft = _qvenft;
         qveEscrow = _qveEscrow;
-        qvetoken.normal_transfer(msg.sender, address(this), qvetoken.totalSupply() / 2 );
+        qvetoken.normal_transfer(msg.sender, address(this), qvetoken.totalSupply() / 4 );
         QVEliquidityPool.balance += qvetoken.balanceOf(address(this)) / 10 ** 18;
     }
 
@@ -111,16 +111,17 @@ contract QVEDefi is Ownable, DefiQVE {
     }
 
     // [------ Shorten Lockup ------] //
-    function shortenLockup(uint256 qveAmount) external returns(bool){
-        require(qvenft.shortenLockup(qveAmount, address(this)), "shorten error");
+    function shortenLockup(uint256 qveAmount, uint256 tokenId) external returns(bool){
+        require(qvenft.shortenLockup(qveAmount, address(this), tokenId), "shorten error");
         _addLiquidity(qveAmount);
         return true;
     }
 
     // [------ Burn staking Guarantee NFT ------ ] // 
-    function burnStakingGuarantee(uint tokenId) public returns(bool){
-        qvenft.burn(tokenId);
-        require(_sendQVEFromLiquidity(msg.sender, ETHstakingVault[msg.sender].balance), "Burn QVE transfer error");
+    function burnStakingGuarantee() public returns(bool){
+        //qvenft.approve(address(this), tokenId);
+        //qvenft.burnNFT(tokenId);
+        require(_sendQVEFromLiquidity(msg.sender, ETHstakingVault[msg.sender].balance / 10 ** 18), "Burn QVE transfer error");
         require(_escrowQVE(ETHstakingVault[msg.sender].balance * 10));
         return true;
     }
@@ -168,7 +169,7 @@ contract QVEDefi is Ownable, DefiQVE {
     }
 
     function _issueGuaranteeNFT(address sender) internal returns(bool){
-        uint256 item_id = qvenft.mintStakingGuarantee(sender);
+        uint256 item_id = qvenft.mintStakingGuarantee(sender, false);
 
         NFTFragment memory newFragment = NFTFragment({
             tokenId : item_id,

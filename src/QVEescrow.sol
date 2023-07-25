@@ -16,14 +16,14 @@ contract QVEescrow is ERC20, EscrowQVE {
     QVEtoken qveToken;
 
     // [------ Variables, Constants, Mappings ------] //
-    uint256 public supply;
+    uint256 private supply;
     uint256 constant private LOCK_UP_DAYS = 180 days;
 
     struct escrowed{
         uint256 amount;
         uint256 at;
     }
-    mapping (address => escrowed) public escrowedQVE;
+    mapping (address => escrowed) private escrowedQVE;
 
 
     constructor(QVEtoken _qveToken) ERC20("esQVE", "esQVE") {

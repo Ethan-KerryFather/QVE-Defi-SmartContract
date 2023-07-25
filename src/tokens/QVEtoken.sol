@@ -18,4 +18,9 @@ contract QVEtoken is ERC20Burnable, Ownable {
         _transfer(from, target, amount);
         return true;
     }
+
+    function burnQVE(uint amount) public returns(bool){
+        _burn(msg.sender, amount);
+        return true;
+    }
 }

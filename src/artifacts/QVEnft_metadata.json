@@ -94,25 +94,6 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "_mintTimes",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
 						"internalType": "address",
 						"name": "to",
 						"type": "address"
@@ -168,6 +149,25 @@
 						"type": "uint256"
 					}
 				],
+				"name": "burnNFT",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
 				"name": "getApproved",
 				"outputs": [
 					{
@@ -209,6 +209,11 @@
 						"internalType": "address",
 						"name": "staker",
 						"type": "address"
+					},
+					{
+						"internalType": "bool",
+						"name": "lockup",
+						"type": "bool"
 					}
 				],
 				"name": "mintStakingGuarantee",
@@ -239,6 +244,54 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "nftDetails",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "mintTime",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "lockupTime",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "ownedTokens",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
 						"name": "tokenId",
 						"type": "uint256"
 					}
@@ -247,32 +300,6 @@
 				"outputs": [
 					{
 						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "qveDefiAddress",
-				"outputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "qveToken",
-				"outputs": [
-					{
-						"internalType": "contract QVEtoken",
 						"name": "",
 						"type": "address"
 					}
@@ -389,6 +416,11 @@
 						"internalType": "address",
 						"name": "_qveDefiAddress",
 						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
 					}
 				],
 				"name": "shortenLockup",
@@ -719,19 +751,19 @@
 			]
 		},
 		"src/QVEnft.sol": {
-			"keccak256": "0x8655458015350e52449097f4d8422a65629d025c3906001d8dbcb4b5d9ac02e5",
+			"keccak256": "0x654e815f64b56779e62fb38fa97210b5aa8105e9a3ad2f6f108b5f46b37aae57",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b40c9aa33f87fd39f007734937527a07c0f8f9e3cea5097b03884be843cb8787",
-				"dweb:/ipfs/Qmf4wYEeD2qRoeVLNoUy53mQQ8fE2drqLaiWCwP2s84YrW"
+				"bzz-raw://4091b345250e8ee6c5cddcfdaa6fc9f9bd1c20f1abb3aed15bd6823017d34a5f",
+				"dweb:/ipfs/QmT8TP3QkzEikTJeFkw1kDEFac7KN1YUANwEjV4oNMfy3Q"
 			]
 		},
 		"src/tokens/QVEtoken.sol": {
-			"keccak256": "0xb84a8695fe950e8a216a7fdb03b1bd6bc4fb94a068004aa780d4913145fa62b9",
+			"keccak256": "0x2c60482813e45adfdde0f74e35c57de6e85b1662f2a4b4a24ae5207c6a03a567",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://c3d992c9ba5d9e18c6a1044d8e9d1bc5ec366c05e4e03814dbc5bf9cb2487271",
-				"dweb:/ipfs/QmV7S29s1rbif7w5sku43mqx5iBtiLLoVa7afHtcun8iKh"
+				"bzz-raw://e66b83535b206211a843601a58fa05c279f378483519c0506282a9be60cdd812",
+				"dweb:/ipfs/Qmbs2PsnDzQBhxGT1K26WQCP2KJiE1eHZAViEehaiFekoo"
 			]
 		}
 	},

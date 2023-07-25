@@ -258,27 +258,27 @@
 			]
 		},
 		"src/QVEDefi.sol": {
-			"keccak256": "0x08d360561d5f2b73f84f59b028e8286c23279003e3a22708764befc96ac7acec",
+			"keccak256": "0xb13119fd67e4a824b5bd31650e772cd28c8e43fffed4b142237f883e059a5163",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://480360b82564aab0eee83ff4578ceaec5e050f2db83a4706a831ceeac8480284",
-				"dweb:/ipfs/QmY1UdQa3NySFzro6dbgpsQ6oDWj91uPuCQByDWPGQCZ8r"
+				"bzz-raw://0ff101497ccf8e7a174c21b9acc32ae29d9198c0ac73fb5e891973fd9b310433",
+				"dweb:/ipfs/QmQ1HzXDXT2XvNAivCJEhS11B9LFtH1Tzv6g9NciwEkUhN"
 			]
 		},
 		"src/QVEescrow.sol": {
-			"keccak256": "0xf7025b047347c5fd46201e932d80786d24e35b126d677ffc58769287e6884a66",
+			"keccak256": "0x0269ee37a3a4e166efc1af33370f1ef3cccc35531507acffea706cc9f9c1566e",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://a454bf6797e3a91edb51a92814412ee894bfb5c1ff285de6aa47bc61be70af2d",
-				"dweb:/ipfs/QmQgRdJ6Rvwc2oDp69NNC8wdfU2sEwCqxHiav3ouzoShyt"
+				"bzz-raw://8029de0586a6dc54c0812dcb398a3b48c2ec29af451719320081d3f9249028b4",
+				"dweb:/ipfs/QmZ256Q3EBz7BoYG3BD9mQbkg9ch2WTqvzMBk1ckkMHFfE"
 			]
 		},
 		"src/QVEnft.sol": {
-			"keccak256": "0x8655458015350e52449097f4d8422a65629d025c3906001d8dbcb4b5d9ac02e5",
+			"keccak256": "0x777008e3f8b6a5c6032bab1734f505b4f3f010b6e935e8f6c908ffdbfc5660ac",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b40c9aa33f87fd39f007734937527a07c0f8f9e3cea5097b03884be843cb8787",
-				"dweb:/ipfs/Qmf4wYEeD2qRoeVLNoUy53mQQ8fE2drqLaiWCwP2s84YrW"
+				"bzz-raw://d66795e2eb1b23d1d0789fb84de4945321b9cdeb15e3ecfeaa0e3b1c79e74760",
+				"dweb:/ipfs/QmQazpLhHktiPudvemNvDftkvLTEVUV9REsgPyEvmaHsrf"
 			]
 		},
 		"src/tokens/QVEtoken.sol": {

@@ -1,0 +1,879 @@
+{
+	"compiler": {
+		"version": "0.6.12+commit.27d51765"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_vault",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_usdg",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_glp",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_shortsTracker",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_cooldownDuration",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "aumInUsdg",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "glpSupply",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "usdgAmount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "mintAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "AddLiquidity",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "glpAmount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "aumInUsdg",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "glpSupply",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "usdgAmount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amountOut",
+						"type": "uint256"
+					}
+				],
+				"name": "RemoveLiquidity",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "BASIS_POINTS_DIVISOR",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "GLP_PRECISION",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "MAX_COOLDOWN_DURATION",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "PRICE_PRECISION",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "USDG_DECIMALS",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_token",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_minUsdg",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_minGlp",
+						"type": "uint256"
+					}
+				],
+				"name": "addLiquidity",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_fundingAccount",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_account",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_token",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_minUsdg",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_minGlp",
+						"type": "uint256"
+					}
+				],
+				"name": "addLiquidityForAccount",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "aumAddition",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "aumDeduction",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "cooldownDuration",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bool",
+						"name": "maximise",
+						"type": "bool"
+					}
+				],
+				"name": "getAum",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bool",
+						"name": "maximise",
+						"type": "bool"
+					}
+				],
+				"name": "getAumInUsdg",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getAums",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_token",
+						"type": "address"
+					}
+				],
+				"name": "getGlobalShortAveragePrice",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_token",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_price",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_size",
+						"type": "uint256"
+					}
+				],
+				"name": "getGlobalShortDelta",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bool",
+						"name": "_maximise",
+						"type": "bool"
+					}
+				],
+				"name": "getPrice",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "glp",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "gov",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "inPrivateMode",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "isHandler",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "lastAddedAt",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_tokenOut",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_glpAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_minOut",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_receiver",
+						"type": "address"
+					}
+				],
+				"name": "removeLiquidity",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_account",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_tokenOut",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_glpAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_minOut",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_receiver",
+						"type": "address"
+					}
+				],
+				"name": "removeLiquidityForAccount",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_aumAddition",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_aumDeduction",
+						"type": "uint256"
+					}
+				],
+				"name": "setAumAdjustment",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_cooldownDuration",
+						"type": "uint256"
+					}
+				],
+				"name": "setCooldownDuration",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_gov",
+						"type": "address"
+					}
+				],
+				"name": "setGov",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_handler",
+						"type": "address"
+					},
+					{
+						"internalType": "bool",
+						"name": "_isActive",
+						"type": "bool"
+					}
+				],
+				"name": "setHandler",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bool",
+						"name": "_inPrivateMode",
+						"type": "bool"
+					}
+				],
+				"name": "setInPrivateMode",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IShortsTracker",
+						"name": "_shortsTracker",
+						"type": "address"
+					}
+				],
+				"name": "setShortsTracker",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_shortsTrackerAveragePriceWeight",
+						"type": "uint256"
+					}
+				],
+				"name": "setShortsTrackerAveragePriceWeight",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "shortsTracker",
+				"outputs": [
+					{
+						"internalType": "contract IShortsTracker",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "shortsTrackerAveragePriceWeight",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "usdg",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "vault",
+				"outputs": [
+					{
+						"internalType": "contract IVault",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"gist-b9df1f47d280e3707a3b6d35cd582bc9/GlpManager.sol": "GlpManager"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"gist-b9df1f47d280e3707a3b6d35cd582bc9/Address.sol": {
+			"keccak256": "0x957115c302156a22973a92ab4ce3a2beff88038979b59fd699adee22e144f274",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a061ab66680837879882da131ce991590e2b81c35f5cdd0c7e148e884587a11c",
+				"dweb:/ipfs/QmPSpSdWy3XjBbhoNCavZVZQrDQuWSSi6y9srHMezLkg3u"
+			]
+		},
+		"gist-b9df1f47d280e3707a3b6d35cd582bc9/GlpManager.sol": {
+			"keccak256": "0xf99e68d2026b3c4e89f5cb82529c881e09b8effb8f20695cf1e54c91a8a3d6f3",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://c12d709e71f54bd219f59fb12c5f7034bb3d9c029c69fcce9a474e4f851b38da",
+				"dweb:/ipfs/QmS27bUTH5QkvydPyLHZpsHWSoffVyeUeCs3VmB8jrMXmv"
+			]
+		},
+		"gist-b9df1f47d280e3707a3b6d35cd582bc9/Governable.sol": {
+			"keccak256": "0x15f4d4535025a5a6f8f3697475c9ccbb5e24976b84d884dad856a08e2cbdf990",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://c94f88f53170dc1ab1d51eba09986451d60b2a29ea608050df72ab722b952708",
+				"dweb:/ipfs/QmaSzCUt6PL7EhnNmeaw13q1mtxYiEU6J9NZWhiZ8M4bmU"
+			]
+		},
+		"gist-b9df1f47d280e3707a3b6d35cd582bc9/IERC20.sol": {
+			"keccak256": "0xc92fa6b1aa19aeb0f89a13090886c90efffa11120f2a2b8fe8a711af711ca7b1",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://5bd49b00b936da9cc3573c020a34f11e00f0e1719d1aa81e0b13be8242f1d4d9",
+				"dweb:/ipfs/Qma4iYvvtaWfqMqocRnyDiK8LbiW26ADdb5voQt9GZuFnq"
+			]
+		},
+		"gist-b9df1f47d280e3707a3b6d35cd582bc9/IGlpManager.sol": {
+			"keccak256": "0x5d6abfb4a27c4980166281b57b9636e65dc6c320c6ad6fd8290463e21db495a5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://4e234afaa8c9dd32d66e7a697cb181a3ef54c0099da722782af5f5d5e18ef005",
+				"dweb:/ipfs/QmRzND4qY4D7op6r2RZ7WnAePsjYwfxrcUv6hC5kBqLNnV"
+			]
+		},
+		"gist-b9df1f47d280e3707a3b6d35cd582bc9/IMintable.sol": {
+			"keccak256": "0xf20dc81b636e099ca28fa08f7ca04c5ccec7fcde28621c53ab8fe0d557785675",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ecb4a63d4e35642026d65d14f92a0250f1ff10b844956cdc2c07b4f8cb25633c",
+				"dweb:/ipfs/QmVnNM4jovkDFa4zr7TJAtovSpK6hSe9Gwn7euH5RmqZD2"
+			]
+		},
+		"gist-b9df1f47d280e3707a3b6d35cd582bc9/IShortsTracker.sol": {
+			"keccak256": "0xf0d013b8588474fcddc5039754195d5a5b9fe083be986a06632f930682fb44fe",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f3538774e4f6afc25b2bf7a2ddf8f8b0e46c5380a04b9e1f8aba5c73c30a4c51",
+				"dweb:/ipfs/QmWhs2U5s6yqpkqhvWkpX6MGM7yvodSkAqfDgWyLnx6yKg"
+			]
+		},
+		"gist-b9df1f47d280e3707a3b6d35cd582bc9/IUSDG.sol": {
+			"keccak256": "0xa875956a5afe6d1306b96a60e2c5701ea24e676bd871f9b9872aeeefb5f2b132",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://4d506e54d5d51b3749ab1a5285f1fee06df14a5777d4829619ee60b9f3c54f54",
+				"dweb:/ipfs/QmNgd5vWKe3U6DT6ZYu5gpdQd9hB9vH6t2uHrVXh98U37c"
+			]
+		},
+		"gist-b9df1f47d280e3707a3b6d35cd582bc9/IVault.sol": {
+			"keccak256": "0x82d2b4165da6a45aa90989a3ca10a4296ea35224676dd47236944bdea3bb9194",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://07bb51edbf1d09b1e52e67d414c566485c897b1f4e2ea6c398bb02dfc688778d",
+				"dweb:/ipfs/QmRNbxKUkXRPPPBTDf7ncAMBBTzRdxkxuFinRHbdTLXuWT"
+			]
+		},
+		"gist-b9df1f47d280e3707a3b6d35cd582bc9/IVaultUtils.sol": {
+			"keccak256": "0xabd9114ca6619ae1a2bff97de64f5fdf04d4ccbe62fbaf73b4ce3c6b22f168bc",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2d68b9eb5e366068fd5df5f5257bb38d293f2dcccd4ebfe6ade6871f8376a731",
+				"dweb:/ipfs/QmPacmLu36G1Y9F5xS4cggh8N3j2dsbxY96HbzzzFSxuXL"
+			]
+		},
+		"gist-b9df1f47d280e3707a3b6d35cd582bc9/ReentrancyGuard.sol": {
+			"keccak256": "0xfe9489a2deac24aae6441ae85957a82db41476659e62b5ba08391c932e1793ee",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://9c5d392d830e03cd15351e848d83a9921422b8f089bed99a461eaadfb444e7db",
+				"dweb:/ipfs/QmcUNJWADdxkqb5C7dGTbMm2ce7hKdch8BSiujPf9fmmNL"
+			]
+		},
+		"gist-b9df1f47d280e3707a3b6d35cd582bc9/SafeERC20.sol": {
+			"keccak256": "0x4a93ea57dad2316f7bfaa959fccd95724df92af35dc808401642092633ae71ef",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://3631801968469ff08525f20287ef9af3ee22d251e1b9e2e295cd6744ef6331b6",
+				"dweb:/ipfs/Qmf11XBuUAkxpBjbqDwGA9UCeF4zcngN2mqEUKNdgorVRm"
+			]
+		},
+		"gist-b9df1f47d280e3707a3b6d35cd582bc9/SafeMath.sol": {
+			"keccak256": "0x6b2df65ce77cff444ec7dcfda62a4774ee8614646d9a3396f799961902addcec",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ba3c7fe429a35c64227277969ddb0932b74e1f11d56452f7ad6be0ada37cc488",
+				"dweb:/ipfs/QmXYGjipppSNByYR5pLarwViuGBWAE5Q3XppEndnjYXKQ5"
+			]
+		}
+	},
+	"version": 1
+}

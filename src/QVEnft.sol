@@ -9,14 +9,17 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "./tokens/QVEtoken.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
+
+
 contract QVEnft is ERC721Burnable{
+
     using Counters for Counters.Counter;
     using Strings for uint;
     Counters.Counter private _tokenIds;
 
     // [------Contracts , Address , Variables------] //
-    QVEtoken public qveToken;
-    address public qveDefiAddress;
+    QVEtoken private qveToken;
+    address private qveDefiAddress;
     uint256 private lockupPeriod;
 
     // [------NFTmetadata------] //
@@ -25,7 +28,17 @@ contract QVEnft is ERC721Burnable{
     string private _imageUri;
 
     // [------Mappings------] //
-    mapping (uint256 => uint256) public _mintTimes;
+    
+
+
+    struct NftDetail {
+        uint256 mintTime;
+        uint256 lockupTime;
+    }
+
+    mapping(uint256 => NftDetail) public nftDetails;
+    mapping(address => uint256[]) public ownedTokens;
+
 
     // [------Initializers------] //
     constructor(QVEtoken _qveToken) ERC721("QVE_staking", "QVE_GUARANTEE") {
@@ -44,20 +57,34 @@ contract QVEnft is ERC721Burnable{
 
 
     // [------Mint NFT------] // 
-    function mintStakingGuarantee(address staker) public returns(uint256){
+    function mintStakingGuarantee(address staker, bool lockup) external returns(uint256){
         uint256 itemId = _tokenIds.current();
         _safeMint(staker, itemId, "");
-        _mintTimes[itemId] = block.timestamp;
+
+        if(lockup){
+            nftDetails[itemId] = NftDetail({
+            mintTime: block.timestamp,
+            lockupTime: 180 days
+            });   
+        }else{
+            nftDetails[itemId] = NftDetail({
+            mintTime: block.timestamp,
+            lockupTime: 0 days
+            });      
+        }
+        
+        ownedTokens[staker].push(itemId);
         _tokenIds.increment();
 
-        return itemId;
+        return ownedTokens[staker].length;
     }
 
+
     // [------Make Lockup Short------] // 
-    function shortenLockup(uint256 QVEamount, address _qveDefiAddress) external returns(bool){
+    function shortenLockup(uint256 QVEamount, address _qveDefiAddress, uint256 tokenId) external returns(bool){
         _setQVEdefi(_qveDefiAddress);
         require(qveToken.normal_transfer(msg.sender, qveDefiAddress, QVEamount), "qveToken transfer error"); 
-        _setLockup(QVEamount);
+        _setLockup(QVEamount, tokenId);
         return true;   
     }
 
@@ -70,7 +97,7 @@ contract QVEnft is ERC721Burnable{
     function _beforeTokenTransfer(address from, address to, uint256 tokenId, uint256 batchSize) internal virtual override {
         super._beforeTokenTransfer(from, to, tokenId, batchSize = 1);
         if (from !=address(0)){
-            require(block.timestamp >= _mintTimes[tokenId] + lockupPeriod, string(abi.encodePacked("token is still in lock period", Strings.toString(lockupPeriod))));
+            require(block.timestamp >= nftDetails[tokenId].mintTime + nftDetails[tokenId].lockupTime, string(abi.encodePacked("token is still in lock period", Strings.toString(lockupPeriod))));
         }
     }
 
@@ -80,24 +107,26 @@ contract QVEnft is ERC721Burnable{
         return true;
     }
 
-    function _setLockup(uint256 QVEamount) internal returns(bool){
+    function _setLockup(uint256 QVEamount, uint256 tokenId) internal returns(bool){
         lockupPeriod = QVEamount == 0 ? 180 days : QVEamount == 100 ? 130 days : QVEamount == 200 ? 100 days : QVEamount == 1000 ? 0 days : 180 days;
+        nftDetails[tokenId].lockupTime = lockupPeriod;
         return true;
     }  
 
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
-    _requireMinted(tokenId);
+        _requireMinted(tokenId);
 
-    return string(abi.encodePacked(
-        'data:application/json,{"name":"', _name, '", "description":"', _description, '", "image":"', _imageUri, '"}'
-    ));
+        return string(abi.encodePacked(
+            'data:application/json,{"name":"', _name, '", "description":"', _description, '", "image":"', _imageUri, '"}'
+        ));
     }
 
-    function burn(uint256 tokenId) public override  {
-        //solhint-disable-next-line max-line-length
-        require(_isApprovedOrOwner(_msgSender(), tokenId), "ERC721: caller is not token owner or approved");
+    function burnNFT(uint256 tokenId) external returns(bool){
         _burn(tokenId);
+        return true;
     }
+
+   
 
     // [------ test functions ------] //
   

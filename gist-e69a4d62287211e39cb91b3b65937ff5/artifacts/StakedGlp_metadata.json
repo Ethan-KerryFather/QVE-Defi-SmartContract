@@ -1,0 +1,393 @@
+{
+	"compiler": {
+		"version": "0.6.12+commit.27d51765"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_glp",
+						"type": "address"
+					},
+					{
+						"internalType": "contract IGlpManager",
+						"name": "_glpManager",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_stakedGlpTracker",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_feeGlpTracker",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "Approval",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_owner",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_spender",
+						"type": "address"
+					}
+				],
+				"name": "allowance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "allowances",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_spender",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					}
+				],
+				"name": "approve",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_account",
+						"type": "address"
+					}
+				],
+				"name": "balanceOf",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "decimals",
+				"outputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "feeGlpTracker",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "glp",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "glpManager",
+				"outputs": [
+					{
+						"internalType": "contract IGlpManager",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "name",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "stakedGlpTracker",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "symbol",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalSupply",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_recipient",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					}
+				],
+				"name": "transfer",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_sender",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_recipient",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					}
+				],
+				"name": "transferFrom",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"gist-e69a4d62287211e39cb91b3b65937ff5/StakedGlp.sol": "StakedGlp"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"gist-e69a4d62287211e39cb91b3b65937ff5/IERC20.sol": {
+			"keccak256": "0xa33f7682fec344ddbcd3b18326018c3819f81e07d2613cad88b037d423fefc4c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://36b3703e3d92983db960c5064fb9709b256a3c35c0a8320607242ddcb04692c2",
+				"dweb:/ipfs/QmRZjP5zcMwgijt2zhfwKSVBYgtU9hvBDbjf5LzmSrn19i"
+			]
+		},
+		"gist-e69a4d62287211e39cb91b3b65937ff5/IGlpManager.sol": {
+			"keccak256": "0xe4eabf90ef15e8f58d82fec33a945ef5d40c238dcc44aa86fc2ab32f9e9ee1d0",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://5fe68948c2cfbe954453c3a732ff434c7cc1137243e218c948abab09cb8a0b48",
+				"dweb:/ipfs/QmSe69WKqFnLdMe1Q1V1JVC5nc34bg7brsUXZXT4p2fHG7"
+			]
+		},
+		"gist-e69a4d62287211e39cb91b3b65937ff5/IRewardTracker.sol": {
+			"keccak256": "0xa19d0cf8a27b2b90b5e84f911e85ce5bce8bae19021cd8c908724f4ae7aa83e7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://72cfaf136cc200cd23a44f5df172742715ccd258dc75a89a5e3c46574b2da4ab",
+				"dweb:/ipfs/QmS9oUhaTeTWr1AxpTUjqMZPdMApaVCrwXTPEQziD3VfgG"
+			]
+		},
+		"gist-e69a4d62287211e39cb91b3b65937ff5/IVault.sol": {
+			"keccak256": "0x4293285c72e04ab318e92e33133bdb281a632b95877c5cd5963a41105da24dc5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://33840396a6c7f0d05f69f44029c214c5fdb6867d08f2392b7d4f139fae5fc91e",
+				"dweb:/ipfs/QmeMvCA54JkhzasY9qtdXdGDdB4y6orK3PEYq7bsDDDhCp"
+			]
+		},
+		"gist-e69a4d62287211e39cb91b3b65937ff5/IVaultUtils.sol": {
+			"keccak256": "0x9dc0bb4afaeb859970d2dabdc85846f1d8f45e7012d4f74b80a66fe93ea1b514",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2d3a63263f7b7e503e234a195cccbdc8f7e3a00782137ecdf3b19819f3302706",
+				"dweb:/ipfs/QmcLSdK2tMXGrXGuomuSWHbeQWbp12e9qjrSwLzg2Te8Dq"
+			]
+		},
+		"gist-e69a4d62287211e39cb91b3b65937ff5/SafeMath.sol": {
+			"keccak256": "0x387fa3ccfe1e348ecb9de6de8ec6d521fc2b3a2e4dccb381323a6e548294f997",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a68e56334f619713a62f117f938abf125e840445ba224333c2fd34b4367cae6b",
+				"dweb:/ipfs/QmPLDoSHehmcP8QbA1LtVU9BB4dYegBasshxuZUAsVznkE"
+			]
+		},
+		"gist-e69a4d62287211e39cb91b3b65937ff5/StakedGlp.sol": {
+			"keccak256": "0x3b7a92cee358a5f8226160052b67577dfe123a9e9133213585d20045332b2b0a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2f2aebcea2498782f745568c43413758457a092340542a82f557df49f8ad97a5",
+				"dweb:/ipfs/QmVeS96smae786Cz7Xibhagj51Wf9Wjq4e14HEgYMf2ur6"
+			]
+		}
+	},
+	"version": 1
+}
