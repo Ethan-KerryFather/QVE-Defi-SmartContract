@@ -72,7 +72,7 @@ contract QVEnft is ERC721Burnable{
         ownedTokens[staker].push(itemId);
         _tokenIds.increment();
 
-        return ownedTokens[staker].length;
+        return itemId - 1;
     }
 
 

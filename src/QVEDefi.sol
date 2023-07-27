@@ -64,6 +64,8 @@ contract QVEDefi is Ownable {
 
     mapping (address => ETHstakingChunk) public ETHstakingVault;
 
+    mapping (uint256 => uint256) private marginForNFT;
+
     // --- new ---- //
     struct marginDetail{
         uint256 marginAmount;
@@ -73,9 +75,9 @@ contract QVEDefi is Ownable {
 
     struct marginData{
         marginDetail[] marginDetails;
-        uint256 Counter;
+        uint256[] holdNFT;
     }
-    mapping (address => marginData) public EthMarginVault;
+    mapping (address => marginData) EthMarginVault;
 
     // [------ about QVE Stake ------] //
     mapping (address => QVEStake) public QVEstakes;
@@ -117,9 +119,8 @@ contract QVEDefi is Ownable {
     }
 
     function stakeEth(uint256 stakeAmount) internal returns(bool){
-        _issueGuaranteeNFT(msg.sender);
-        _addUserStakeVault(msg.sender, stakeAmount);
-        _addUserMarginVault(msg.sender, stakeAmount);
+        _issueGuaranteeNFT(msg.sender, stakeAmount);
+        //_addUserMarginVault(msg.sender, stakeAmount);
         stakeCount.increment();
         return true;
     }
@@ -134,8 +135,8 @@ contract QVEDefi is Ownable {
     // [------ Burn staking Guarantee NFT ------ ] // 
     function burnStakingGuarantee(uint256 tokenId) public returns(bool){
         qvenft.burnNFT(tokenId);
-        require(_sendQVEFromLiquidity(msg.sender, ETHstakingVault[msg.sender].balance / 10 ** 18), "Burn QVE transfer error");
-        require(_escrowQVE(ETHstakingVault[msg.sender].balance * 10));
+        require(_sendQVEFromLiquidity(msg.sender, marginForNFT[tokenId] / 10 ** 18), "Burn QVE transfer error");
+        require(_escrowQVE(marginForNFT[tokenId] * ESCROWRATIO / 100 ));
         return true;
     }
 
@@ -171,9 +172,11 @@ contract QVEDefi is Ownable {
     }
 
     // --- new --- //
-    function _addUserMarginVault(address userAddress, uint amount) internal returns(bool){
+    function _addUserMarginVault(address userAddress, uint amount, uint256 tokenId) internal returns(bool){
             marginDetail[] storage marginVault = EthMarginVault[userAddress].marginDetails;
-            marginVault.push(marginDetail(amount, block.timestamp, 1));
+            marginVault.push(marginDetail(amount, block.timestamp, tokenId));
+            EthMarginVault[userAddress].holdNFT.push(tokenId);
+            marginForNFT[tokenId] = amount;
         return true;
     }
 
@@ -189,15 +192,10 @@ contract QVEDefi is Ownable {
         return true;
     }
 
-    function _issueGuaranteeNFT(address sender) internal returns(bool){
+    function _issueGuaranteeNFT(address sender, uint256 stakeAmount) internal returns(bool){
         uint256 item_id = qvenft.mintStakingGuarantee(sender, false);
-
-        NFTFragment memory newFragment = NFTFragment({
-            tokenId : item_id,
-            at : block.timestamp
-        });
-
-        nftVault[sender].fragment.push(newFragment);
+        nftVault[sender].fragment.push(NFTFragment(item_id, block.timestamp));
+        _addUserMarginVault(msg.sender, stakeAmount, item_id);
         return true;
     }
 
@@ -206,7 +204,4 @@ contract QVEDefi is Ownable {
         return true;
     }
 
-   
-
-   
 }
