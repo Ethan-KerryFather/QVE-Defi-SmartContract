@@ -243,6 +243,11 @@
 						"internalType": "uint256",
 						"name": "assetAmount",
 						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "lockup",
+						"type": "bool"
 					}
 				],
 				"name": "receiveAsset",
@@ -437,11 +442,11 @@
 			]
 		},
 		"@openzeppelin/contracts/token/ERC721/ERC721.sol": {
-			"keccak256": "0x2c309e7df9e05e6ce15bedfe74f3c61b467fc37e0fae9eab496acf5ea0bbd7ff",
+			"keccak256": "0xfb988613f06fe2839338adaf38941d815448ec2288025638395fd15f1de197fa",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://7063b5c98711a98018ba4635ac74cee1c1cfa2ea01099498e062699ed9530005",
-				"dweb:/ipfs/QmeJ8rGXkcv7RrqLdAW8PCXPAykxVsddfYY6g5NaTwmRFE"
+				"bzz-raw://47c33d032ad50e82d9d3e3ecc3681bcc9feb423311c4b7af7294a1b5f647cbec",
+				"dweb:/ipfs/QmPv7XLjWbyHX7oZr31aueqLhu17YMGF4qVPuj9kbt6wVe"
 			]
 		},
 		"@openzeppelin/contracts/token/ERC721/IERC721.sol": {
@@ -557,11 +562,11 @@
 			]
 		},
 		"src/QVEDefi.sol": {
-			"keccak256": "0xfea7a7cca70c920f679d28d7e782cd40faef6939d7ede9c756cf48abbc18dea4",
+			"keccak256": "0x77955abf796b01f2e19434bf3cd826f183bd69d1b9168777668743b9ef12625e",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://2d9a4a1cdb3a060fc832a858d080b54006a7c142ad4c0e428c5f3087fbbf01ea",
-				"dweb:/ipfs/QmSRtqu931T9TSnUjBSW7dN8W9vQ3LGLzG6mp3HsV5SxhK"
+				"bzz-raw://f06d3f8fca1b902a3c4c3e9453c5fe2b04270019b1079cce4934b5c0702b16e2",
+				"dweb:/ipfs/QmQDCP18soLVFjFYBsaB14QErqswKmaV3NmEH3dCnpf9WB"
 			]
 		},
 		"src/QVEescrow.sol": {
@@ -573,11 +578,11 @@
 			]
 		},
 		"src/QVEnft.sol": {
-			"keccak256": "0x388d8624f03b620273a1e88014fd25a78893b37ae84965d5d3c72439d2883f20",
+			"keccak256": "0x4a60a1ed3541bcc8ea7c3061127111821488e86ab0e8b3aad89593d53f202ac2",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://3faf0413aa75b99f4cb1e46a3f0587636016704c558b773ce1e1b76e72234406",
-				"dweb:/ipfs/QmeYKKhrQixcHVJrqcxiqx9gPDx5SCKi27tbqmfzPbQ7JF"
+				"bzz-raw://14419d7d169b43a14d497ff13f5fa1fd2138f5b5f6d00361eb6d749471e8caf2",
+				"dweb:/ipfs/QmXiZNYSuXJoPgGS93yN6GuPiSVAwLLGerRu4dUH38Wf9Z"
 			]
 		},
 		"src/tokens/QVEtoken.sol": {

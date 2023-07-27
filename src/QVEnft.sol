@@ -117,7 +117,6 @@ contract QVEnft is ERC721Burnable{
     }
 
     function burnNFT(uint256 tokenId) external returns(bool){
-        _approve(msg.sender, tokenId);  // QVE defi에게 권한을 부여함.
         burn(tokenId);
         return true;
     }

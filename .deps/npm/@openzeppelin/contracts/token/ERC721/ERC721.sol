@@ -25,7 +25,7 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
 
     // Token symbol
     string private _symbol;
-
+ 
     // Mapping from token ID to owner address
     mapping(uint256 => address) private _owners;
 
