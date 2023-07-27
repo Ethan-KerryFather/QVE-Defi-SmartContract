@@ -122,7 +122,13 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
 				"name": "burnStakingGuarantee",
 				"outputs": [
 					{
@@ -575,11 +581,11 @@
 			]
 		},
 		"src/QVEDefi.sol": {
-			"keccak256": "0x8d4db59b90deaa74cd75ee2ab0cd046c25222018e78022a3fe2e1482721be03b",
+			"keccak256": "0x160ef83fc9415d7eaf34ccfad195684de18ebfb3745433688f8631cf226a1818",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://4a8753e62b4bb800f4c3390d5c51b924625db4e13a2003a161c3357f447de2ec",
-				"dweb:/ipfs/QmYbHFonvwoUkycGyeVrYa1F1ZCwtz7Sp8EUPdV9kGcDTa"
+				"bzz-raw://ee675095d4d4eb9b206c8d6e8e3514b2f93e08b357f37422e6af897c136d147c",
+				"dweb:/ipfs/QmbdyDaaYBVi5oLGdVyZNvY9AUwPZkXNrsDgkVxZ9qtAnF"
 			]
 		},
 		"src/QVEescrow.sol": {
@@ -591,11 +597,11 @@
 			]
 		},
 		"src/QVEnft.sol": {
-			"keccak256": "0x654e815f64b56779e62fb38fa97210b5aa8105e9a3ad2f6f108b5f46b37aae57",
+			"keccak256": "0x0f5d6a8ab4e4656c968b727803adbc3146a70ad65f904fa62c601d99e726f974",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://4091b345250e8ee6c5cddcfdaa6fc9f9bd1c20f1abb3aed15bd6823017d34a5f",
-				"dweb:/ipfs/QmT8TP3QkzEikTJeFkw1kDEFac7KN1YUANwEjV4oNMfy3Q"
+				"bzz-raw://9b30007032a82611a2e00cb3cce242636305e354787e3b6cbcd2a8ee744d5d64",
+				"dweb:/ipfs/QmXPFzR6d9eCzHNeBVierWRP5bascuUp6pexnQxxzy2ebP"
 			]
 		},
 		"src/tokens/QVEtoken.sol": {

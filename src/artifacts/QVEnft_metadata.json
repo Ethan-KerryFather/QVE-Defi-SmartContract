@@ -751,11 +751,11 @@
 			]
 		},
 		"src/QVEnft.sol": {
-			"keccak256": "0x654e815f64b56779e62fb38fa97210b5aa8105e9a3ad2f6f108b5f46b37aae57",
+			"keccak256": "0x09f4d217815718f3e0a7ac53c655c212aa497618f2e57a3b8cc2326b19756210",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://4091b345250e8ee6c5cddcfdaa6fc9f9bd1c20f1abb3aed15bd6823017d34a5f",
-				"dweb:/ipfs/QmT8TP3QkzEikTJeFkw1kDEFac7KN1YUANwEjV4oNMfy3Q"
+				"bzz-raw://1f27a63c61eda158503682abc7422f9bd20e3967f8509b51182f101e974670a4",
+				"dweb:/ipfs/QmUZdTdsS1b3o4584yzrjeS9HfwEbzMzKgJasS63Qyg4cd"
 			]
 		},
 		"src/tokens/QVEtoken.sol": {

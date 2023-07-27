@@ -23,5 +23,4 @@ contract QLPtoken is ERC20Burnable, Ownable {
         _mint(sender, indexAmount);
         return true;
     }
-    
 }

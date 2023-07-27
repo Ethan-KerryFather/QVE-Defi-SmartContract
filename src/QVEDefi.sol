@@ -64,6 +64,19 @@ contract QVEDefi is Ownable {
 
     mapping (address => ETHstakingChunk) public ETHstakingVault;
 
+    // --- new ---- //
+    struct marginDetail{
+        uint256 marginAmount;
+        uint256 at;
+        uint256 random;
+    }
+
+    struct marginData{
+        marginDetail[] marginDetails;
+        uint256 Counter;
+    }
+    mapping (address => marginData) public EthMarginVault;
+
     // [------ about QVE Stake ------] //
     mapping (address => QVEStake) public QVEstakes;
     mapping (address => uint256) public rewardPointsEarned;
@@ -98,7 +111,7 @@ contract QVEDefi is Ownable {
         해당하는 양만큼 봇주소로 보냄
     */
         stakeEth(assetAmount);
-        string memory assetString = string(abi.encodePacked("This", " ", "nft", " ", "guarantees", " : ", assetAmount.toString()," ", "ETH"));
+        string memory assetString = string(abi.encodePacked("Margin : ", assetAmount.toString(),"ETH"));
         qvenft.setMetadata("Staking Guarantee Card", assetString, "https://ipfs.io/ipfs/QmWEgQskBctQJUarEycv6cxPnM3Wr4aHz6rGoq2QmTvwUc?filename=QVEwarranty.png");
         return true;
     }
@@ -106,6 +119,7 @@ contract QVEDefi is Ownable {
     function stakeEth(uint256 stakeAmount) internal returns(bool){
         _issueGuaranteeNFT(msg.sender);
         _addUserStakeVault(msg.sender, stakeAmount);
+        _addUserMarginVault(msg.sender, stakeAmount);
         stakeCount.increment();
         return true;
     }
@@ -118,13 +132,13 @@ contract QVEDefi is Ownable {
     }
 
     // [------ Burn staking Guarantee NFT ------ ] // 
-    function burnStakingGuarantee() public returns(bool){
-        //qvenft.approve(address(this), tokenId);
-        //qvenft.burnNFT(tokenId);
+    function burnStakingGuarantee(uint256 tokenId) public returns(bool){
+        qvenft.burnNFT(tokenId);
         require(_sendQVEFromLiquidity(msg.sender, ETHstakingVault[msg.sender].balance / 10 ** 18), "Burn QVE transfer error");
         require(_escrowQVE(ETHstakingVault[msg.sender].balance * 10));
         return true;
     }
+
 
     // [------ Getters ------ ] //
     function getStakeCount_() external view returns(uint256){
@@ -153,6 +167,13 @@ contract QVEDefi is Ownable {
 
     function _addUserStakeVault(address userAddress, uint256 stakeAmount) internal returns(bool){
         ETHstakingVault[userAddress].balance += stakeAmount * 10 ** 18;
+        return true;
+    }
+
+    // --- new --- //
+    function _addUserMarginVault(address userAddress, uint amount) internal returns(bool){
+            marginDetail[] storage marginVault = EthMarginVault[userAddress].marginDetails;
+            marginVault.push(marginDetail(amount, block.timestamp, 1));
         return true;
     }
 
