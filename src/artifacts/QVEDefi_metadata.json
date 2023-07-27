@@ -46,30 +46,6 @@
 				"type": "event"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"name": "ETHstakingVault",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "balance",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "at",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
 				"inputs": [],
 				"name": "QVEliquidityPool",
 				"outputs": [
@@ -160,6 +136,19 @@
 			},
 			{
 				"inputs": [],
+				"name": "getInputedMarginCount",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "getNFTbalance_",
 				"outputs": [
 					{
@@ -191,19 +180,6 @@
 						"internalType": "struct QVEDefi.NFTFragment[]",
 						"name": "",
 						"type": "tuple[]"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "getStakeCount_",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -581,11 +557,11 @@
 			]
 		},
 		"src/QVEDefi.sol": {
-			"keccak256": "0x160ef83fc9415d7eaf34ccfad195684de18ebfb3745433688f8631cf226a1818",
+			"keccak256": "0xfea7a7cca70c920f679d28d7e782cd40faef6939d7ede9c756cf48abbc18dea4",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ee675095d4d4eb9b206c8d6e8e3514b2f93e08b357f37422e6af897c136d147c",
-				"dweb:/ipfs/QmbdyDaaYBVi5oLGdVyZNvY9AUwPZkXNrsDgkVxZ9qtAnF"
+				"bzz-raw://2d9a4a1cdb3a060fc832a858d080b54006a7c142ad4c0e428c5f3087fbbf01ea",
+				"dweb:/ipfs/QmSRtqu931T9TSnUjBSW7dN8W9vQ3LGLzG6mp3HsV5SxhK"
 			]
 		},
 		"src/QVEescrow.sol": {
@@ -597,11 +573,11 @@
 			]
 		},
 		"src/QVEnft.sol": {
-			"keccak256": "0x0f5d6a8ab4e4656c968b727803adbc3146a70ad65f904fa62c601d99e726f974",
+			"keccak256": "0x388d8624f03b620273a1e88014fd25a78893b37ae84965d5d3c72439d2883f20",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://9b30007032a82611a2e00cb3cce242636305e354787e3b6cbcd2a8ee744d5d64",
-				"dweb:/ipfs/QmXPFzR6d9eCzHNeBVierWRP5bascuUp6pexnQxxzy2ebP"
+				"bzz-raw://3faf0413aa75b99f4cb1e46a3f0587636016704c558b773ce1e1b76e72234406",
+				"dweb:/ipfs/QmeYKKhrQixcHVJrqcxiqx9gPDx5SCKi27tbqmfzPbQ7JF"
 			]
 		},
 		"src/tokens/QVEtoken.sol": {
