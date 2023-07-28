@@ -495,11 +495,11 @@
 			]
 		},
 		"src/QVEescrow.sol": {
-			"keccak256": "0x0269ee37a3a4e166efc1af33370f1ef3cccc35531507acffea706cc9f9c1566e",
+			"keccak256": "0xb3febdfad9635fd0bcd48020b40850cef7400126c068d1521ae3daf7c0e6473c",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://8029de0586a6dc54c0812dcb398a3b48c2ec29af451719320081d3f9249028b4",
-				"dweb:/ipfs/QmZ256Q3EBz7BoYG3BD9mQbkg9ch2WTqvzMBk1ckkMHFfE"
+				"bzz-raw://6e561d061573cfa3775aa39bfcf51429590aaa516e7cdb6bc851c0ea4a554148",
+				"dweb:/ipfs/Qma2XeJjjzsiHhqmEYmVwN6a4W4wjxSaJU3rXEHWcUhjen"
 			]
 		},
 		"src/tokens/QVEtoken.sol": {

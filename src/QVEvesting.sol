@@ -34,9 +34,9 @@ contract QVEvesting is Ownable{
 
 
     // [------ Events ------] //
-    event TokenVesingReleased(uint256 indexed vesting, address indexed beneficiary, uint256 amount);
-    event TokenVesingAdded(uint256 indexed vesting, address indexed beneficiary, uint256 amount);
-    event TokenVesingRemoved(uint256 indexed vesting, address indexed beneficiary, uint256 amount);
+    event TokenVestingReleased(uint256 indexed vesting, address indexed beneficiary, uint256 amount);
+    event TokenVestingAdded(uint256 indexed vesting, address indexed beneficiary, uint256 amount);
+    event TokenVestingRemoved(uint256 indexed vesting, address indexed beneficiary, uint256 amount);
 
 
     // [------ Variables ------] //    
@@ -75,7 +75,7 @@ contract QVEvesting is Ownable{
             amount : _amount,
             released : false
         });
-        emit  TokenVesingReleased(VestingCounter.current(), _beneficiary, _amount);
+        emit  TokenVestingReleased(VestingCounter.current(), _beneficiary, _amount);
 
         VestingCounter.increment();
     }
@@ -87,12 +87,26 @@ contract QVEvesting is Ownable{
         tokensToVest = tokensToVest.sub(vesting.amount);
 
         vesting.released = true;
-        emit TokenVesingReleased(_vestingId, vesting.beneficiary, vesting.amount);
+        emit TokenVestingReleased(_vestingId, vesting.beneficiary, vesting.amount);
     }
 
     function release(uint256 _vestingId) public {
         Vesting storage vesting = vestings[_vestingId];
-        require(vesting.beneficiary != address(0), INVALID_BENEFICIARY);
+        require(vesting.beneficiary != address(0x0), INVALID_VESTING_ID);
+        require(!vesting.released , VESTING_ALREADY_RELEASED);
+        // solhint-disable-next-line not-rely-on-time
+        require(block.timestamp >= vesting.releaseTime, NOT_VESTED);
+
+        require(qveToken.balanceOf(address(this)) >= vesting.amount, INSUFFICIENT_BALANCE);
+        vesting.released = true;
+        tokensToVest = tokensToVest.sub(vesting.amount);
+        qveToken.normal_transfer(address(this), vesting.beneficiary, vesting.amount);
+        emit TokenVestingReleased(_vestingId, vesting.beneficiary, vesting.amount);
+    }
+
+    function retrieveExcessTokens(uint256 _amount) public onlyOwner {
+        require(_amount <= qveToken.balanceOf(address(this)).sub(tokensToVest), INSUFFICIENT_BALANCE);
+        qveToken.normal_transfer(address(this), owner(), _amount);
     }
 
     // [------ internal Functions -------] //

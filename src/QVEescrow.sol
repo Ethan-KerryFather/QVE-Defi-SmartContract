@@ -15,6 +15,9 @@ contract QVEescrow is ERC20, EscrowQVE {
     using Strings for *;
     QVEtoken qveToken;
 
+   
+
+
     // [------ Variables, Constants, Mappings ------] //
     uint256 private supply;
     uint256 constant private LOCK_UP_DAYS = 180 days;

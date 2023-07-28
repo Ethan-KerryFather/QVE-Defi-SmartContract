@@ -57,7 +57,7 @@
 						"type": "uint256"
 					}
 				],
-				"name": "TokenVesingAdded",
+				"name": "TokenVestingAdded",
 				"type": "event"
 			},
 			{
@@ -82,7 +82,7 @@
 						"type": "uint256"
 					}
 				],
-				"name": "TokenVesingReleased",
+				"name": "TokenVestingReleased",
 				"type": "event"
 			},
 			{
@@ -107,7 +107,7 @@
 						"type": "uint256"
 					}
 				],
-				"name": "TokenVesingRemoved",
+				"name": "TokenVestingRemoved",
 				"type": "event"
 			},
 			{
@@ -232,6 +232,19 @@
 			{
 				"inputs": [],
 				"name": "renounceOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					}
+				],
+				"name": "retrieveExcessTokens",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -431,11 +444,11 @@
 			]
 		},
 		"src/QVEvesting.sol": {
-			"keccak256": "0x409a0f5022d15adb0212672fe28e4427106e6739c75f60ef84b2749023977002",
+			"keccak256": "0x4fde2676cd7a7f95f5b174a9f3f0b395d2356b920454d4c887a14f0e2cecf6a0",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://47aab3261b8773d09dc756e155d37fcf954238caf42a76eefa65023384d12406",
-				"dweb:/ipfs/QmboojgVrVajmcLXfrpy2A7JcXL4xHvZsLPoVg8UTNhPW3"
+				"bzz-raw://435f5d10d4234d0d3c07366a785a83bf5726f088361ddbd3f74bab22c148c3ee",
+				"dweb:/ipfs/QmTUr7pyTET91MHWxZamEtHZDRrNqb1TLEeYwQ8tbddUcA"
 			]
 		},
 		"src/tokens/QVEtoken.sol": {
