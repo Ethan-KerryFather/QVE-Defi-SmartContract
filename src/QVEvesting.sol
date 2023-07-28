@@ -94,10 +94,9 @@ contract QVEvesting is Ownable{
         Vesting storage vesting = vestings[_vestingId];
         require(vesting.beneficiary != address(0x0), INVALID_VESTING_ID);
         require(!vesting.released , VESTING_ALREADY_RELEASED);
-        // solhint-disable-next-line not-rely-on-time
         require(block.timestamp >= vesting.releaseTime, NOT_VESTED);
-
         require(qveToken.balanceOf(address(this)) >= vesting.amount, INSUFFICIENT_BALANCE);
+        
         vesting.released = true;
         tokensToVest = tokensToVest.sub(vesting.amount);
         qveToken.normal_transfer(address(this), vesting.beneficiary, vesting.amount);
