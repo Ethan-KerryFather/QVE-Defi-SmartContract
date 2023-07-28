@@ -1,0 +1,747 @@
+{
+	"compiler": {
+		"version": "0.6.12+commit.27d51765"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "BASIS_POINTS_DIVISOR",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "POSITION_PROPS_LENGTH",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "PRICE_PRECISION",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "USDG_DECIMALS",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IVault",
+						"name": "_vault",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_tokenIn",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_tokenOut",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amountIn",
+						"type": "uint256"
+					}
+				],
+				"name": "getAmountOut",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IVault",
+						"name": "_vault",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_tokenIn",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_tokenOut",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amountIn",
+						"type": "uint256"
+					}
+				],
+				"name": "getFeeBasisPoints",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_vault",
+						"type": "address"
+					},
+					{
+						"internalType": "address[]",
+						"name": "_tokens",
+						"type": "address[]"
+					}
+				],
+				"name": "getFees",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_vault",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_weth",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_usdgAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address[]",
+						"name": "_tokens",
+						"type": "address[]"
+					}
+				],
+				"name": "getFullVaultTokenInfo",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_vault",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_weth",
+						"type": "address"
+					},
+					{
+						"internalType": "address[]",
+						"name": "_tokens",
+						"type": "address[]"
+					}
+				],
+				"name": "getFundingRates",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IVault",
+						"name": "_vault",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_tokenIn",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_tokenOut",
+						"type": "address"
+					}
+				],
+				"name": "getMaxAmountIn",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_factory",
+						"type": "address"
+					},
+					{
+						"internalType": "address[]",
+						"name": "_tokens",
+						"type": "address[]"
+					}
+				],
+				"name": "getPairInfo",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_vault",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_account",
+						"type": "address"
+					},
+					{
+						"internalType": "address[]",
+						"name": "_collateralTokens",
+						"type": "address[]"
+					},
+					{
+						"internalType": "address[]",
+						"name": "_indexTokens",
+						"type": "address[]"
+					},
+					{
+						"internalType": "bool[]",
+						"name": "_isLong",
+						"type": "bool[]"
+					}
+				],
+				"name": "getPositions",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IVaultPriceFeed",
+						"name": "_priceFeed",
+						"type": "address"
+					},
+					{
+						"internalType": "address[]",
+						"name": "_tokens",
+						"type": "address[]"
+					}
+				],
+				"name": "getPrices",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_account",
+						"type": "address"
+					},
+					{
+						"internalType": "address[]",
+						"name": "_yieldTrackers",
+						"type": "address[]"
+					}
+				],
+				"name": "getStakingInfo",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_account",
+						"type": "address"
+					},
+					{
+						"internalType": "address[]",
+						"name": "_tokens",
+						"type": "address[]"
+					}
+				],
+				"name": "getTokenBalances",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_account",
+						"type": "address"
+					},
+					{
+						"internalType": "address[]",
+						"name": "_tokens",
+						"type": "address[]"
+					}
+				],
+				"name": "getTokenBalancesWithSupplies",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IERC20",
+						"name": "_token",
+						"type": "address"
+					},
+					{
+						"internalType": "address[]",
+						"name": "_excludedAccounts",
+						"type": "address[]"
+					}
+				],
+				"name": "getTokenSupply",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IERC20",
+						"name": "_token",
+						"type": "address"
+					},
+					{
+						"internalType": "address[]",
+						"name": "_accounts",
+						"type": "address[]"
+					}
+				],
+				"name": "getTotalBalance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address[]",
+						"name": "_yieldTokens",
+						"type": "address[]"
+					}
+				],
+				"name": "getTotalStaked",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_vault",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_weth",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_usdgAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address[]",
+						"name": "_tokens",
+						"type": "address[]"
+					}
+				],
+				"name": "getVaultTokenInfo",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_vault",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_weth",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_usdgAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address[]",
+						"name": "_tokens",
+						"type": "address[]"
+					}
+				],
+				"name": "getVaultTokenInfoV2",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_account",
+						"type": "address"
+					},
+					{
+						"internalType": "address[]",
+						"name": "_vesters",
+						"type": "address[]"
+					}
+				],
+				"name": "getVestingInfo",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "gov",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "hasMaxGlobalShortSizes",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bool",
+						"name": "_hasMaxGlobalShortSizes",
+						"type": "bool"
+					}
+				],
+				"name": "setConfig",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_gov",
+						"type": "address"
+					}
+				],
+				"name": "setGov",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"gist-2ac93afd0a3d74bf5b97d46a2fe3348c/Reader.sol": "Reader"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"gist-2ac93afd0a3d74bf5b97d46a2fe3348c/Governable.sol": {
+			"keccak256": "0x24cf6b396a440bc184acc20506b80acf3959d0d219b9d5ff3000287a8373c48b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://451567abb454ae0d5209bef8aa7d1d660de1a8953ec408ed4d0ffe8bda5a24fc",
+				"dweb:/ipfs/QmcAj13Ly3eb6FQo19CGfBACCUG4mePmPn3JX6M7FoTGpM"
+			]
+		},
+		"gist-2ac93afd0a3d74bf5b97d46a2fe3348c/IERC20.sol": {
+			"keccak256": "0xfadc8bd9cd6972d076076a6e5f1003d1ba997085dbb66e00c5a120ab8f88befc",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://1b2856ea913dcb85608e595ad6c876357bac1a30fdffc663fa5249396490e4e3",
+				"dweb:/ipfs/QmZyeSeA8rWFBNXeFQw2HvgvFVFGoAunukmJmR3WiUnXP9"
+			]
+		},
+		"gist-2ac93afd0a3d74bf5b97d46a2fe3348c/IPancakeFactory.sol": {
+			"keccak256": "0xd90401839969fda2b94a55019295616aa4f32ca05cae52e4d85ebd6a50f969e8",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://585d5037cc2b58d5e66c9a8e5e45b3d25d568a500dc7082177a75e85864e59e7",
+				"dweb:/ipfs/Qme2VtiGWa8BF2Ek6g3GeGjb9DUk6cJLt1XFvWKe1SkBws"
+			]
+		},
+		"gist-2ac93afd0a3d74bf5b97d46a2fe3348c/IVault.sol": {
+			"keccak256": "0xed1fe4cc88e0b0bc333454ece6086e22266b9448b2134cae50940e2516aa55ca",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://da5ed8f731555e1dcee2a949cfb72fcd525b9313377935135036e4af3dde11f2",
+				"dweb:/ipfs/QmdZJ2g4YRB3B6EzWu9VeSHEN9hP7up4BTbxYEdarHsz2Y"
+			]
+		},
+		"gist-2ac93afd0a3d74bf5b97d46a2fe3348c/IVaultPriceFeed.sol": {
+			"keccak256": "0xeaf0769c870e89e96c532a13343c9c75c03f1453994e4ea08fd9b7de871ad5b5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://fadc434951c0ab47e1e9f813ec4237f05fd6c0d6c68d46b4767656033eaf95cd",
+				"dweb:/ipfs/QmUhXtGPUpZ1tsMkCWNnc6J54fccUMvGkTBuWtQ2r7AKt2"
+			]
+		},
+		"gist-2ac93afd0a3d74bf5b97d46a2fe3348c/IVaultUtils.sol": {
+			"keccak256": "0xfa0ae2e4fa209200c1bdf3ef8b20f110faf9178826f3662c8f17a4f623f714c7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://cff3c980535de4a60775f695459a480c81480b7e2048d43ece5a4f88d195ddf7",
+				"dweb:/ipfs/QmZviQJuuM57Y9F7vgMpKSJUpG8E9fZk9rSnAhr19zvhgc"
+			]
+		},
+		"gist-2ac93afd0a3d74bf5b97d46a2fe3348c/IVester.sol": {
+			"keccak256": "0x8d17e1b700339674d63c84eb4d4b2472551cb7f2f65c1e5ab3e760f38da2b778",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://e1e674678026d955c0c0098d72876377963abeeca2d0777297216565ca4cde24",
+				"dweb:/ipfs/QmVxz4ZYdx2ojt3dFqNFaKwcTFExVK6o2Uwo3bBVpKp6yZ"
+			]
+		},
+		"gist-2ac93afd0a3d74bf5b97d46a2fe3348c/IYieldToken.sol": {
+			"keccak256": "0xc6ff0a7414af80c53e67df2658495239db6f50a26215c67e7b96eb6cc3f30abe",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://e708a1e435f59ae7bcb97238ada42d097eff5da9609da87eea9d6701b39d225b",
+				"dweb:/ipfs/QmWUEPeYbf6d8hSCnmAt2mDAwfdshMsx2xsXRnowP1Tn2t"
+			]
+		},
+		"gist-2ac93afd0a3d74bf5b97d46a2fe3348c/IYieldTracker.sol": {
+			"keccak256": "0xeaf60a7cdd25f9e5a8a69a70f998cb13a029e49d6e7e7ab9bec6ddbcefe83b00",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6525e44fb5a9cb088e9fe97338cd234c4d29ffce7ced13264d952c2474e99214",
+				"dweb:/ipfs/QmckyKEb2PT3CMZKGL5QrwHcYrk8LfmRpeVBNKxsvpg5s4"
+			]
+		},
+		"gist-2ac93afd0a3d74bf5b97d46a2fe3348c/Reader.sol": {
+			"keccak256": "0x8707967b9b2c2e6b7af550335779f8bc37bb087400f5954758ccf6f19a5385e5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://dbbce64aa77db3f4c134cb50f7ef9c4ba6f76e4e1b2abab1f7e0c9f12d96838a",
+				"dweb:/ipfs/QmcWm6DCBZus6KBbvYfQE3VQJoAgCvqpgrAigHmRtktog8"
+			]
+		},
+		"gist-2ac93afd0a3d74bf5b97d46a2fe3348c/SafeMath.sol": {
+			"keccak256": "0xa07ee73d352e2f41fac0ca8f77741209df3acf572a4c6f20730431bb6bb12ded",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://88f9f2ff9d7b94d52f29b61cda8dd8cac77aa95606ce1fa20ad3127eb40e37e7",
+				"dweb:/ipfs/Qmf3G1GMuctsMAgeTWrBTNiTTymEHT2QvDfxT7Zt4xovu4"
+			]
+		}
+	},
+	"version": 1
+}
