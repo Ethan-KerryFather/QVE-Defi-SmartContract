@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.21+commit.d9974bed"
+		"version": "0.8.18+commit.87f61d96"
 	},
 	"language": "Solidity",
 	"output": {
@@ -58,40 +58,6 @@
 						"internalType": "uint256",
 						"name": "at",
 						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"name": "QVEstakes",
-				"outputs": [
-					{
-						"internalType": "uint72",
-						"name": "tokenAmount",
-						"type": "uint72"
-					},
-					{
-						"internalType": "uint24",
-						"name": "lockingPeriodInBlocks",
-						"type": "uint24"
-					},
-					{
-						"internalType": "uint32",
-						"name": "startBlock",
-						"type": "uint32"
-					},
-					{
-						"internalType": "uint128",
-						"name": "expectedStakingRewardPoints",
-						"type": "uint128"
 					}
 				],
 				"stateMutability": "view",
@@ -187,6 +153,19 @@
 			},
 			{
 				"inputs": [],
+				"name": "locked",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "owner",
 				"outputs": [
 					{
@@ -271,25 +250,6 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"name": "rewardPointsEarned",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
 						"internalType": "uint256",
 						"name": "qveAmount",
 						"type": "uint256"
@@ -309,45 +269,6 @@
 					}
 				],
 				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "stakingFundAmount",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "stakingProgramEndsBlock",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "totalRewardPoints",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -389,7 +310,7 @@
 		"compilationTarget": {
 			"src/QVEDefi.sol": "QVEDefi"
 		},
-		"evmVersion": "shanghai",
+		"evmVersion": "paris",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -562,19 +483,19 @@
 			]
 		},
 		"src/QVEDefi.sol": {
-			"keccak256": "0x77955abf796b01f2e19434bf3cd826f183bd69d1b9168777668743b9ef12625e",
+			"keccak256": "0xaa8f4934fe8badc5a3d4f1a8e8bc587df46116415fd6de821317a9c44ad37aec",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://f06d3f8fca1b902a3c4c3e9453c5fe2b04270019b1079cce4934b5c0702b16e2",
-				"dweb:/ipfs/QmQDCP18soLVFjFYBsaB14QErqswKmaV3NmEH3dCnpf9WB"
+				"bzz-raw://b296543d6c9cfe34a5c4f30ddb7922c3c31043ceda78af2529eebaf84141fcd2",
+				"dweb:/ipfs/QmQmveohWurXY1AHwhux8p94M64zqTky12K495mUifZjaC"
 			]
 		},
 		"src/QVEescrow.sol": {
-			"keccak256": "0x0269ee37a3a4e166efc1af33370f1ef3cccc35531507acffea706cc9f9c1566e",
+			"keccak256": "0xb3febdfad9635fd0bcd48020b40850cef7400126c068d1521ae3daf7c0e6473c",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://8029de0586a6dc54c0812dcb398a3b48c2ec29af451719320081d3f9249028b4",
-				"dweb:/ipfs/QmZ256Q3EBz7BoYG3BD9mQbkg9ch2WTqvzMBk1ckkMHFfE"
+				"bzz-raw://6e561d061573cfa3775aa39bfcf51429590aaa516e7cdb6bc851c0ea4a554148",
+				"dweb:/ipfs/Qma2XeJjjzsiHhqmEYmVwN6a4W4wjxSaJU3rXEHWcUhjen"
 			]
 		},
 		"src/QVEnft.sol": {
@@ -591,6 +512,14 @@
 			"urls": [
 				"bzz-raw://e66b83535b206211a843601a58fa05c279f378483519c0506282a9be60cdd812",
 				"dweb:/ipfs/Qmbs2PsnDzQBhxGT1K26WQCP2KJiE1eHZAViEehaiFekoo"
+			]
+		},
+		"src/util/Security.sol": {
+			"keccak256": "0xe75f29e6ce53e43e73431d0bdc9bc7a35b8559fd1e83e995b0f635f46f46e94d",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://46d92ec7d3933a0a5e83b08147ba1bb1e248d2f566c05fc15d668f44286ccbab",
+				"dweb:/ipfs/QmPT2xrGAVxTngXKZCSWBNHetrRpuNCGYvK9Jaaj3mKjMX"
 			]
 		}
 	},

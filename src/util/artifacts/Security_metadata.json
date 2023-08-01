@@ -1,0 +1,59 @@
+{
+	"compiler": {
+		"version": "0.8.18+commit.87f61d96"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "locked",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"src/util/Security.sol": "Security"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"src/util/Security.sol": {
+			"keccak256": "0xe75f29e6ce53e43e73431d0bdc9bc7a35b8559fd1e83e995b0f635f46f46e94d",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://46d92ec7d3933a0a5e83b08147ba1bb1e248d2f566c05fc15d668f44286ccbab",
+				"dweb:/ipfs/QmPT2xrGAVxTngXKZCSWBNHetrRpuNCGYvK9Jaaj3mKjMX"
+			]
+		}
+	},
+	"version": 1
+}

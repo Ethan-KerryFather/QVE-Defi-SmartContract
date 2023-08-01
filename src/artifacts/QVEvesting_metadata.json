@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.21+commit.d9974bed"
+		"version": "0.8.18+commit.87f61d96"
 	},
 	"language": "Solidity",
 	"output": {
@@ -192,6 +192,19 @@
 			},
 			{
 				"inputs": [],
+				"name": "locked",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "owner",
 				"outputs": [
 					{
@@ -335,7 +348,7 @@
 		"compilationTarget": {
 			"src/QVEvesting.sol": "QVEvesting"
 		},
-		"evmVersion": "shanghai",
+		"evmVersion": "paris",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -444,11 +457,11 @@
 			]
 		},
 		"src/QVEvesting.sol": {
-			"keccak256": "0xa00df7400e01c51e8f65ec235f385532e02113efafbd6e7e3d990108195c12c0",
+			"keccak256": "0x8e82ad444054e2acc76ea14ea1dae588881a028aeebd8d4dcc37820f38633f24",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1b68610e6ef6185d196a88407387646d6549697cedc66c61710525d14b2a39c0",
-				"dweb:/ipfs/QmaBayQX4H5sGdR6grhgLjGw9kosX5HiLJHCQJyKwQxKyW"
+				"bzz-raw://436cf706d5f30fe8fb59660c435df2502d8501a67b63a6395fd63816160788be",
+				"dweb:/ipfs/Qma5tbm8UNGZ2vwH4P2q9STEreYjYp4hMdh9QqhNvAebxz"
 			]
 		},
 		"src/tokens/QVEtoken.sol": {
@@ -457,6 +470,14 @@
 			"urls": [
 				"bzz-raw://e66b83535b206211a843601a58fa05c279f378483519c0506282a9be60cdd812",
 				"dweb:/ipfs/Qmbs2PsnDzQBhxGT1K26WQCP2KJiE1eHZAViEehaiFekoo"
+			]
+		},
+		"src/util/Security.sol": {
+			"keccak256": "0xe75f29e6ce53e43e73431d0bdc9bc7a35b8559fd1e83e995b0f635f46f46e94d",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://46d92ec7d3933a0a5e83b08147ba1bb1e248d2f566c05fc15d668f44286ccbab",
+				"dweb:/ipfs/QmPT2xrGAVxTngXKZCSWBNHetrRpuNCGYvK9Jaaj3mKjMX"
 			]
 		}
 	},

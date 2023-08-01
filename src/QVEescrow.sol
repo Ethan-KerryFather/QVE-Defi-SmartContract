@@ -4,13 +4,14 @@ pragma solidity ^0.8.10;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "./tokens/QVEtoken.sol";
+import "./util/Security.sol";
 
 interface EscrowQVE{
     function makeQVEescrow(address, uint) external returns(bool);   // escrow QVE token
     function getEscrowedBalance_() external  view returns(uint);    // inquire User Escrowed QVE token in escrowed QVE vault
 }
 
-contract QVEescrow is ERC20, EscrowQVE {
+contract QVEescrow is ERC20, EscrowQVE, Security {
 
     using Strings for *;
     QVEtoken qveToken;
@@ -36,7 +37,7 @@ contract QVEescrow is ERC20, EscrowQVE {
     }
 
     // [------ Token functions -------] //
-    function normal_transfer(address from, address target, uint256 amount) public returns(bool){
+    function normal_transfer(address from, address target, uint256 amount) public NoReEntrancy returns(bool){
         _transfer(from, target, amount);
         return true;
     }
@@ -55,7 +56,7 @@ contract QVEescrow is ERC20, EscrowQVE {
     }
 
     // [------ Internal functions -------] //
-    function mintToEscrow(address receiver, uint256 amount) internal returns(bool){
+    function mintToEscrow(address receiver, uint256 amount) internal NoReEntrancy returns(bool){
         _mint(receiver, amount);
         return true;
     }

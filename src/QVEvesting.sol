@@ -7,8 +7,9 @@ import "@openzeppelin/contracts/token/ERC20/utils/TokenTimelock.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "./tokens/QVEtoken.sol"; 
+import "./util/Security.sol";
 
-contract QVEvesting is Ownable{
+contract QVEvesting is Ownable, Security{
     using SafeMath for uint256;
     using Counters for Counters.Counter;
     Counters.Counter private VestingCounter;
@@ -66,7 +67,7 @@ contract QVEvesting is Ownable{
         return vestings[_vestingId].amount;
     }
 
-    function addVesting(address _beneficiary, uint256 _releaseTime, uint256 _amount) public onlyOwner{
+    function addVesting(address _beneficiary, uint256 _releaseTime, uint256 _amount) public onlyOwner NoReEntrancy{
         require( _beneficiary != address(0), "QVE receiver is address(0)");
         tokensToVest = tokensToVest += _amount;
         vestings[VestingCounter.current()] = Vesting({

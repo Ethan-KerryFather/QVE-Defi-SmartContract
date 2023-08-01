@@ -9,6 +9,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "./tokens/QVEtoken.sol";
 import "./QVEescrow.sol";
 import "./QVEnft.sol";
+import "./util/Security.sol";
 
 // interface DefiQVE{
 //     function receiveAsset(uint256 assetAmount) external  payable returns(bool);     // User send ETH to QVE Defi
@@ -17,7 +18,7 @@ import "./QVEnft.sol";
 //     function getNFTbalance_() external view returns(uint);                          // get NFT balance, if you want to want to inquire individual nft vault, USE [---nftVault---]
 // }
 
-contract QVEDefi is Ownable {
+contract QVEDefi is Security, Ownable{
 
     using SafeMath for uint;
     using Counters for Counters.Counter;
@@ -41,12 +42,12 @@ contract QVEDefi is Ownable {
         uint256 at;
     }
 
-    struct QVEStake {
-        uint72 tokenAmount;                   // 스테이킹에 락된 물량                                                            
-        uint24 lockingPeriodInBlocks;         // 보상을 지급할 임의의 시간                                   
-        uint32 startBlock;                    // 스테이킹 시작 시간                                                                           
-        uint128 expectedStakingRewardPoints;  // 정상적으로 언락했을때 받게될 보상
-    }
+    // struct QVEStake {
+    //     uint72 tokenAmount;                   // 스테이킹에 락된 물량                                                            
+    //     uint24 lockingPeriodInBlocks;         // 보상을 지급할 임의의 시간                                   
+    //     uint32 startBlock;                    // 스테이킹 시작 시간                                                                           
+    //     uint128 expectedStakingRewardPoints;  // 정상적으로 언락했을때 받게될 보상
+    // }
 
     struct NFTFragment {
         uint256 tokenId;
@@ -82,12 +83,12 @@ contract QVEDefi is Ownable {
 
     mapping (address => userMarginData) EthMarginVault;
 
-    // [------ about QVE Stake ------] //
-    mapping (address => QVEStake) public QVEstakes;
-    mapping (address => uint256) public rewardPointsEarned;
-    uint256 public totalRewardPoints;
-    uint256 immutable public stakingProgramEndsBlock;
-    uint256 immutable public stakingFundAmount;
+    // // [------ about QVE Stake ------] //
+    // mapping (address => QVEStake) public QVEstakes;
+    // mapping (address => uint256) public rewardPointsEarned;
+    // uint256 public totalRewardPoints;
+    // uint256 immutable public stakingProgramEndsBlock;
+    // uint256 immutable public stakingFundAmount;
 
 
 
@@ -104,7 +105,7 @@ contract QVEDefi is Ownable {
         프론트에서 할일 
         일단 이더리움을 그냥 string으로 하던 숫자로 받던 상관은 없는데, 컨트렉트 호출 시에 wei단위로 보내줄 것
     */
-    function receiveAsset(uint256 assetAmount, bool lockup) external payable returns(bool){
+    function receiveAsset(uint256 assetAmount, bool lockup) external payable NoReEntrancy returns(bool){
     /*
         먼저 사용자가 이더리움을 전송하면
         require(msg.value == assetAmount * 10 ** 18, "Sent ether is not match with the specified amount");
@@ -128,7 +129,7 @@ contract QVEDefi is Ownable {
     }
 
     // [------ Shorten Lockup ------] //
-    function shortenLockup(uint256 qveAmount, uint256 tokenId) external returns(bool){
+    function shortenLockup(uint256 qveAmount, uint256 tokenId) external NoReEntrancy returns(bool){
         require(qvenft.shortenLockup(qveAmount, address(this), tokenId), "shorten error");
         _addLiquidity(qveAmount);
         return true;
@@ -161,7 +162,7 @@ contract QVEDefi is Ownable {
         return payable(address(uint160(0x1e721FF3c56EA3001B6Cf7268e2dAe8ddb10010A)));
     }
 
-    function _sendQVEFromLiquidity(address _to, uint256 sendAmount) internal returns(bool){
+    function _sendQVEFromLiquidity(address _to, uint256 sendAmount) internal NoReEntrancy returns(bool){
         require(qvetoken.normal_transfer(address(this), _to, sendAmount * 10 ** 18), "QVE transfer error");
         QVEliquidityPool.balance -= sendAmount;
         QVEliquidityPool.at = block.timestamp;
@@ -190,14 +191,14 @@ contract QVEDefi is Ownable {
         return true;
     }
 
-    function _issueGuaranteeNFT(address sender, uint256 stakeAmount, bool lockup) internal returns(uint256){
+    function _issueGuaranteeNFT(address sender, uint256 stakeAmount, bool lockup) internal NoReEntrancy returns(uint256){
         uint256 item_id = qvenft.mintStakingGuarantee(sender, lockup);
         nftVault[sender].fragment.push(NFTFragment(item_id, block.timestamp));
         _addUserMarginVault(msg.sender, stakeAmount, item_id);
         return item_id;
     }
 
-    function _escrowQVE(uint256 QVEamount) internal returns(bool){
+    function _escrowQVE(uint256 QVEamount) internal NoReEntrancy returns(bool){
         qveEscrow.makeQVEescrow(msg.sender, QVEamount);
         return true;
     }
