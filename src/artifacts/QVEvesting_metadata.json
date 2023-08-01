@@ -126,9 +126,21 @@
 						"internalType": "uint256",
 						"name": "_amount",
 						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
 					}
 				],
 				"name": "addVesting",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "claimForQVE",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -191,13 +203,24 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "locked",
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "ownedVestings",
 				"outputs": [
 					{
-						"internalType": "bool",
+						"internalType": "uint256",
 						"name": "",
-						"type": "bool"
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -222,22 +245,14 @@
 						"internalType": "uint256",
 						"name": "_vestingId",
 						"type": "uint256"
-					}
-				],
-				"name": "release",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
+					},
 					{
-						"internalType": "uint256",
-						"name": "_vestingId",
-						"type": "uint256"
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
 					}
 				],
-				"name": "removeVesting",
+				"name": "releaseAll",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -245,19 +260,6 @@
 			{
 				"inputs": [],
 				"name": "renounceOwnership",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "_amount",
-						"type": "uint256"
-					}
-				],
-				"name": "retrieveExcessTokens",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -457,11 +459,11 @@
 			]
 		},
 		"src/QVEvesting.sol": {
-			"keccak256": "0x8e82ad444054e2acc76ea14ea1dae588881a028aeebd8d4dcc37820f38633f24",
+			"keccak256": "0xcac41ccea53f1706b6c1926e83b7e887fee22c30127683aacd8879ddacbe4c46",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://436cf706d5f30fe8fb59660c435df2502d8501a67b63a6395fd63816160788be",
-				"dweb:/ipfs/Qma5tbm8UNGZ2vwH4P2q9STEreYjYp4hMdh9QqhNvAebxz"
+				"bzz-raw://b7a493bad2e9903c0c63a5ec193c7486e980230aed148cea224c41379c7982fc",
+				"dweb:/ipfs/QmTVyM3iZgTb9AmYcGKu6zM8gaLVhMsAevzuEW77Bq3b2Z"
 			]
 		},
 		"src/tokens/QVEtoken.sol": {
@@ -473,11 +475,11 @@
 			]
 		},
 		"src/util/Security.sol": {
-			"keccak256": "0xe75f29e6ce53e43e73431d0bdc9bc7a35b8559fd1e83e995b0f635f46f46e94d",
+			"keccak256": "0x9662a04e27fbd0b9f06044dd35b70f368aeb15054fa05ce7264e0a5369c57612",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://46d92ec7d3933a0a5e83b08147ba1bb1e248d2f566c05fc15d668f44286ccbab",
-				"dweb:/ipfs/QmPT2xrGAVxTngXKZCSWBNHetrRpuNCGYvK9Jaaj3mKjMX"
+				"bzz-raw://25f4a2cf6538f437b73bde383fc9c5c31af7da02095b44383e2386f2f62a6eae",
+				"dweb:/ipfs/QmfWiGSu3KLnAangD2PjXLx6c2KSTYW1s7iZz9PZJxVfZ2"
 			]
 		}
 	},

@@ -25,8 +25,14 @@ contract QVEDefi is Security, Ownable{
     using Strings for *;
     Counters.Counter private InputedMarginCount;
 
+    // [------ Warning Strings ------] //
+    string private constant WARNING_ADDRESS = "Warning For Address(0)";
+    string private constant WARNING_TRANSFER = "Warning For Transfer";
+    string private constant WARNING_VAULT = "Warning For Vault";
+    string private constant WARNING_SHORTEN = "Warning For Lockup Shorten";
 
-    // [------ variables, struct -------] //
+
+    // [------ Variables, Struct -------] //
     uint8 private constant ESCROWRATIO = 40;
     QVEtoken public qvetoken;
     QVEnft public qvenft;
@@ -123,14 +129,14 @@ contract QVEDefi is Security, Ownable{
     function stakeEth(uint256 stakeAmount, bool lockup) internal returns(bool){
         uint256 tokenId = _issueGuaranteeNFT(msg.sender, stakeAmount,lockup);
         console.log(tokenId);
-        require(_addUserMarginVault(msg.sender, stakeAmount, tokenId), "add userMargin Vault failed");
+        require(_addUserMarginVault(msg.sender, stakeAmount, tokenId), WARNING_VAULT);
         InputedMarginCount.increment();
         return true;
     }
 
     // [------ Shorten Lockup ------] //
     function shortenLockup(uint256 qveAmount, uint256 tokenId) external NoReEntrancy returns(bool){
-        require(qvenft.shortenLockup(qveAmount, address(this), tokenId), "shorten error");
+        require(qvenft.shortenLockup(qveAmount, address(this), tokenId), WARNING_SHORTEN);
         _addLiquidity(qveAmount);
         return true;
     }
@@ -138,7 +144,7 @@ contract QVEDefi is Security, Ownable{
     // [------ Burn staking Guarantee NFT ------ ] // 
     function burnStakingGuarantee(uint256 tokenId) public returns(bool){
         qvenft.burnNFT(tokenId);
-        require(_sendQVEFromLiquidity(msg.sender, marginForNFT[tokenId] / 10 ** 18), "Burn QVE transfer error");
+        require(_sendQVEFromLiquidity(msg.sender, marginForNFT[tokenId] / 10 ** 18), WARNING_TRANSFER);
         require(_escrowQVE(marginForNFT[tokenId] * ESCROWRATIO / 100 * 10 ** 18 ));
         return true;
     }
@@ -163,7 +169,7 @@ contract QVEDefi is Security, Ownable{
     }
 
     function _sendQVEFromLiquidity(address _to, uint256 sendAmount) internal NoReEntrancy returns(bool){
-        require(qvetoken.normal_transfer(address(this), _to, sendAmount * 10 ** 18), "QVE transfer error");
+        require(qvetoken.normal_transfer(address(this), _to, sendAmount * 10 ** 18), WARNING_TRANSFER);
         QVEliquidityPool.balance -= sendAmount;
         QVEliquidityPool.at = block.timestamp;
         return true;

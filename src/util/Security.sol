@@ -2,7 +2,7 @@
 pragma solidity ^0.8.10;
 
 contract Security{
-    bool public locked;
+    bool private locked;
 
     modifier NoReEntrancy(){
         require(!locked, "No ReEntrancy");
