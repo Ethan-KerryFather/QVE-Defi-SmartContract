@@ -26,6 +26,7 @@ contract QVEvesting is Security{
     string private constant VESTING_ALREADY_RELEASED = "Vesting already released";
     string private constant INVALID_BENEFICIARY = "Invalid beneficiary address";
     string private constant NOT_VESTED = "Tokens have not vested yet";
+    string private constant WARN_VESTING_PERIOD = "We have Token's vesting period";
 
 
     // [------ Variables, Mappings ------] //
@@ -108,7 +109,7 @@ contract QVEvesting is Security{
 
         // Check for Vesting Period
         require(block.timestamp >= vesting.vestedTime, NOT_VESTED);
-        require(block.timestamp - vesting.vestedTime >= VESTING_PERIOD, "Vesting Period remained");
+        require(block.timestamp - vesting.vestedTime >= VESTING_PERIOD, WARN_VESTING_PERIOD);
         require(!vesting.released , VESTING_ALREADY_RELEASED);
         
         claimForQVE(_vestingId, sender);        

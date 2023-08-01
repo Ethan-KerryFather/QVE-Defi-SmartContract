@@ -34,7 +34,7 @@ contract QVEDefi is Security, Ownable{
 
 
     // [------ Variables, Struct -------] //
-    uint8 private constant ESCROWRATIO = 40;
+    uint8 private constant ESCROWRATIO = 10;
     QVEtoken public qvetoken;
     QVEnft public qvenft;
     QVEescrow public qveEscrow;
@@ -145,6 +145,7 @@ contract QVEDefi is Security, Ownable{
         _addLiquidity(qveAmount);
         return true;
     }
+
 
     // [------ Burn staking Guarantee NFT ------ ] // 
     function burnStakingGuarantee(uint256 tokenId) public returns(bool){
