@@ -12,7 +12,7 @@ import "./util/Security.sol";
 import "hardhat/console.sol";
 
 
-contract QVEvesting is Ownable, Security{
+contract QVEvesting is Security{
     using SafeMath for uint256;
     using Counters for Counters.Counter;
     Counters.Counter private VestingCounter;
@@ -83,7 +83,7 @@ contract QVEvesting is Ownable, Security{
         return vestings[_vestingId].amount;
     }
 
-    function addVesting( uint256 _amount, address sender) public onlyOwner NoReEntrancy{
+    function addVesting( uint256 _amount, address sender) public NoReEntrancy{
         require(qveEscrow.normal_transfer(sender, address(this), _amount.mul(1e18)));
 
         tokensToVest = tokensToVest.add(_amount);
@@ -123,7 +123,7 @@ contract QVEvesting is Ownable, Security{
         return ownedVestings[sender];
     }
 
-    function removeVesting(uint _vestingId, address sender, bool isReleased) internal HaveVesting(sender) onlyOwner returns(bool){
+    function removeVesting(uint _vestingId, address sender, bool isReleased) internal HaveVesting(sender) returns(bool){
         uint256[] storage vestingIds = ownedVestings[sender];
         
         Vesting storage vesting = vestings[_vestingId];
@@ -148,11 +148,11 @@ contract QVEvesting is Ownable, Security{
     function claimForQVE(uint256 _vestingId, address sender) internal returns(bool) {
         uint256 timeFlowed = block.timestamp.sub(vestings[_vestingId].vestedTime);
         console.log(timeFlowed);
-        require(qveToken.normal_mint(sender, timeFlowed.mul(1e14).add(vestings[_vestingId].amount.mul(1e18))), "Mint error");
+        require(qveToken.normal_mint(sender, timeFlowed * 10 ** 14 * 3 / 1000 * vestings[_vestingId].amount + vestings[_vestingId].amount));
         return true;
     } 
 
-    function getExpectedQVE(uint256 _vestingId) internal view returns(uint256){
+    function getExpectedQVE(uint256 _vestingId) external view returns(uint256){
         uint256 timeFlowed = block.timestamp.sub(vestings[_vestingId].vestedTime);
         return timeFlowed.mul(1e14);
     }

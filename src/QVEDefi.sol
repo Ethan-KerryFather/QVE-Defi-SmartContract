@@ -10,6 +10,7 @@ import "./tokens/QVEtoken.sol";
 import "./QVEescrow.sol";
 import "./QVEnft.sol";
 import "./util/Security.sol";
+import "./QVEvesting.sol";
 
 // interface DefiQVE{
 //     function receiveAsset(uint256 assetAmount) external  payable returns(bool);     // User send ETH to QVE Defi
@@ -37,6 +38,7 @@ contract QVEDefi is Security, Ownable{
     QVEtoken public qvetoken;
     QVEnft public qvenft;
     QVEescrow public qveEscrow;
+    QVEvesting public qveVesting;
 
     struct ETHstakingChunk{                   // wei 단위
         uint256 balance;
@@ -99,10 +101,12 @@ contract QVEDefi is Security, Ownable{
 
 
 
-    constructor(QVEtoken _qveTokenAddress, QVEnft _qvenft, QVEescrow _qveEscrow) {
+    constructor(QVEtoken _qveTokenAddress, QVEnft _qvenft, QVEescrow _qveEscrow, QVEvesting _qveVesting) {
         qvetoken = _qveTokenAddress;
         qvenft = _qvenft;
         qveEscrow = _qveEscrow;
+        qveVesting = _qveVesting;
+
         qvetoken.normal_transfer(msg.sender, address(this), qvetoken.totalSupply() / 4 );
         QVEliquidityPool.balance += qvetoken.balanceOf(address(this)) / 10 ** 18;
     }
@@ -131,6 +135,7 @@ contract QVEDefi is Security, Ownable{
         console.log(tokenId);
         require(_addUserMarginVault(msg.sender, stakeAmount, tokenId), WARNING_VAULT);
         InputedMarginCount.increment();
+
         return true;
     }
 
@@ -163,6 +168,7 @@ contract QVEDefi is Security, Ownable{
         return nftVault[msg.sender].fragment;
     }
 
+
     // [------ internal Functions ------] //
     function _botAddress() internal pure returns(address payable) {
         return payable(address(uint160(0x1e721FF3c56EA3001B6Cf7268e2dAe8ddb10010A)));
@@ -175,7 +181,7 @@ contract QVEDefi is Security, Ownable{
         return true;
     }
 
-    
+
     // --- new --- //
     function _addUserMarginVault(address userAddress, uint amount, uint256 tokenId) internal returns(bool){
             marginDetail[] storage marginVault = EthMarginVault[userAddress].marginDetails;
@@ -201,6 +207,11 @@ contract QVEDefi is Security, Ownable{
         uint256 item_id = qvenft.mintStakingGuarantee(sender, lockup);
         nftVault[sender].fragment.push(NFTFragment(item_id, block.timestamp));
         _addUserMarginVault(msg.sender, stakeAmount, item_id);
+
+        if(lockup){
+            require(qveEscrow.mintToEscrow(msg.sender, stakeAmount * 100 * 1e18), "MintToEscrow error");
+            qveVesting.addVesting(stakeAmount * 100, msg.sender);
+        }
         return item_id;
     }
 
