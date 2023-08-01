@@ -1,27 +1,22 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.10;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "./tokens/QVEtoken.sol";
 import "./util/Security.sol";
 
-interface EscrowQVE{
-    function makeQVEescrow(address, uint) external returns(bool);   // escrow QVE token
-    function getEscrowedBalance_() external  view returns(uint);    // inquire User Escrowed QVE token in escrowed QVE vault
-}
 
-contract QVEescrow is ERC20, EscrowQVE, Security {
+
+contract QVEescrow is ERC20Burnable, Security {
 
     using Strings for *;
     QVEtoken qveToken;
-
-   
-
+    address public esQVEVestingAddress;
 
     // [------ Variables, Constants, Mappings ------] //
     uint256 private supply;
-    uint256 constant private LOCK_UP_DAYS = 180 days;
+    uint256 constant private LOCK_UP_DAYS = 90 days;
 
     struct escrowed{
         uint256 amount;
@@ -42,11 +37,21 @@ contract QVEescrow is ERC20, EscrowQVE, Security {
         return true;
     }
 
+    function burnEsQVE(uint amount, address sender) public returns(bool){
+        _burn(sender, amount);
+        return true;
+    }
+
     // [------ external functions ------] //
     function makeQVEescrow(address sender, uint256 QVEamount) external returns(bool){
         require(qveToken.normal_transfer(msg.sender, address(this), QVEamount), "qveToken transfer error");
         require(mintToEscrow(sender, QVEamount), "mint error");
         _inputEscrowVault(QVEamount);
+        return true;
+    }
+
+    function setesQVEVesting(address _esQVEVestingAddress) external returns(bool){
+        esQVEVestingAddress = _esQVEVestingAddress;
         return true;
     }
 
@@ -66,18 +71,18 @@ contract QVEescrow is ERC20, EscrowQVE, Security {
         escrowedQVE[msg.sender].at = block.timestamp;
     }
 
-    function _beforeTokenTransfer(address from, address to, uint256 amount) internal override  {
-        super._beforeTokenTransfer(from, to, amount);
-        if (from !=address(0)){
-            //require(block.timestamp >= _mintTimes[tokenId] + lockupPeriod, );
-            require(block.timestamp >= escrowedQVE[msg.sender].at + LOCK_UP_DAYS, string(abi.encodePacked(
-                "token is still in lock period ", 
-                Strings.toString( 
-                    (escrowedQVE[msg.sender].at + LOCK_UP_DAYS - block.timestamp)/60/60/12), 
-                "days left"
-                )
-            ));
-        }
-    }
+    // function _beforeTokenTransfer(address from, address to, uint256 amount) internal override  {
+    //     super._beforeTokenTransfer(from, to, amount);
+    //     require( from != address(0), "INVALID ADDRESS");
+    //         if( from != esQVEVestingAddress || from != ){
+    //             require(block.timestamp >= escrowedQVE[msg.sender].at + LOCK_UP_DAYS, string(abi.encodePacked(
+    //             "token is still in lock period ", 
+    //             Strings.toString( 
+    //                 (escrowedQVE[msg.sender].at + LOCK_UP_DAYS - block.timestamp)/60/60/12), 
+    //             "days left"
+    //             )
+    //             ));   
+    //         }
+    // }
 
 }

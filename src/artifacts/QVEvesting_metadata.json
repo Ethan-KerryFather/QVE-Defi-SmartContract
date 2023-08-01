@@ -11,6 +11,11 @@
 						"internalType": "contract QVEtoken",
 						"name": "_qveToken",
 						"type": "address"
+					},
+					{
+						"internalType": "contract QVEescrow",
+						"name": "_qveEscrow",
+						"type": "address"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -111,12 +116,20 @@
 				"type": "event"
 			},
 			{
-				"inputs": [
+				"inputs": [],
+				"name": "VESTING_PERIOD",
+				"outputs": [
 					{
-						"internalType": "address",
-						"name": "_beneficiary",
-						"type": "address"
-					},
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
 					{
 						"internalType": "uint256",
 						"name": "_releaseTime",
@@ -139,9 +152,26 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_vestingId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					}
+				],
 				"name": "claimForQVE",
-				"outputs": [],
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
@@ -252,7 +282,7 @@
 						"type": "address"
 					}
 				],
-				"name": "releaseAll",
+				"name": "releaseVestedQVE",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -450,6 +480,22 @@
 				"dweb:/ipfs/QmezuXg5GK5oeA4F91EZhozBFekhq5TD966bHPH18cCqhu"
 			]
 		},
+		"@openzeppelin/contracts/utils/Strings.sol": {
+			"keccak256": "0x3088eb2868e8d13d89d16670b5f8612c4ab9ff8956272837d8e90106c59c14a0",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b81d9ff6559ea5c47fc573e17ece6d9ba5d6839e213e6ebc3b4c5c8fe4199d7f",
+				"dweb:/ipfs/QmPCW1bFisUzJkyjroY3yipwfism9RRCigCcK1hbXtVM8n"
+			]
+		},
+		"@openzeppelin/contracts/utils/math/Math.sol": {
+			"keccak256": "0xe4455ac1eb7fc497bb7402579e7b4d64d928b846fce7d2b6fde06d366f21c2b3",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://cc8841b3cd48ad125e2f46323c8bad3aa0e88e399ec62acb9e57efa7e7c8058c",
+				"dweb:/ipfs/QmSqE4mXHA2BXW58deDbXE8MTcsL5JSKNDbm23sVQxRLPS"
+			]
+		},
 		"@openzeppelin/contracts/utils/math/SafeMath.sol": {
 			"keccak256": "0x58b21219689909c4f8339af00813760337f7e2e7f169a97fe49e2896dcfb3b9a",
 			"license": "MIT",
@@ -458,20 +504,36 @@
 				"dweb:/ipfs/QmVTooKWcLkJ9W68yNX4MgdrbAKiAXwuRN9A7f4NkdcdtQ"
 			]
 		},
-		"src/QVEvesting.sol": {
-			"keccak256": "0xcac41ccea53f1706b6c1926e83b7e887fee22c30127683aacd8879ddacbe4c46",
+		"@openzeppelin/contracts/utils/math/SignedMath.sol": {
+			"keccak256": "0xf92515413956f529d95977adc9b0567d583c6203fc31ab1c23824c35187e3ddc",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b7a493bad2e9903c0c63a5ec193c7486e980230aed148cea224c41379c7982fc",
-				"dweb:/ipfs/QmTVyM3iZgTb9AmYcGKu6zM8gaLVhMsAevzuEW77Bq3b2Z"
+				"bzz-raw://c50fcc459e49a9858b6d8ad5f911295cb7c9ab57567845a250bf0153f84a95c7",
+				"dweb:/ipfs/QmcEW85JRzvDkQggxiBBLVAasXWdkhEysqypj9EaB6H2g6"
+			]
+		},
+		"src/QVEescrow.sol": {
+			"keccak256": "0x36a63c4e15856e724147fbae1a85f4eec0c7cbc88c3f87c804a8b78f4351ae50",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ee64dcfdc56e5c53c80d5970f333a8dc1754b0eb32ede399b233133d9824b42b",
+				"dweb:/ipfs/QmWVWrNryr5TwZqe3xMT8msNeikpihkQaWcXmzGWzkGR3i"
+			]
+		},
+		"src/QVEvesting.sol": {
+			"keccak256": "0x3ac30c6183fba9d93710a4644a4cc2196e6bcb9358565df967c30e551c883c6a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://1b0a31c695fde1d5361a4a90186deb04294d651d52d8fda75a2c45d9bb8ba902",
+				"dweb:/ipfs/QmdhMkSzz7xEXDQUDqq6jYhvSH9yXSWF7jw2rbC8Hep8WH"
 			]
 		},
 		"src/tokens/QVEtoken.sol": {
-			"keccak256": "0x2c60482813e45adfdde0f74e35c57de6e85b1662f2a4b4a24ae5207c6a03a567",
+			"keccak256": "0x918011980b800005071a89d6ead6d1ee9174cf9fcdca0e00bd5cc94c8cfc4269",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e66b83535b206211a843601a58fa05c279f378483519c0506282a9be60cdd812",
-				"dweb:/ipfs/Qmbs2PsnDzQBhxGT1K26WQCP2KJiE1eHZAViEehaiFekoo"
+				"bzz-raw://26c537b256265384352b4818a2e3d0511a6baba8e458a503dc7c1eb188040fc6",
+				"dweb:/ipfs/QmUKN7CiDyLhDA1SH1Y6rB7KC1CNipv76rZKUaCrC9oJkz"
 			]
 		},
 		"src/util/Security.sol": {

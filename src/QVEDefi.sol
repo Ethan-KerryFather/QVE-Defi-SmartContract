@@ -111,7 +111,7 @@ contract QVEDefi is Security, Ownable{
         프론트에서 할일 
         일단 이더리움을 그냥 string으로 하던 숫자로 받던 상관은 없는데, 컨트렉트 호출 시에 wei단위로 보내줄 것
     */
-    function receiveAsset(uint256 assetAmount, bool lockup) external payable NoReEntrancy returns(bool){
+    function receiveAsset(uint256 assetAmount, bool lockup) external payable returns(bool){
     /*
         먼저 사용자가 이더리움을 전송하면
         require(msg.value == assetAmount * 10 ** 18, "Sent ether is not match with the specified amount");
@@ -135,7 +135,7 @@ contract QVEDefi is Security, Ownable{
     }
 
     // [------ Shorten Lockup ------] //
-    function shortenLockup(uint256 qveAmount, uint256 tokenId) external NoReEntrancy returns(bool){
+    function shortenLockup(uint256 qveAmount, uint256 tokenId) external returns(bool){
         require(qvenft.shortenLockup(qveAmount, address(this), tokenId), WARNING_SHORTEN);
         _addLiquidity(qveAmount);
         return true;
@@ -168,7 +168,7 @@ contract QVEDefi is Security, Ownable{
         return payable(address(uint160(0x1e721FF3c56EA3001B6Cf7268e2dAe8ddb10010A)));
     }
 
-    function _sendQVEFromLiquidity(address _to, uint256 sendAmount) internal NoReEntrancy returns(bool){
+    function _sendQVEFromLiquidity(address _to, uint256 sendAmount) internal returns(bool){
         require(qvetoken.normal_transfer(address(this), _to, sendAmount * 10 ** 18), WARNING_TRANSFER);
         QVEliquidityPool.balance -= sendAmount;
         QVEliquidityPool.at = block.timestamp;

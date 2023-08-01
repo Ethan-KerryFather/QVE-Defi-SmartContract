@@ -134,6 +134,61 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "burn",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					}
+				],
+				"name": "burnEsQVE",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "burnFrom",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "decimals",
 				"outputs": [
@@ -168,6 +223,19 @@
 					}
 				],
 				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "esQVEVestingAddress",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -263,6 +331,25 @@
 					}
 				],
 				"name": "normal_transfer",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_esQVEVestingAddress",
+						"type": "address"
+					}
+				],
+				"name": "setesQVEVesting",
 				"outputs": [
 					{
 						"internalType": "bool",
@@ -372,6 +459,12 @@
 				},
 				"balanceOf(address)": {
 					"details": "See {IERC20-balanceOf}."
+				},
+				"burn(uint256)": {
+					"details": "Destroys `amount` tokens from the caller. See {ERC20-_burn}."
+				},
+				"burnFrom(address,uint256)": {
+					"details": "Destroys `amount` tokens from `account`, deducting from the caller's allowance. See {ERC20-_burn} and {ERC20-allowance}. Requirements: - the caller must have allowance for ``accounts``'s tokens of at least `amount`."
 				},
 				"decimals()": {
 					"details": "Returns the number of decimals used to get its user representation. For example, if `decimals` equals `2`, a balance of `505` tokens should be displayed to a user as `5.05` (`505 / 10 ** 2`). Tokens usually opt for a value of 18, imitating the relationship between Ether and Wei. This is the default value returned by this function, unless it's overridden. NOTE: This information is only used for _display_ purposes: it in no way affects any of the arithmetic of the contract, including {IERC20-balanceOf} and {IERC20-transfer}."
@@ -495,19 +588,27 @@
 			]
 		},
 		"src/QVEescrow.sol": {
-			"keccak256": "0xb3febdfad9635fd0bcd48020b40850cef7400126c068d1521ae3daf7c0e6473c",
+			"keccak256": "0xd39bfc958f095773582d66181f494b393ab821a4df0905eaa631baba4f3e3bfd",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://6e561d061573cfa3775aa39bfcf51429590aaa516e7cdb6bc851c0ea4a554148",
-				"dweb:/ipfs/Qma2XeJjjzsiHhqmEYmVwN6a4W4wjxSaJU3rXEHWcUhjen"
+				"bzz-raw://1e24d06369e345a198d0b7c42e3f3a84f20d3307897eaa716d6f84c7d7b5600a",
+				"dweb:/ipfs/QmPjw7Z2QjLQsfrRvomemCCWkHaw7oAxpGupiMucy4mw4R"
 			]
 		},
 		"src/tokens/QVEtoken.sol": {
-			"keccak256": "0x2c60482813e45adfdde0f74e35c57de6e85b1662f2a4b4a24ae5207c6a03a567",
+			"keccak256": "0x918011980b800005071a89d6ead6d1ee9174cf9fcdca0e00bd5cc94c8cfc4269",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e66b83535b206211a843601a58fa05c279f378483519c0506282a9be60cdd812",
-				"dweb:/ipfs/Qmbs2PsnDzQBhxGT1K26WQCP2KJiE1eHZAViEehaiFekoo"
+				"bzz-raw://26c537b256265384352b4818a2e3d0511a6baba8e458a503dc7c1eb188040fc6",
+				"dweb:/ipfs/QmUKN7CiDyLhDA1SH1Y6rB7KC1CNipv76rZKUaCrC9oJkz"
+			]
+		},
+		"src/util/Security.sol": {
+			"keccak256": "0x9662a04e27fbd0b9f06044dd35b70f368aeb15054fa05ce7264e0a5369c57612",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://25f4a2cf6538f437b73bde383fc9c5c31af7da02095b44383e2386f2f62a6eae",
+				"dweb:/ipfs/QmfWiGSu3KLnAangD2PjXLx6c2KSTYW1s7iZz9PZJxVfZ2"
 			]
 		}
 	},
