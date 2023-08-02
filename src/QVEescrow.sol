@@ -62,7 +62,7 @@ contract QVEescrow is ERC20Burnable, Security {
 
     // [------ Internal functions -------] //
     function mintToEscrow(address receiver, uint256 amount) public NoReEntrancy returns(bool){
-        _mint(receiver, amount);
+        super._mint(receiver, amount);
         return true;
     }
 
