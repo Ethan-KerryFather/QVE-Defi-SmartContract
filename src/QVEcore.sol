@@ -32,7 +32,8 @@ contract QVEcore is Security, Ownable{
     string private constant WARNING_TRANSFER = "Warning For Transfer";
     string private constant WARNING_VAULT = "Warning For Vault";
     string private constant WARNING_SHORTEN = "Warning For Lockup Shorten";
-
+    string private constant WARNING_ESCROW = "Warning For QVE Escrow error";
+    string private constant WARNING_VESTING = "Warning For QVE Vesting";
 
     // [------ Events ------] //
  
@@ -151,7 +152,7 @@ contract QVEcore is Security, Ownable{
     function burnStakingGuarantee(uint256 tokenId) public returns(bool){
         qvenft.burnNFT(tokenId);
         require(_sendQVEFromLiquidity(msg.sender, marginForNFT[tokenId]), WARNING_TRANSFER);
-        require(_escrowQVE(marginForNFT[tokenId].mul(ESCROWRATIO).div(100).mul(1e18)));
+        // 스테이킹        
         return true;
     }
 
@@ -212,20 +213,15 @@ contract QVEcore is Security, Ownable{
         _addUserMarginVault(msg.sender, stakeAmount, item_id);
 
         if(lockup){
-            require(qveEscrow.mintToEscrow(msg.sender, stakeAmount * 100 * 1e18), "MintToEscrow error");
-            qveVesting.addVesting(stakeAmount * 100, msg.sender);
+            require(qveVesting.addVesting(qveEscrow.mintForLockup(msg.sender, stakeAmount.mul(1e18)), msg.sender), WARNING_VESTING);
         }
         return item_id;
     }
 
-    function _escrowQVE(uint256 QVEamount) internal NoReEntrancy returns(bool){
-        qveEscrow.makeQVEescrow(msg.sender, QVEamount);
-        return true;
-    }
 
     // [------ QVE Staking ------] //
     function doQVEStake(uint qveStakeAmount) public NoReEntrancy returns(bool){
-        require(makeQVEescrowedAndVesting(msg.sender, qveStakeAmount.mul(1e18).mul(ESCROWRATIO).div(100)), "Error in Make QVE escrowed and Vesting");
+        require(_makeQVEescrowedAndVesting(msg.sender, qveStakeAmount.mul(1e18).mul(ESCROWRATIO).div(100)), "Error in Make QVE escrowed and Vesting");
         require(qveStaking.stake(msg.sender, qveStakeAmount.mul(100 - ESCROWRATIO).div(100)), "Error in QVE staking");
         return true;
     }
@@ -234,9 +230,9 @@ contract QVEcore is Security, Ownable{
     //     return true;
     // }
 
-    function makeQVEescrowedAndVesting(address escrower, uint256 QVEamount) internal returns(bool){
-        qveEscrow.makeQVEescrow(escrower, QVEamount);
-        qveVesting.addVesting(QVEamount, escrower);
+    function _makeQVEescrowedAndVesting(address sender,uint256 QVEamount) internal returns(bool){
+        require(qveEscrow.makeQVEescrow(sender, QVEamount.mul(1e18)), WARNING_ESCROW);
+        require(qveVesting.addVesting(QVEamount.mul(1e18), sender), WARNING_VESTING);
         return true;
     }
 

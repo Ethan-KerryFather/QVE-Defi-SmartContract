@@ -25,7 +25,7 @@ contract QVEvesting is Security{
     string private constant INVALID_VESTING_ID = "Invalid vesting id";
     string private constant VESTING_ALREADY_RELEASED = "Vesting already released";
     string private constant INVALID_BENEFICIARY = "Invalid beneficiary address";
-    string private constant NOT_VESTED = "Tokens have not vested yet";
+    string private constant NOT_VESTED = "You don't have vested QVE";
     string private constant WARN_VESTING_PERIOD = "We have Token's vesting period";
 
 
@@ -40,7 +40,7 @@ contract QVEvesting is Security{
     mapping(uint256 => Vesting) public vestings;
     mapping(address => uint256[]) public ownedVestings;
 
-    uint256 constant public VESTING_PERIOD = 90 days;
+    uint256 constant public VESTING_PERIOD = 0 days;
 
 
     // [------ Events ------] //
@@ -84,8 +84,8 @@ contract QVEvesting is Security{
         return vestings[_vestingId].amount;
     }
 
-    function addVesting( uint256 _amount, address sender) public NoReEntrancy{
-        require(qveEscrow.normal_transfer(sender, address(this), _amount.mul(1e18)));
+    function addVesting(uint256 _amount, address sender) public NoReEntrancy returns(bool){
+        require(qveEscrow.normal_transfer(sender, address(this), _amount));
 
         tokensToVest = tokensToVest.add(_amount);
 
@@ -101,6 +101,8 @@ contract QVEvesting is Security{
         emit TokenVestingAdded(VestingCounter.current(), sender, _amount);
 
         VestingCounter.increment();
+
+        return true;
     }
 
     function releaseVestedQVE(uint256 _vestingId, address sender) public NoReEntrancy{
@@ -108,6 +110,7 @@ contract QVEvesting is Security{
         Vesting storage vesting = vestings[_vestingId];
 
         // Check for Vesting Period
+        require(ownedVestings[sender].length > 0, NOT_VESTED);
         require(block.timestamp >= vesting.vestedTime, NOT_VESTED);
         require(block.timestamp - vesting.vestedTime >= VESTING_PERIOD, WARN_VESTING_PERIOD);
         require(!vesting.released , VESTING_ALREADY_RELEASED);
@@ -147,14 +150,13 @@ contract QVEvesting is Security{
     }
 
     function claimForQVE(uint256 _vestingId, address sender) internal returns(bool) {
-        uint256 timeFlowed = block.timestamp.sub(vestings[_vestingId].vestedTime);
-        console.log(timeFlowed);
-        require(qveToken.normal_mint(sender, timeFlowed * 10 ** 14 * 3 / 1000 * vestings[_vestingId].amount + vestings[_vestingId].amount));
+        require(qveToken.normal_mint(sender, getExpectedQVE(_vestingId, sender)));
         return true;
     } 
 
-    function getExpectedQVE(uint256 _vestingId) external view returns(uint256){
+    function getExpectedQVE(uint256 _vestingId, address sender) public view returns(uint256){
+        require(ownedVestings[sender].length > 0, NOT_VESTED);
         uint256 timeFlowed = block.timestamp.sub(vestings[_vestingId].vestedTime);
-        return timeFlowed.mul(1e14);
+        return vestings[_vestingId].amount + timeFlowed.mul(vestings[_vestingId].amount.mul(3).div(100000));
     }
 }

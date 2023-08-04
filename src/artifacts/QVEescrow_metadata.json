@@ -45,6 +45,25 @@
 				"anonymous": false,
 				"inputs": [
 					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "receiver",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "mintAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "MintEvent",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
 						"indexed": true,
 						"internalType": "address",
 						"name": "from",
@@ -65,6 +84,19 @@
 				],
 				"name": "Transfer",
 				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "LOCKUP_ESCROWRATIO",
+				"outputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
 			},
 			{
 				"inputs": [
@@ -303,21 +335,21 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "receiver",
+						"name": "sender",
 						"type": "address"
 					},
 					{
 						"internalType": "uint256",
-						"name": "amount",
+						"name": "marginAmount",
 						"type": "uint256"
 					}
 				],
-				"name": "mintToEscrow",
+				"name": "mintForLockup",
 				"outputs": [
 					{
-						"internalType": "bool",
+						"internalType": "uint256",
 						"name": "",
-						"type": "bool"
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -334,6 +366,30 @@
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "normal_mint",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -603,6 +659,14 @@
 				"dweb:/ipfs/QmSqE4mXHA2BXW58deDbXE8MTcsL5JSKNDbm23sVQxRLPS"
 			]
 		},
+		"@openzeppelin/contracts/utils/math/SafeMath.sol": {
+			"keccak256": "0x58b21219689909c4f8339af00813760337f7e2e7f169a97fe49e2896dcfb3b9a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ef8e012e946dec20e59f2d4446f4b44bb098f3fa8bac103b1b5112fff777447b",
+				"dweb:/ipfs/QmVTooKWcLkJ9W68yNX4MgdrbAKiAXwuRN9A7f4NkdcdtQ"
+			]
+		},
 		"@openzeppelin/contracts/utils/math/SignedMath.sol": {
 			"keccak256": "0xf92515413956f529d95977adc9b0567d583c6203fc31ab1c23824c35187e3ddc",
 			"license": "MIT",
@@ -612,19 +676,19 @@
 			]
 		},
 		"src/QVEescrow.sol": {
-			"keccak256": "0x9e224d7e62c30dc767cb1a39486c7794d4907be6a44e6b2695053e08624f41f7",
+			"keccak256": "0x7b85f68373ef3350772be6d4b802513494dfe595b183748e2109938b4b92258f",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://692d51a0f0c84ea30da9a981628348172e21b4846aa9ec7cf6fd8efb93a2612f",
-				"dweb:/ipfs/QmYZK7WPdZh4Tn9BuaMZ67Jmg3VPaFyXYfhYpAr6dHZFcn"
+				"bzz-raw://8808f8c1d349871ef140a144d11604bd185b1e252148a15218190b5a8957036b",
+				"dweb:/ipfs/QmZUrPNyVKLiHcLhfc9U7FAXrGAs3TNqaZ4hrrR2Hizj6U"
 			]
 		},
 		"src/tokens/QVEtoken.sol": {
-			"keccak256": "0x918011980b800005071a89d6ead6d1ee9174cf9fcdca0e00bd5cc94c8cfc4269",
+			"keccak256": "0xc21592d7a8cda2f65a71e345d2502971d551705548c3a7503d3f2953ef4f8b23",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://26c537b256265384352b4818a2e3d0511a6baba8e458a503dc7c1eb188040fc6",
-				"dweb:/ipfs/QmUKN7CiDyLhDA1SH1Y6rB7KC1CNipv76rZKUaCrC9oJkz"
+				"bzz-raw://530c668179bdf98664b00bd1f7690be5a302b5c36480d29f07d56a3b91205c9e",
+				"dweb:/ipfs/QmaiKauURcB8UznKxkYv7KzMZjQL5AkZbvpXiAFsKHpFpS"
 			]
 		},
 		"src/util/Security.sol": {
