@@ -26,11 +26,16 @@ contract QVEcore is Security, Ownable{
     using Strings for *;
     Counters.Counter private InputedMarginCount;
 
+
     // [------ Warning Strings ------] //
     string private constant WARNING_ADDRESS = "Warning For Address(0)";
     string private constant WARNING_TRANSFER = "Warning For Transfer";
     string private constant WARNING_VAULT = "Warning For Vault";
     string private constant WARNING_SHORTEN = "Warning For Lockup Shorten";
+
+
+    // [------ Events ------] //
+ 
 
 
     // [------ Variables, Struct -------] //
@@ -52,7 +57,6 @@ contract QVEcore is Security, Ownable{
     }
 
 
-  
     // [------ NFT vault ------ ] //
     struct NFTFragment {
         uint256 tokenId;
@@ -71,8 +75,8 @@ contract QVEcore is Security, Ownable{
     liquidityChunk public QVEliquidityPool;
     liquidityChunk public esQVEliquidityPool;
 
-
     mapping (uint256 => uint256) private marginForNFT;
+
 
     // --- Put margin(ETH) ---- //
     struct marginDetail{
@@ -146,8 +150,8 @@ contract QVEcore is Security, Ownable{
     // [------ Burn staking Guarantee NFT ------ ] // 
     function burnStakingGuarantee(uint256 tokenId) public returns(bool){
         qvenft.burnNFT(tokenId);
-        require(_sendQVEFromLiquidity(msg.sender, marginForNFT[tokenId] / 10 ** 18), WARNING_TRANSFER);
-        require(_escrowQVE(marginForNFT[tokenId] * ESCROWRATIO / 100 * 10 ** 18 ));
+        require(_sendQVEFromLiquidity(msg.sender, marginForNFT[tokenId]), WARNING_TRANSFER);
+        require(_escrowQVE(marginForNFT[tokenId].mul(ESCROWRATIO).div(100).mul(1e18)));
         return true;
     }
 
@@ -165,16 +169,20 @@ contract QVEcore is Security, Ownable{
         return nftVault[msg.sender].fragment;
     }
 
+    function getQVELiquidityAmount_() external view returns(uint){
+        return QVEliquidityPool.balance;
+    }
 
     // [------ internal Functions ------] //
     function _botAddress() internal pure returns(address payable) {
         return payable(address(uint160(0x1e721FF3c56EA3001B6Cf7268e2dAe8ddb10010A)));
     }
 
-    function _sendQVEFromLiquidity(address _to, uint256 sendAmount) internal returns(bool){
-        require(qvetoken.normal_transfer(address(this), _to, sendAmount * 10 ** 18), WARNING_TRANSFER);
+    function _sendQVEFromLiquidity(address _to, uint256 sendAmount) public returns(bool){
+        require(qvetoken.normal_transfer(address(this), _to, sendAmount.mul(1e18)), WARNING_TRANSFER);
         QVEliquidityPool.balance -= sendAmount;
         QVEliquidityPool.at = block.timestamp;
+
         return true;
     }
 

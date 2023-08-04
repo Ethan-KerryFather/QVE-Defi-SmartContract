@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.18+commit.87f61d96"
+		"version": "0.8.21+commit.d9974bed"
 	},
 	"language": "Solidity",
 	"output": {
@@ -300,6 +300,30 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "receiver",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "mintToEscrow",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "name",
 				"outputs": [
@@ -503,7 +527,7 @@
 		"compilationTarget": {
 			"src/QVEescrow.sol": "QVEescrow"
 		},
-		"evmVersion": "paris",
+		"evmVersion": "shanghai",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -588,11 +612,11 @@
 			]
 		},
 		"src/QVEescrow.sol": {
-			"keccak256": "0xd39bfc958f095773582d66181f494b393ab821a4df0905eaa631baba4f3e3bfd",
+			"keccak256": "0x9e224d7e62c30dc767cb1a39486c7794d4907be6a44e6b2695053e08624f41f7",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1e24d06369e345a198d0b7c42e3f3a84f20d3307897eaa716d6f84c7d7b5600a",
-				"dweb:/ipfs/QmPjw7Z2QjLQsfrRvomemCCWkHaw7oAxpGupiMucy4mw4R"
+				"bzz-raw://692d51a0f0c84ea30da9a981628348172e21b4846aa9ec7cf6fd8efb93a2612f",
+				"dweb:/ipfs/QmYZK7WPdZh4Tn9BuaMZ67Jmg3VPaFyXYfhYpAr6dHZFcn"
 			]
 		},
 		"src/tokens/QVEtoken.sol": {

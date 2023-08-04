@@ -14,19 +14,23 @@ contract QVEnft is ERC721Burnable{
     using Strings for uint;
     Counters.Counter private _tokenIds;
 
+    // [----- Events ------] //
+    event NFTburnEvent(uint256 tokenId);
+    event NFTburnEvent(address indexed from, uint256 tokenId);
 
-    // [------Contracts , Address , Variables------] //
+
+    // [------ Contracts , Address , Variables ------] //
     QVEtoken private qveToken;
     address private qveDefiAddress;
 
 
-    // [------NFTmetadata------] //
+    // [------ NFTmetadata ------] //
     string private _name;
     string private _description;
     string private _imageUri;
 
 
-    // [------Mappings------] //
+    // [------ Mappings ------] //
     struct NftDetail {
         uint256 mintTime;
         uint256 lockupTime;
@@ -36,13 +40,13 @@ contract QVEnft is ERC721Burnable{
     mapping(address => uint256[]) public ownedTokens;
 
 
-    // [------Initializers------] //
+    // [------ Initializer ------] //
     constructor(QVEtoken _qveToken) ERC721("QVE_staking", "QVE_GUARANTEE") {
         qveToken = _qveToken;
     }
 
 
-    // [------Set Metadata------] // 
+    // [------ Set Metadata ------] // 
     function setMetadata(string memory name_, string memory description_, string memory imageUri_) external returns(bool){
         _name = name_;
         _description = description_;
@@ -51,7 +55,7 @@ contract QVEnft is ERC721Burnable{
     }
 
 
-    // [------Mint NFT------] // 
+    // [------ Mint NFT ------] // 
     function mintStakingGuarantee(address staker, bool lockup) external returns(uint256){
         uint256 itemId = _tokenIds.current();
         _safeMint(staker, itemId, "");
@@ -76,7 +80,7 @@ contract QVEnft is ERC721Burnable{
     }
 
 
-    // [------Make Lockup Short------] //
+    // [------ Make Lockup Short ------] //
     //  ------ not used, but prepared ------ // 
     function shortenLockup(uint256 QVEamount, address _qveDefiAddress, uint256 tokenId) external returns(bool){
         _setQVEdefi(_qveDefiAddress);
@@ -89,7 +93,7 @@ contract QVEnft is ERC721Burnable{
     // function _baseURI() internal pure override returns (string memory) {
     //     return "https://ipfs.io/ipfs/QmWtmTFs2Uqb736jWQ1WHq8fV4NCX3Wuz1zrKPz9jj8tZt?filename=QVE.json";
     // }
-    // [------Internal functions------] //
+    // [------ Internal functions ------] //
     function _beforeTokenTransfer(address from, address to, uint256 tokenId, uint256 batchSize) internal virtual override {
         super._beforeTokenTransfer(from, to, tokenId, batchSize = 1);
         if (from !=address(0)){
@@ -118,6 +122,15 @@ contract QVEnft is ERC721Burnable{
 
     function burnNFT(uint256 tokenId) external returns(bool){
         burn(tokenId);
+
+        emit NFTburnEvent(tokenId);
+        return true;
+    }
+
+    function burnNFT(address nftHolder, uint256 tokenId) external returns(bool){
+        burn(tokenId);
+
+        emit NFTburnEvent(nftHolder, tokenId);
         return true;
     }
 
