@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.21+commit.d9974bed"
+		"version": "0.8.18+commit.87f61d96"
 	},
 	"language": "Solidity",
 	"output": {
@@ -76,6 +76,30 @@
 			{
 				"inputs": [
 					{
+						"internalType": "address",
+						"name": "_to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "sendAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "_sendQVEFromLiquidity",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "uint256",
 						"name": "tokenId",
 						"type": "uint256"
@@ -123,6 +147,25 @@
 					{
 						"internalType": "uint256",
 						"name": "at",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_address",
+						"type": "address"
+					}
+				],
+				"name": "getEthBalance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
 						"type": "uint256"
 					}
 				],
@@ -303,6 +346,19 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "sendEther",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "uint256",
@@ -338,6 +394,10 @@
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
 			}
 		],
 		"devdoc": {
@@ -365,7 +425,7 @@
 		"compilationTarget": {
 			"src/QVEcore.sol": "QVEcore"
 		},
-		"evmVersion": "shanghai",
+		"evmVersion": "paris",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -562,27 +622,27 @@
 			]
 		},
 		"src/QVEcore.sol": {
-			"keccak256": "0xabea331b39bf7575b6371d04fab5a87e766ac081545183aa44ba06acc849045c",
+			"keccak256": "0x048bb901d18506d9f1bee273e043a8c94917f978067d3afcf271ffac1a18d51a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://0402f8dee2f065333334f2d4537d56e1c2a01808e1263dd8be12e4c185699de1",
-				"dweb:/ipfs/QmdQwdF2iR84CifuoU55NWFQ6SPFUrprjSR1NpW7fBiqwj"
+				"bzz-raw://c962ba4e1d851b5214739961155db3ec86b6ba34bef597a5397a819e7b43e365",
+				"dweb:/ipfs/QmNrMM5VYDQkegaZ1G4weNDErFvfJX3BvxyyJ7Qejki5Yi"
 			]
 		},
 		"src/QVEescrow.sol": {
-			"keccak256": "0x9e224d7e62c30dc767cb1a39486c7794d4907be6a44e6b2695053e08624f41f7",
+			"keccak256": "0x7b85f68373ef3350772be6d4b802513494dfe595b183748e2109938b4b92258f",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://692d51a0f0c84ea30da9a981628348172e21b4846aa9ec7cf6fd8efb93a2612f",
-				"dweb:/ipfs/QmYZK7WPdZh4Tn9BuaMZ67Jmg3VPaFyXYfhYpAr6dHZFcn"
+				"bzz-raw://8808f8c1d349871ef140a144d11604bd185b1e252148a15218190b5a8957036b",
+				"dweb:/ipfs/QmZUrPNyVKLiHcLhfc9U7FAXrGAs3TNqaZ4hrrR2Hizj6U"
 			]
 		},
 		"src/QVEnft.sol": {
-			"keccak256": "0x4a60a1ed3541bcc8ea7c3061127111821488e86ab0e8b3aad89593d53f202ac2",
+			"keccak256": "0x89e429e879ae88ba90585c26e5a54175019fba621db5ec346115e6f01d659241",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://14419d7d169b43a14d497ff13f5fa1fd2138f5b5f6d00361eb6d749471e8caf2",
-				"dweb:/ipfs/QmXiZNYSuXJoPgGS93yN6GuPiSVAwLLGerRu4dUH38Wf9Z"
+				"bzz-raw://9494817822a20606e92c968df4c1f2e0b8676946f77a0afe65544724698cda48",
+				"dweb:/ipfs/QmYS5neps9jpFJrUcomrwwptTgWA19sDj4FrmUwS5BzkH3"
 			]
 		},
 		"src/QVEstaking.sol": {
@@ -594,11 +654,11 @@
 			]
 		},
 		"src/QVEvesting.sol": {
-			"keccak256": "0x9d171100c5662d9de3b00ef30d613bb4b4bc0efcce442c00b831634138a64ea7",
+			"keccak256": "0xf100e806f9df4ad005858f8436008bd9d78f1276ad78bf1e62d4e7b7fc8cc9e2",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b458a50e7fe390d630e4e69de00ed3e2ef79ab7b452638dab1fd14b2b70537f1",
-				"dweb:/ipfs/QmP5Ru1i6sWZj6r866sgQ1iUA7gjHuafsj41XqVh3JoHFR"
+				"bzz-raw://3a58a24d138203a88f7faaee5b2995884f660a1a392145279245ad90b861a6f5",
+				"dweb:/ipfs/QmUJpqziPGagoErSxa3iLakBSvW2T1bkeA3im5BYN8bo6Q"
 			]
 		},
 		"src/tokens/QVEtoken.sol": {

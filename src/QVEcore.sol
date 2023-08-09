@@ -12,12 +12,7 @@ import "./QVEnft.sol";
 import "./util/Security.sol";
 import "./QVEvesting.sol";
 import "./QVEstaking.sol";
-// interface DefiQVE{
-//     function receiveAsset(uint256 assetAmount) external  payable returns(bool);     // User send ETH to QVE Defi
-//     function shortenLockup(uint256 qveAmount) external returns(bool);               // Shorten Lockup using QVEtoken
-//     function getStakeCount_() external view returns(uint256);                       // get Stake Count
-//     function getNFTbalance_() external view returns(uint);                          // get NFT balance, if you want to want to inquire individual nft vault, USE [---nftVault---]
-// }
+import "./QVEswap.sol";
 
 contract QVEcore is Security, Ownable{
 
@@ -46,6 +41,7 @@ contract QVEcore is Security, Ownable{
     QVEescrow public qveEscrow;
     QVEvesting public qveVesting;
     QVEstaking public qveStaking;
+    QVEswap public qveSwap;
 
     struct ETHstakingChunk{                   // wei 단위
         uint256 balance;
@@ -99,7 +95,8 @@ contract QVEcore is Security, Ownable{
         QVEnft _qvenft, 
         QVEescrow _qveEscrow, 
         QVEvesting _qveVesting,
-        QVEstaking _qveStaking
+        QVEstaking _qveStaking,
+        QVEswap _qveSwap
         ) 
         {
             qvetoken = _qveTokenAddress;
@@ -107,31 +104,34 @@ contract QVEcore is Security, Ownable{
             qveEscrow = _qveEscrow;
             qveVesting = _qveVesting;
             qveStaking = _qveStaking;
+            qveSwap = _qveSwap;
 
             qvetoken.normal_transfer(msg.sender, address(this), qvetoken.totalSupply() / 4 );
             QVEliquidityPool.balance += qvetoken.balanceOf(address(this)) / 10 ** 18;
     }
 
-    /*
-        프론트에서 할일 
-        일단 이더리움을 그냥 string으로 하던 숫자로 받던 상관은 없는데, 컨트렉트 호출 시에 wei단위로 보내줄 것
-    */
-    function receiveAsset(uint256 assetAmount, bool lockup) external payable returns(bool){
-    /*
-        먼저 사용자가 이더리움을 전송하면
-        require(msg.value == assetAmount * 10 ** 18, "Sent ether is not match with the specified amount");
-        이더리움을 양을 체크하고
-        address payable _to = _botAddress();
-        _to.transfer(assetAmount * 10 ** 18);
-        해당하는 양만큼 봇주소로 보냄
-    */
-        stakeEth(assetAmount, lockup);
-        string memory assetString = string(abi.encodePacked("Margin : ", assetAmount.toString(),"ETH"));
+    function getEthBalance(address _address) external view returns(uint){
+        return _address.balance;
+    }
+    // receive() external payable{
+    //    
+    // }
+
+    // fallback() external payable{
+
+    // }
+
+    // 이더리움
+    function receiveAsset(bool lockup) public payable returns(bool){
+        string memory assetString = string(abi.encodePacked("Margin : ", msg.value.toString(),"WEI"));
         qvenft.setMetadata("Staking Guarantee Card", assetString, "https://ipfs.io/ipfs/QmWEgQskBctQJUarEycv6cxPnM3Wr4aHz6rGoq2QmTvwUc?filename=QVEwarranty.png");
+        investmentEth(msg.value , lockup); // 원래 맨 위였음
         return true;
     }
 
-    function stakeEth(uint256 stakeAmount, bool lockup) internal returns(bool){
+
+
+    function investmentEth(uint256 stakeAmount, bool lockup) internal returns(bool){
         uint256 tokenId = _issueGuaranteeNFT(msg.sender, stakeAmount,lockup);
         console.log(tokenId);
         require(_addUserMarginVault(msg.sender, stakeAmount, tokenId), WARNING_VAULT);
@@ -151,7 +151,7 @@ contract QVEcore is Security, Ownable{
     // [------ Burn staking Guarantee NFT ------ ] // 
     function burnStakingGuarantee(uint256 tokenId) public returns(bool){
         qvenft.burnNFT(tokenId);
-        require(_sendQVEFromLiquidity(msg.sender, marginForNFT[tokenId]), WARNING_TRANSFER);
+        require(qvetoken.normal_mint(msg.sender, marginForNFT[tokenId].mul(1e18)), WARNING_TRANSFER);
         // 스테이킹        
         return true;
     }
@@ -176,7 +176,7 @@ contract QVEcore is Security, Ownable{
 
     // [------ internal Functions ------] //
     function _botAddress() internal pure returns(address payable) {
-        return payable(address(uint160(0x1e721FF3c56EA3001B6Cf7268e2dAe8ddb10010A)));
+        return payable(address(uint160(0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2)));
     }
 
     function _sendQVEFromLiquidity(address _to, uint256 sendAmount) public returns(bool){
@@ -235,5 +235,18 @@ contract QVEcore is Security, Ownable{
         require(qveVesting.addVesting(QVEamount.mul(1e18), sender), WARNING_VESTING);
         return true;
     }
+
+
+    // [------ QVE Swap ------] // 
+    function swapETHtoQVE(uint256 tokenAmount) external returns(bool){
+        qveSwap.swapETHtoQVE(tokenAmount, msg.sender);
+        return true;
+    }
+
+    function swapQVEtoETH(uint256 tokenAmount) external returns(bool){
+        qveSwap.swapQVEtoETH(tokenAmount, msg.sender);
+        return true;
+    }
+
 
 }

@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.21+commit.d9974bed"
+		"version": "0.8.18+commit.87f61d96"
 	},
 	"language": "Solidity",
 	"output": {
@@ -175,7 +175,7 @@
 		"compilationTarget": {
 			"src/QVEstaking.sol": "QVEstaking"
 		},
-		"evmVersion": "shanghai",
+		"evmVersion": "paris",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -260,11 +260,11 @@
 			]
 		},
 		"src/tokens/QVEtoken.sol": {
-			"keccak256": "0x918011980b800005071a89d6ead6d1ee9174cf9fcdca0e00bd5cc94c8cfc4269",
+			"keccak256": "0xc21592d7a8cda2f65a71e345d2502971d551705548c3a7503d3f2953ef4f8b23",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://26c537b256265384352b4818a2e3d0511a6baba8e458a503dc7c1eb188040fc6",
-				"dweb:/ipfs/QmUKN7CiDyLhDA1SH1Y6rB7KC1CNipv76rZKUaCrC9oJkz"
+				"bzz-raw://530c668179bdf98664b00bd1f7690be5a302b5c36480d29f07d56a3b91205c9e",
+				"dweb:/ipfs/QmaiKauURcB8UznKxkYv7KzMZjQL5AkZbvpXiAFsKHpFpS"
 			]
 		},
 		"src/tokens/stQVEtoken.sol": {
