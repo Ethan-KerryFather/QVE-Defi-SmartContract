@@ -124,7 +124,7 @@ contract QVEcore is Security, Ownable{
     // 이더리움
     function receiveAsset(bool lockup) public payable returns(bool){
         string memory assetString = string(abi.encodePacked("Margin : ", msg.value.toString(),"WEI"));
-        qvenft.setMetadata("Staking Guarantee Card", assetString, "https://ipfs.io/ipfs/QmWEgQskBctQJUarEycv6cxPnM3Wr4aHz6rGoq2QmTvwUc?filename=QVEwarranty.png");
+        qvenft.setMetadata("Staking Guarantee Card", assetString, "https://ipfs.io/ipfs/QmQUumq8iYcA9X8uoafM2YU8LeyyMKzUN2HF5FGp6NpXEV?filename=Group%204584.jpg");
         investmentEth(msg.value , lockup); // 원래 맨 위였음
         return true;
     }
