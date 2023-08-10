@@ -230,9 +230,10 @@ contract QVEcore is Security, Ownable{
 
 
     // [------ QVE Staking ------] //
-    function doQVEStake(uint qveStakeAmount) public NoReEntrancy returns(bool){
-        require(_makeQVEescrowedAndVesting(msg.sender, qveStakeAmount.mul(1e18).mul(ESCROWRATIO).div(100)), "Error in Make QVE escrowed and Vesting");
-        require(qveStaking.stake(msg.sender, qveStakeAmount.mul(100 - ESCROWRATIO).div(100)), "Error in QVE staking");
+    function doQVEStake(uint256 qveStakeAmount) public NoReEntrancy returns(bool){
+        //require(_makeQVEescrowedAndVesting(msg.sender, qveStakeAmount.mul(1e18).mul(ESCROWRATIO).div(100)), "Error in Make QVE escrowed and Vesting");
+        //require(qveStaking.stake(msg.sender, qveStakeAmount.mul(100 - ESCROWRATIO).div(100)), "Error in QVE staking");
+        require(qveStaking.stake(msg.sender, qveStakeAmount), "Error in QVE staking");
         return true;
     }
 

@@ -10,7 +10,7 @@ contract QVEtoken is ERC20Burnable, Ownable, Security {
 
     // [------ Init -------] //
     constructor() ERC20("QVE", "QVE") {
-        initialSupply = 0;
+        initialSupply = 0; 
         _mint(msg.sender, initialSupply * 10 ** 18);
     }
 
