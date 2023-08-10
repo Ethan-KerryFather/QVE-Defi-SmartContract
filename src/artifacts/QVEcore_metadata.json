@@ -61,6 +61,25 @@
 				"type": "event"
 			},
 			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "Received",
+				"type": "event"
+			},
+			{
 				"inputs": [],
 				"name": "QVEliquidityPool",
 				"outputs": [
@@ -110,7 +129,7 @@
 						"type": "uint256"
 					}
 				],
-				"name": "burnStakingGuarantee",
+				"name": "burnInvestmentGuarantee",
 				"outputs": [
 					{
 						"internalType": "bool",
@@ -179,6 +198,48 @@
 			},
 			{
 				"inputs": [],
+				"name": "getEthMarginVault_",
+				"outputs": [
+					{
+						"components": [
+							{
+								"components": [
+									{
+										"internalType": "uint256",
+										"name": "marginAmount",
+										"type": "uint256"
+									},
+									{
+										"internalType": "uint256",
+										"name": "at",
+										"type": "uint256"
+									},
+									{
+										"internalType": "uint256",
+										"name": "tokenId",
+										"type": "uint256"
+									}
+								],
+								"internalType": "struct QVEcore.marginDetail[]",
+								"name": "marginDetails",
+								"type": "tuple[]"
+							},
+							{
+								"internalType": "uint256[]",
+								"name": "holdNFT",
+								"type": "uint256[]"
+							}
+						],
+						"internalType": "struct QVEcore.userMarginData",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "getInputedMarginCount",
 				"outputs": [
 					{
@@ -231,6 +292,25 @@
 			{
 				"inputs": [],
 				"name": "getQVELiquidityAmount_",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "getmarginForNFT_",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -338,6 +418,11 @@
 						"internalType": "bool",
 						"name": "lockup",
 						"type": "bool"
+					},
+					{
+						"internalType": "uint256",
+						"name": "sendAmount",
+						"type": "uint256"
 					}
 				],
 				"name": "receiveAsset",
@@ -432,6 +517,10 @@
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
 			}
 		],
 		"devdoc": {
@@ -656,11 +745,11 @@
 			]
 		},
 		"src/QVEcore.sol": {
-			"keccak256": "0x766b87a635675d0ab540a7f1f803a34e6a30b049ff94c7014c67e96d74310c43",
+			"keccak256": "0xd92aef2fa8c96b23faa72a25f8e1fedd8975b0aa1fee0b7e55abfea05bcf5d2f",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e356d33a38fd548aa56e64d5006cf9374b2f5a9e2431789664978b1ddd76c210",
-				"dweb:/ipfs/QmWv34cs6hLiaTCgQ7r5REuVvREfp3B4eUz4waDS9RyuLK"
+				"bzz-raw://b756b2723b7260a8f82d1631f4a865898eaee6c7eecf0c6685487690bf345449",
+				"dweb:/ipfs/QmP4qw7oHNLt2DwJDiMhixknKYtBL1KnhVrJHxaBsruyuN"
 			]
 		},
 		"src/QVEescrow.sol": {
@@ -688,11 +777,11 @@
 			]
 		},
 		"src/QVEswap.sol": {
-			"keccak256": "0xe9d571fd10c8464a4decc14394e25a65bd55cec4c31c363528fb99bd8dc42071",
+			"keccak256": "0x4b4a8cfd9e43fd333e42f8fd99e8574df66dc166dad8eb2a5f18207d6cfad114",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://06988f968308e61bd3b560cc749a5f5daca1cfb61f477d24f046b88339a246a3",
-				"dweb:/ipfs/Qmf8Q97bcXuKN32DwA4Ycx8LcoPAhCC7MZLLee9SGguuy6"
+				"bzz-raw://3ab3c04af8f8111396bf04aeb1cb87068cd310245a857fd8e26781f7f26478c2",
+				"dweb:/ipfs/QmVLaETf5UQxisGdtnermwZgviYfANU8GoVsYqjyy9Dt4J"
 			]
 		},
 		"src/QVEvesting.sol": {
@@ -704,11 +793,11 @@
 			]
 		},
 		"src/tokens/QVEtoken.sol": {
-			"keccak256": "0xc21592d7a8cda2f65a71e345d2502971d551705548c3a7503d3f2953ef4f8b23",
+			"keccak256": "0xce47c52cc5618ef6a3b54baa0b6136856a3534f1a3cddce47abba54e521e95be",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://530c668179bdf98664b00bd1f7690be5a302b5c36480d29f07d56a3b91205c9e",
-				"dweb:/ipfs/QmaiKauURcB8UznKxkYv7KzMZjQL5AkZbvpXiAFsKHpFpS"
+				"bzz-raw://0bc814fe798a6e6191b4630f211490f12c41f744d71c8e77481abb6f0b983c96",
+				"dweb:/ipfs/QmbwcQUh9JjMCh4C7UdRjPYP1pe8u4ZvKeuJ76yVtPYa1r"
 			]
 		},
 		"src/tokens/stQVEtoken.sol": {

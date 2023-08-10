@@ -10,17 +10,18 @@ contract QVEtoken is ERC20Burnable, Ownable, Security {
 
     // [------ Init -------] //
     constructor() ERC20("QVE", "QVE") {
-        initialSupply = 1000000000;
+        initialSupply = 0;
         _mint(msg.sender, initialSupply * 10 ** 18);
     }
 
     // [------ Event ------] //
     event TransferEvent(address from, address to, uint256 amount);
     event BurnEvent(address from, uint256 amount);
+    event MintEvent(address to, uint256 amount);
 
     // [------ functions -------] //
     function normal_transfer(address from, address target, uint256 amount) NoReEntrancy public returns(bool){
-        _transfer(from, target, amount);
+        super._transfer(from, target, amount);
 
         emit TransferEvent(from, target, amount);
         return true;
@@ -34,7 +35,9 @@ contract QVEtoken is ERC20Burnable, Ownable, Security {
     }
 
     function normal_mint(address account, uint256 amount) public NoReEntrancy returns(bool){
-        _mint(account, amount);
+        super._mint(account, amount);
+
+        emit MintEvent(account, amount);
         return true;
     }
 }

@@ -23,15 +23,22 @@ contract QVEcore is Security, Ownable{
 
 
     // [------ Warning Strings ------] //
-    string private constant WARNING_ADDRESS = "Warning For Address(0)";
-    string private constant WARNING_TRANSFER = "Warning For Transfer";
-    string private constant WARNING_VAULT = "Warning For Vault";
-    string private constant WARNING_SHORTEN = "Warning For Lockup Shorten";
-    string private constant WARNING_ESCROW = "Warning For QVE Escrow error";
-    string private constant WARNING_VESTING = "Warning For QVE Vesting";
+    string private constant WARNING_ADDRESS = "Warning : You are trying to send asset to invalid Address";
+    string private constant WARNING_TRANSFER = "Warning : Transfer failed";
+    string private constant WARNING_VAULT = "Warning : Vault";
+    string private constant WARNING_SHORTEN = "Warning : Lockup Shorten";
+    string private constant WARNING_ESCROW = "Warning : QVE Escrow error";
+    string private constant WARNING_VESTING = "Warning : QVE Vesting";
+    string private constant WARNING_SENTAMOUNT = "Warning : Sent Eth Amount and Wanted Amount are different";
+    string private constant WARNING_BALANCE = "Warning : You don't have suffient balance in your wallet";
+    string private constant WARNING_NFTOWNER = "Warning : You are not NFT owner";
 
     // [------ Events ------] //
- 
+    event Received(address indexed sender, uint256 amount);
+
+    receive() external payable{
+        emit Received(msg.sender, msg.value);
+    }
 
 
     // [------ Variables, Struct -------] //
@@ -64,22 +71,21 @@ contract QVEcore is Security, Ownable{
         NFTFragment[] fragment;
     }
   
-    mapping (address => NFTs) nftVault;
-
+    mapping (address => NFTs) nftVault; // 주소 - {토큰id, mint시점}[]
+    mapping (uint256 => uint256)  marginForNFT; // 토큰id - margin ETH 액수
+    mapping (uint256 => address)  tokenIdForAddress; // 토큰id - 소유자 주소
 
     // [------ QVE Liquidity pool / ETH staking pool ------] //
-    // QVE : ether unit     // ETHVault : wei unit
     liquidityChunk public QVEliquidityPool;
     liquidityChunk public esQVEliquidityPool;
 
-    mapping (uint256 => uint256) private marginForNFT;
 
 
     // --- Put margin(ETH) ---- //
     struct marginDetail{
         uint256 marginAmount;
         uint256 at;
-        uint256 random;
+        uint256 tokenId;
     }
 
     struct userMarginData{
@@ -87,7 +93,7 @@ contract QVEcore is Security, Ownable{
         uint256[] holdNFT;
     }
 
-    mapping (address => userMarginData) EthMarginVault;
+    mapping (address => userMarginData) EthMarginVault;  // 주소 - {잔액, 시간, 토큰 id}[], NFTid[]
 
    
     constructor(
@@ -106,36 +112,28 @@ contract QVEcore is Security, Ownable{
             qveStaking = _qveStaking;
             qveSwap = _qveSwap;
 
-            qvetoken.normal_transfer(msg.sender, address(this), qvetoken.totalSupply() / 4 );
-            QVEliquidityPool.balance += qvetoken.balanceOf(address(this)) / 10 ** 18;
     }
 
     function getEthBalance(address _address) external view returns(uint){
         return _address.balance;
     }
-    // receive() external payable{
-    //    
-    // }
+   
 
-    // fallback() external payable{
+    function receiveAsset(bool lockup, uint256 sendAmount) public payable returns(bool){
+        // 조건검사
+        require(msg.value == sendAmount, WARNING_SENTAMOUNT); // 보내려는 금액, 실제 보낸 금액 일치하는지 확인
 
-    // }
-
-    // 이더리움
-    function receiveAsset(bool lockup) public payable returns(bool){
-        investmentEth(msg.value , lockup); // 원래 맨 위였음
-
-        string memory assetString = string(abi.encodePacked("Margin : ", msg.value.toString(),"WEI"));
+        string memory assetString = string(abi.encodePacked("[Guaranteed Investment Margin]--:", msg.value.toString(),"WEI"));
         qvenft.setMetadata("Staking Guarantee Card", assetString, "https://ipfs.io/ipfs/QmQUumq8iYcA9X8uoafM2YU8LeyyMKzUN2HF5FGp6NpXEV?filename=Group%204584.jpg");
+        
+        investmentEth(msg.value.div(1e18), lockup); 
+
         return true;
     }
 
-
-
-    function investmentEth(uint256 stakeAmount, bool lockup) internal returns(bool){
-        uint256 tokenId = _issueGuaranteeNFT(msg.sender, stakeAmount,lockup);
-        console.log(tokenId);
-        require(_addUserMarginVault(msg.sender, stakeAmount, tokenId), WARNING_VAULT);
+    function investmentEth(uint256 investAmount, bool lockup) internal returns(bool){
+        uint256 tokenId = _issueGuaranteeNFT(msg.sender, investAmount,lockup);
+        require(_addUserMarginVault(msg.sender, investAmount.mul(1e18), tokenId), WARNING_VAULT);
         InputedMarginCount.increment();
 
         return true;
@@ -149,10 +147,12 @@ contract QVEcore is Security, Ownable{
     }
 
 
-    // [------ Burn staking Guarantee NFT ------ ] // 
-    function burnStakingGuarantee(uint256 tokenId) public returns(bool){
+    // [------ Burn Investment Guarantee NFT ------ ] // 
+    function burnInvestmentGuarantee(uint256 tokenId) public returns(bool){
+        require(tokenIdForAddress[tokenId] == msg.sender, WARNING_NFTOWNER); // 함수 실행하는 사람이 실제 NFT소유자인지 확인
+
         qvenft.burnNFT(tokenId);
-        require(qvetoken.normal_mint(msg.sender, marginForNFT[tokenId].mul(1e18)), WARNING_TRANSFER);
+        require(qvetoken.normal_mint(msg.sender, marginForNFT[tokenId].div(1e18)), WARNING_TRANSFER);
         // 스테이킹        
         return true;
     }
@@ -173,6 +173,14 @@ contract QVEcore is Security, Ownable{
 
     function getQVELiquidityAmount_() external view returns(uint){
         return QVEliquidityPool.balance;
+    }
+
+    function getEthMarginVault_() external view returns(userMarginData memory){
+        return EthMarginVault[msg.sender];
+    }
+
+    function getmarginForNFT_(uint256 tokenId) external view returns(uint256){
+        return marginForNFT[tokenId];
     }
 
     // [------ internal Functions ------] //
@@ -212,6 +220,7 @@ contract QVEcore is Security, Ownable{
         uint256 item_id = qvenft.mintStakingGuarantee(sender, lockup);
         nftVault[sender].fragment.push(NFTFragment(item_id, block.timestamp));
         _addUserMarginVault(msg.sender, stakeAmount, item_id);
+        tokenIdForAddress[item_id] = sender;
 
         if(lockup){
             require(qveVesting.addVesting(qveEscrow.mintForLockup(msg.sender, stakeAmount.mul(1e18)), msg.sender), WARNING_VESTING);
@@ -239,15 +248,14 @@ contract QVEcore is Security, Ownable{
 
 
     // [------ QVE Swap ------] // 
-    function swapETHtoQVE(uint256 tokenAmount) external returns(bool){
+    function swapETHtoQVE_(uint256 tokenAmount) external payable returns(bool){
         qveSwap.swapETHtoQVE(tokenAmount, msg.sender);
         return true;
     }
 
-    function swapQVEtoETH(uint256 tokenAmount) external returns(bool){
+    function swapQVEtoETH_(uint256 tokenAmount) external returns(bool){
         qveSwap.swapQVEtoETH(tokenAmount, msg.sender);
         return true;
     }
-
 
 }
