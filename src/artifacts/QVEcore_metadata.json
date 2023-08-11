@@ -475,7 +475,7 @@
 						"type": "uint256"
 					}
 				],
-				"name": "swapETHtoQVE",
+				"name": "swapETHtoQVE_",
 				"outputs": [
 					{
 						"internalType": "bool",
@@ -483,7 +483,7 @@
 						"type": "bool"
 					}
 				],
-				"stateMutability": "nonpayable",
+				"stateMutability": "payable",
 				"type": "function"
 			},
 			{
@@ -494,7 +494,7 @@
 						"type": "uint256"
 					}
 				],
-				"name": "swapQVEtoETH",
+				"name": "swapQVEtoETH_",
 				"outputs": [
 					{
 						"internalType": "bool",
@@ -745,11 +745,11 @@
 			]
 		},
 		"src/QVEcore.sol": {
-			"keccak256": "0xd92aef2fa8c96b23faa72a25f8e1fedd8975b0aa1fee0b7e55abfea05bcf5d2f",
+			"keccak256": "0xfd8d288b68ed5ffa6276e128ee16cced6461ec7e3afcab233a2f692b723bdcc8",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b756b2723b7260a8f82d1631f4a865898eaee6c7eecf0c6685487690bf345449",
-				"dweb:/ipfs/QmP4qw7oHNLt2DwJDiMhixknKYtBL1KnhVrJHxaBsruyuN"
+				"bzz-raw://d0533fb40ba46fa23f1fafa25eff16f45e0b49d55e56ee6065be31f0afe266ca",
+				"dweb:/ipfs/Qme4VWmxn7Z4R76hZaTx35Cwj3BWoqQTr3nWK3WKoR27WR"
 			]
 		},
 		"src/QVEescrow.sol": {
@@ -777,11 +777,11 @@
 			]
 		},
 		"src/QVEswap.sol": {
-			"keccak256": "0x4b4a8cfd9e43fd333e42f8fd99e8574df66dc166dad8eb2a5f18207d6cfad114",
+			"keccak256": "0xcf11afc09c73812f34281e9758df20d8034ea31c06e07e47b9f0e3a2ce17034e",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://3ab3c04af8f8111396bf04aeb1cb87068cd310245a857fd8e26781f7f26478c2",
-				"dweb:/ipfs/QmVLaETf5UQxisGdtnermwZgviYfANU8GoVsYqjyy9Dt4J"
+				"bzz-raw://ef129926f90b6dc84856ae64a4f080c34b046a21bca89a709f0aad184add0b79",
+				"dweb:/ipfs/QmTMKZ3my5RJE3BPL9bLtuETCKHALTgB4sBkDd9tikV9fj"
 			]
 		},
 		"src/QVEvesting.sol": {
@@ -793,11 +793,11 @@
 			]
 		},
 		"src/tokens/QVEtoken.sol": {
-			"keccak256": "0xce47c52cc5618ef6a3b54baa0b6136856a3534f1a3cddce47abba54e521e95be",
+			"keccak256": "0x10ffb01fde69dcac6242b3fee8bc5477948433878ef1f8265d6d3e7773184bab",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://0bc814fe798a6e6191b4630f211490f12c41f744d71c8e77481abb6f0b983c96",
-				"dweb:/ipfs/QmbwcQUh9JjMCh4C7UdRjPYP1pe8u4ZvKeuJ76yVtPYa1r"
+				"bzz-raw://88193e3347b00d1046dc6eb902843111442d643a90ff71e79e6153314a86ba6b",
+				"dweb:/ipfs/Qmc5yfJUegTnUeVfNeXNxHt1heQ2ohrj9vCrLDtU1BEy4S"
 			]
 		},
 		"src/tokens/stQVEtoken.sol": {

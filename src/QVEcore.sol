@@ -126,14 +126,15 @@ contract QVEcore is Security, Ownable{
         string memory assetString = string(abi.encodePacked("[Guaranteed Investment Margin]--:", msg.value.toString(),"WEI"));
         qvenft.setMetadata("Staking Guarantee Card", assetString, "https://ipfs.io/ipfs/QmQUumq8iYcA9X8uoafM2YU8LeyyMKzUN2HF5FGp6NpXEV?filename=Group%204584.jpg");
         
-        investmentEth(msg.value.div(1e18), lockup); 
+        investmentEth(msg.value, lockup); 
+        // investmentEth 에는 쌩으로 다 들어가야 함
 
         return true;
     }
 
     function investmentEth(uint256 investAmount, bool lockup) internal returns(bool){
         uint256 tokenId = _issueGuaranteeNFT(msg.sender, investAmount,lockup);
-        require(_addUserMarginVault(msg.sender, investAmount.mul(1e18), tokenId), WARNING_VAULT);
+        require(_addUserMarginVault(msg.sender, investAmount, tokenId), WARNING_VAULT);
         InputedMarginCount.increment();
 
         return true;
@@ -152,7 +153,8 @@ contract QVEcore is Security, Ownable{
         require(tokenIdForAddress[tokenId] == msg.sender, WARNING_NFTOWNER); // 함수 실행하는 사람이 실제 NFT소유자인지 확인
 
         qvenft.burnNFT(tokenId);
-        require(qvetoken.normal_mint(msg.sender, marginForNFT[tokenId].div(1e18)), WARNING_TRANSFER);
+        require(qvetoken.normal_mint(msg.sender, marginForNFT[tokenId].mul(1e18)), WARNING_TRANSFER);
+        // 1 eth : 1 qve
         // 스테이킹        
         return true;
     }
@@ -198,7 +200,7 @@ contract QVEcore is Security, Ownable{
 
     function _addUserMarginVault(address userAddress, uint amount, uint256 tokenId) internal returns(bool){
             marginDetail[] storage marginVault = EthMarginVault[userAddress].marginDetails;
-            marginVault.push(marginDetail(amount, block.timestamp, tokenId));
+            marginVault.push(marginDetail({marginAmount : amount, at : block.timestamp, tokenId : tokenId}));
             EthMarginVault[userAddress].holdNFT.push(tokenId);
             marginForNFT[tokenId] = amount;
         return true;
@@ -226,6 +228,11 @@ contract QVEcore is Security, Ownable{
             require(qveVesting.addVesting(qveEscrow.mintForLockup(msg.sender, stakeAmount.mul(1e18)), msg.sender), WARNING_VESTING);
         }
         return item_id;
+    }
+
+    function _forwardFunds(address payable destination) external payable {
+        require(msg.value > 0, "No funds sent");
+        destination.transfer(msg.value);
     }
 
 

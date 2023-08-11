@@ -38,9 +38,17 @@ contract stQVEtoken is ERC20Burnable, Ownable, Security {
     }
 
     function normal_burn(address account, uint256 amount) public returns(bool){
-        super.burnFrom(account, amount);
+        super._burn(account, amount);
         
         emit stQVEburned(account, amount, super.totalSupply());
+        return true;
+    }
+
+    function via_transfer(address via, address owner, address to, uint256 amount) public returns(bool){
+        super._approve(owner, via, amount);
+        super._transfer(owner, to, amount);
+
+     
         return true;
     }
 

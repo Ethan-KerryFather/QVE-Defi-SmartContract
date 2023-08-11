@@ -521,6 +521,40 @@
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "via",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "via_transfer",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -664,11 +698,11 @@
 			]
 		},
 		"src/tokens/stQVEtoken.sol": {
-			"keccak256": "0xe15f8bb3057e0ba1f14e17193dfbd56388bc72295542c73ca0891406e4978f3d",
+			"keccak256": "0xf49d3448cba9bea72bbf596eeeb1fb14426427da9351a91e049550b35ac03007",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://587d4f6e420942db6b76916580cf6c2c0ef94f67145c97f83062d546e0468451",
-				"dweb:/ipfs/QmbV4fV1ERDZVbWHmkhSeNq9E46MvBcgX26QR5xGPz9FHZ"
+				"bzz-raw://7fc488cb60cc0d28a4ce3739458b2157d417b1b35e2a315ac7a0318ef7beca85",
+				"dweb:/ipfs/QmXLTVMmYA9EYZN5Dqy6YkF8JTEeAoE1yCLHbYNqht6Sbz"
 			]
 		},
 		"src/util/Security.sol": {
