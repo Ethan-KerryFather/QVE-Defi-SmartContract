@@ -265,5 +265,15 @@ contract QVEcore is Security, Ownable{
         qveSwap.swapQVEtoETH(tokenAmount, msg.sender);
         return true;
     }
+    
 
+    // [------ Refund ------] // 
+    function refundInvestment() external payable returns(bool){
+        return true;
+    }
+
+    function _sendIntoContract(uint256 tokenId) external returns(bool){
+        qvenft.safeTransferFrom(msg.sender, address(this), tokenId);
+        return true;
+    }
 }
