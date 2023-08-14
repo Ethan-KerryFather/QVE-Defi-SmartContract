@@ -100,6 +100,38 @@
 			{
 				"inputs": [
 					{
+						"internalType": "address payable",
+						"name": "destination",
+						"type": "address"
+					}
+				],
+				"name": "_forwardFunds",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "_sendIntoContract",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "address",
 						"name": "_to",
 						"type": "address"
@@ -438,6 +470,19 @@
 			},
 			{
 				"inputs": [],
+				"name": "refundInvestment",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "renounceOwnership",
 				"outputs": [],
 				"stateMutability": "nonpayable",
@@ -745,11 +790,11 @@
 			]
 		},
 		"src/QVEcore.sol": {
-			"keccak256": "0xfd8d288b68ed5ffa6276e128ee16cced6461ec7e3afcab233a2f692b723bdcc8",
+			"keccak256": "0xb7f85dbcf2fe148db82014b85744cd8a30eb559f0609cd8dd005bd7bc14d1557",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://d0533fb40ba46fa23f1fafa25eff16f45e0b49d55e56ee6065be31f0afe266ca",
-				"dweb:/ipfs/Qme4VWmxn7Z4R76hZaTx35Cwj3BWoqQTr3nWK3WKoR27WR"
+				"bzz-raw://a66ac47600e8a6a00ac4b8176a3755c7a30b2d0a31122ca35e629215cb52f2be",
+				"dweb:/ipfs/QmdrPqfs9v5jRj8EfV9tUCrwjdSffJ4b6hEtwfQd224zES"
 			]
 		},
 		"src/QVEescrow.sol": {
@@ -769,11 +814,11 @@
 			]
 		},
 		"src/QVEstaking.sol": {
-			"keccak256": "0x92f971297663e565ff437c400923ea99e33c01780f6e6b6c44cd5c1c9025d6ad",
+			"keccak256": "0x3e152ff4d114f8369b39c0c6cf1a2cd792d9264e979358c91cadce97d2e39d9e",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://79e562268499eebd2c5eba486a59bb38dfbf084b4338ebf5e4e320b8684c4c91",
-				"dweb:/ipfs/QmQ6kNpYMwa55eFi6hfpfkgYZpgVRVtUQHqZ62wtSffch6"
+				"bzz-raw://beb7902eb76f509f1e263c05ec567c5119b284f51933a53c19922a68566df0fd",
+				"dweb:/ipfs/QmS3nVf94uLJdVsE9rnTpYFpFgedSaqaDRATLGd23mF2ET"
 			]
 		},
 		"src/QVEswap.sol": {
@@ -793,19 +838,19 @@
 			]
 		},
 		"src/tokens/QVEtoken.sol": {
-			"keccak256": "0x10ffb01fde69dcac6242b3fee8bc5477948433878ef1f8265d6d3e7773184bab",
+			"keccak256": "0x4b0de3d888800fe1613f8d637cf0dae925f03acb2ff1a5e3209545ee73259dad",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://88193e3347b00d1046dc6eb902843111442d643a90ff71e79e6153314a86ba6b",
-				"dweb:/ipfs/Qmc5yfJUegTnUeVfNeXNxHt1heQ2ohrj9vCrLDtU1BEy4S"
+				"bzz-raw://8cfc3b033444ae9144046d1abb0f157acb642198b7baa0445efbca4b317804f8",
+				"dweb:/ipfs/QmWDRhfAihoJZg97hw8KbGDxzcGDo5Tu6DPaRixmGmZ9Ga"
 			]
 		},
 		"src/tokens/stQVEtoken.sol": {
-			"keccak256": "0xe15f8bb3057e0ba1f14e17193dfbd56388bc72295542c73ca0891406e4978f3d",
+			"keccak256": "0xf49d3448cba9bea72bbf596eeeb1fb14426427da9351a91e049550b35ac03007",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://587d4f6e420942db6b76916580cf6c2c0ef94f67145c97f83062d546e0468451",
-				"dweb:/ipfs/QmbV4fV1ERDZVbWHmkhSeNq9E46MvBcgX26QR5xGPz9FHZ"
+				"bzz-raw://7fc488cb60cc0d28a4ce3739458b2157d417b1b35e2a315ac7a0318ef7beca85",
+				"dweb:/ipfs/QmXLTVMmYA9EYZN5Dqy6YkF8JTEeAoE1yCLHbYNqht6Sbz"
 			]
 		},
 		"src/util/Security.sol": {

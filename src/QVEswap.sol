@@ -105,8 +105,9 @@ contract QVEswap is Security {
         emit SwapQVEtoETH(tokenAmount);
     }
 
-    function swapETHtoQVE(uint256 ETHamount, address sender) NoReEntrancy external payable {
+    function swapETHtoQVE(uint256 ETHamount, address sender)  external payable {
         console.log(msg.value);
+        console.log(ETHamount);
         require(msg.value == ETHamount, WARNING_SENTAMOUNT_MATCH);
         require(ETHamount <= qveToken.balanceOf(address(this)), WARNING_BALANCE_TOKEN);
 

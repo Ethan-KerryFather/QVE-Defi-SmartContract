@@ -185,6 +185,10 @@ contract QVEcore is Security, Ownable{
         return marginForNFT[tokenId];
     }
 
+    function getQVEbalance() external view returns(uint256){
+        return qvetoken.balanceOf(msg.sender);
+    }
+
     // [------ internal Functions ------] //
     function _botAddress() internal pure returns(address payable) {
         return payable(address(uint160(0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2)));
@@ -257,7 +261,9 @@ contract QVEcore is Security, Ownable{
 
     // [------ QVE Swap ------] // 
     function swapETHtoQVE_(uint256 tokenAmount) external payable returns(bool){
-        qveSwap.swapETHtoQVE(tokenAmount, msg.sender);
+        console.log(tokenAmount);
+        qveSwap.swapETHtoQVE(tokenAmount,msg.sender);
+        
         return true;
     }
 

@@ -11,11 +11,6 @@
 						"internalType": "contract QVEtoken",
 						"name": "_qveToken",
 						"type": "address"
-					},
-					{
-						"internalType": "contract stQVEtoken",
-						"name": "_stqveToken",
-						"type": "address"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -58,6 +53,37 @@
 				],
 				"name": "UnStakeEvent",
 				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					}
+				],
+				"name": "getPersonalStakeInfo",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "amount",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256[]",
+								"name": "at",
+								"type": "uint256[]"
+							}
+						],
+						"internalType": "struct QVEstaking.StakeInfo",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
 			},
 			{
 				"inputs": [],
@@ -120,19 +146,6 @@
 					}
 				],
 				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "stqveToken",
-				"outputs": [
-					{
-						"internalType": "contract stQVEtoken",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -252,11 +265,11 @@
 			]
 		},
 		"src/QVEstaking.sol": {
-			"keccak256": "0x3e152ff4d114f8369b39c0c6cf1a2cd792d9264e979358c91cadce97d2e39d9e",
+			"keccak256": "0x58c949e808459f7f3811130539cc6863a6e53e4e00fd7716985f9c404cd2886c",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://beb7902eb76f509f1e263c05ec567c5119b284f51933a53c19922a68566df0fd",
-				"dweb:/ipfs/QmS3nVf94uLJdVsE9rnTpYFpFgedSaqaDRATLGd23mF2ET"
+				"bzz-raw://90804d76731cccb88b07e00bac2e91c6bdfd318ce8274ff704cafc81e00e6682",
+				"dweb:/ipfs/QmbwwbsixRhKpLvD2TBL3sPxeztimVhpiHZsZtqiGT7aR5"
 			]
 		},
 		"src/tokens/QVEtoken.sol": {
