@@ -261,9 +261,7 @@ contract QVEcore is Security, Ownable{
 
     // [------ QVE Swap ------] // 
     function swapETHtoQVE_(uint256 tokenAmount) external payable returns(bool){
-        console.log(tokenAmount);
-        qveSwap.swapETHtoQVE(tokenAmount,msg.sender);
-        
+        qveSwap.swapETHtoQVE{value: msg.value}(tokenAmount, msg.sender);
         return true;
     }
 
