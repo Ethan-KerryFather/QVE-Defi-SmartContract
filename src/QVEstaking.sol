@@ -17,6 +17,7 @@ contract QVEstaking is Security {
     uint256 private MINIMAL_PERIOD = 90 days;
 
     Counters.Counter private totalStakeCount;
+    Counters.Counter private totalSettlementCount;
 
     // [----- Warning Strings ------] //
     string constant private WARN_TRANSFER = "Transfer Error";
@@ -48,6 +49,11 @@ contract QVEstaking is Security {
     }
     mapping (address => StakeInfo) stakeInfo;
     mapping (address => uint256 count) stakeCount;
+
+    // Settle balance
+    mapping(uint256 => uint256) SettlementLog; // block.timestamp => amount
+    uint256 private totalSettlement;
+    
 
     constructor(QVEtoken _qveToken) {
         qveToken = _qveToken;
@@ -84,6 +90,15 @@ contract QVEstaking is Security {
         require(qveToken.transfer(staker, unstakeAmount), "Warn : Send QVE error");
 
         _unstakeAfter(unstakeAmount, staker);
+        return true;
+    }
+
+    function receiveSettledEth(uint256 receivedAmount) external payable returns(bool){
+        require(msg.value == receivedAmount, "Warn : received Amount , msg.value are different");
+
+        totalSettlement = totalSettlement.add(receivedAmount);
+        SettlementLog[block.timestamp] = receivedAmount;
+        totalSettlementCount.increment();
         return true;
     }
 
