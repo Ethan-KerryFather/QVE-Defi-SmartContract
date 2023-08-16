@@ -47,6 +47,44 @@
 					{
 						"indexed": true,
 						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "NFTDeposited",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "receiver",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "NFTWithdrawn",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
 						"name": "previousOwner",
 						"type": "address"
 					},
@@ -108,25 +146,6 @@
 				"name": "_forwardFunds",
 				"outputs": [],
 				"stateMutability": "payable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					}
-				],
-				"name": "_sendIntoContract",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -335,6 +354,19 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "getQVEbalance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "uint256",
@@ -351,6 +383,40 @@
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "nftOwner",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"name": "onERC721Received",
+				"outputs": [
+					{
+						"internalType": "bytes4",
+						"name": "",
+						"type": "bytes4"
+					}
+				],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -470,7 +536,44 @@
 			},
 			{
 				"inputs": [],
-				"name": "refundInvestment",
+				"name": "renounceOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "sendIntoContract_",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address payable",
+						"name": "botAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "sendAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "sendToBotAddress_",
 				"outputs": [
 					{
 						"internalType": "bool",
@@ -479,13 +582,6 @@
 					}
 				],
 				"stateMutability": "payable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "renounceOwnership",
-				"outputs": [],
-				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -790,11 +886,11 @@
 			]
 		},
 		"src/QVEcore.sol": {
-			"keccak256": "0xb7f85dbcf2fe148db82014b85744cd8a30eb559f0609cd8dd005bd7bc14d1557",
+			"keccak256": "0x316a99b7fc4335c9e10a9b21f7db5e27830bf54c5d55654120a46c928edf4c26",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://a66ac47600e8a6a00ac4b8176a3755c7a30b2d0a31122ca35e629215cb52f2be",
-				"dweb:/ipfs/QmdrPqfs9v5jRj8EfV9tUCrwjdSffJ4b6hEtwfQd224zES"
+				"bzz-raw://11515b7ab3d39b2671a8a54afed8c515d3ee374299e7b05a5ce62d4c7784a13c",
+				"dweb:/ipfs/QmSbD6D1z37eT7M3XEUSK7AYhE1ENR6YhFMVrGzdwYWP8W"
 			]
 		},
 		"src/QVEescrow.sol": {
@@ -814,19 +910,19 @@
 			]
 		},
 		"src/QVEstaking.sol": {
-			"keccak256": "0x3e152ff4d114f8369b39c0c6cf1a2cd792d9264e979358c91cadce97d2e39d9e",
+			"keccak256": "0x0b49b6f23b09f2425f9781472412d817f206bfd19acb4d0fcbd87deb69b869ff",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://beb7902eb76f509f1e263c05ec567c5119b284f51933a53c19922a68566df0fd",
-				"dweb:/ipfs/QmS3nVf94uLJdVsE9rnTpYFpFgedSaqaDRATLGd23mF2ET"
+				"bzz-raw://3ae8b4bac9947d6322bfad9c1c738d27e18e418117f6fa19414b43a3078e532d",
+				"dweb:/ipfs/QmfJ37LL1CWMU31Z69RhgsFAaRMbFUM6tDuoLdrvv65fLH"
 			]
 		},
 		"src/QVEswap.sol": {
-			"keccak256": "0xcf11afc09c73812f34281e9758df20d8034ea31c06e07e47b9f0e3a2ce17034e",
+			"keccak256": "0x33b528dbc28188a82ce04c2ffe48690bb097965feb8a96609b5df44fba8c8bb8",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ef129926f90b6dc84856ae64a4f080c34b046a21bca89a709f0aad184add0b79",
-				"dweb:/ipfs/QmTMKZ3my5RJE3BPL9bLtuETCKHALTgB4sBkDd9tikV9fj"
+				"bzz-raw://95e25ae30f7f35afd20123d4a663ef6aeded86c215bac2bbf61c246dce9a932f",
+				"dweb:/ipfs/QmdC643aAkhCmpAp6Kz6SVfW3zk12fNP66yCjZE3K2CVZ1"
 			]
 		},
 		"src/QVEvesting.sol": {

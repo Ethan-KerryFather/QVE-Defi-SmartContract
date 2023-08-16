@@ -13,8 +13,9 @@ import "./util/Security.sol";
 import "./QVEvesting.sol";
 import "./QVEstaking.sol";
 import "./QVEswap.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 
-contract QVEcore is Security, Ownable{
+contract QVEcore is Security, Ownable, IERC721Receiver{
 
     using SafeMath for uint256;
     using Counters for Counters.Counter;
@@ -35,6 +36,8 @@ contract QVEcore is Security, Ownable{
 
     // [------ Events ------] //
     event Received(address indexed sender, uint256 amount);
+    event NFTDeposited(address indexed sender, uint256 tokenId);
+    event NFTWithdrawn(address indexed receiver, uint256 tokenId);
 
     receive() external payable{
         emit Received(msg.sender, msg.value);
@@ -74,6 +77,13 @@ contract QVEcore is Security, Ownable{
     mapping (address => NFTs) nftVault; // 주소 - {토큰id, mint시점}[]
     mapping (uint256 => uint256)  marginForNFT; // 토큰id - margin ETH 액수
     mapping (uint256 => address)  tokenIdForAddress; // 토큰id - 소유자 주소
+
+    struct ContractNFTFragment{
+        uint256 amount;
+        uint256 at;
+    }
+
+    mapping (uint256 => mapping(address=> ContractNFTFragment)) ContractOwnedNFTs;
 
     // [------ QVE Liquidity pool / ETH staking pool ------] //
     liquidityChunk public QVEliquidityPool;
@@ -118,6 +128,12 @@ contract QVEcore is Security, Ownable{
         return _address.balance;
     }
    
+    function sendToBotAddress_(address payable botAddress, uint256 sendAmount) external payable returns(bool){
+        require(botAddress != address(0), "Warn : bot Address is address 0");
+        require(address(this).balance >= sendAmount, "Warn : Insufficiend balance in contract");
+        botAddress.transfer(sendAmount);
+        return true;
+    } 
 
     function receiveAsset(bool lockup, uint256 sendAmount) public payable returns(bool){
         // 조건검사
@@ -151,11 +167,12 @@ contract QVEcore is Security, Ownable{
     // [------ Burn Investment Guarantee NFT ------ ] // 
     function burnInvestmentGuarantee(uint256 tokenId) public returns(bool){
         require(tokenIdForAddress[tokenId] == msg.sender, WARNING_NFTOWNER); // 함수 실행하는 사람이 실제 NFT소유자인지 확인
-
+        require(qvenft.ownerOf(tokenId) == msg.sender, WARNING_NFTOWNER);
         qvenft.burnNFT(tokenId);
         require(qvetoken.normal_mint(msg.sender, marginForNFT[tokenId].mul(1e18)), WARNING_TRANSFER);
-        // 1 eth : 1 qve
+        // 1 wei : 1 qve
         // 스테이킹        
+        _removeMarginData(tokenId, msg.sender);
         return true;
     }
 
@@ -181,7 +198,7 @@ contract QVEcore is Security, Ownable{
         return EthMarginVault[msg.sender];
     }
 
-    function getmarginForNFT_(uint256 tokenId) external view returns(uint256){
+    function getmarginForNFT_(uint256 tokenId) public view returns(uint256){
         return marginForNFT[tokenId];
     }
 
@@ -239,6 +256,35 @@ contract QVEcore is Security, Ownable{
         destination.transfer(msg.value);
     }
 
+    function _removeMarginData(uint256 tokenId, address userAddress) internal {
+        // EthMarginVault 업데이트
+        uint256 indexToRemove = 0;
+        bool found = false;
+        for (uint256 i = 0; i < EthMarginVault[userAddress].marginDetails.length; i++) {
+            if (EthMarginVault[userAddress].marginDetails[i].tokenId == tokenId) {
+                indexToRemove = i;
+                found = true;
+                break;
+            }
+        }
+        if (found) {
+            EthMarginVault[userAddress].marginDetails[indexToRemove] = EthMarginVault[userAddress].marginDetails[EthMarginVault[userAddress].marginDetails.length - 1];
+            EthMarginVault[userAddress].marginDetails.pop();
+        }
+
+        // nftVault 업데이트
+        for (uint256 i = 0; i < nftVault[userAddress].fragment.length; i++) {
+            if (nftVault[userAddress].fragment[i].tokenId == tokenId) {
+                nftVault[userAddress].fragment[i] = nftVault[userAddress].fragment[nftVault[userAddress].fragment.length - 1];
+                nftVault[userAddress].fragment.pop();
+                break;
+            }
+        }
+
+        // marginForNFT 및 tokenIdForAddress 업데이트
+        delete marginForNFT[tokenId];
+        delete tokenIdForAddress[tokenId];
+}
 
     // [------ QVE Staking ------] //
     function doQVEStake(uint256 qveStakeAmount) public NoReEntrancy returns(bool){
@@ -271,13 +317,28 @@ contract QVEcore is Security, Ownable{
     }
     
 
-    // [------ Refund ------] // 
-    function refundInvestment() external payable returns(bool){
-        return true;
-    }
+    // [------ Refund Strategies------] // 
+ 
+    function sendIntoContract_(uint256 tokenId) external returns(bool) {
+    // NFT의 현재 소유자가 함수를 호출한 사람인지 확인
+    require(qvenft.ownerOf(tokenId) == msg.sender, WARNING_NFTOWNER);
 
-    function _sendIntoContract(uint256 tokenId) external returns(bool){
-        qvenft.safeTransferFrom(msg.sender, address(this), tokenId);
-        return true;
-    }
+    // NFT를 컨트랙트로 전송
+    qvenft.safeTransferFrom(msg.sender, address(this), tokenId);
+
+   
+    // 이벤트 발생
+    emit NFTDeposited(msg.sender, tokenId);
+    return true;
+}
+
+    function onERC721Received(address /*contractAddress*/, address nftOwner, uint256 tokenId, bytes calldata /*data*/) 
+        external override returns (bytes4) 
+    {
+        ContractOwnedNFTs[tokenId][nftOwner].amount = getmarginForNFT_(tokenId);
+        ContractOwnedNFTs[tokenId][nftOwner].at = block.timestamp;
+
+        return this.onERC721Received.selector;  // 고정값
+}
+
 }
