@@ -102,6 +102,39 @@ contract QVEstaking is Security {
         return true;
     }
 
+    // [------ distribute profit to stakers ------] // 
+    address[] private stakers;
+
+    // 스테이킹 함수 내에서
+    function _stakeAfter(address staker, uint256 stakeAmount) internal returns(bool){
+        if (stakeInfo[staker].amount == 0) { // 이 조건은 처음 스테이킹하는 경우에만 true가 된당
+            stakers.push(staker);
+        }
+        totalStaked = totalStaked.add(stakeAmount);
+        stakeInfo[staker].amount = stakeInfo[staker].amount.add(stakeAmount);
+        stakeInfo[staker].at.push(block.timestamp);
+        stakeCount[staker] = stakeCount[staker].add(1);
+        totalStakeCount.increment();
+        return true;
+    }
+
+    // 분배 함수에서
+    function distributeToQVEholders() public returns(bool){
+        uint256 totalEthToDistribute = address(this).balance.sub(totalSettlement);
+        require(totalEthToDistribute > 0, "No ETH to distribute");
+
+        for (uint256 i = 0; i < stakers.length; i++) {
+            address staker = stakers[i];
+            uint256 stakerBalance = stakeInfo[staker].amount;
+            if (stakerBalance > 0) {
+                uint256 stakerShare = totalEthToDistribute.mul(stakerBalance).div(totalStaked);
+                payable(staker).transfer(stakerShare);
+            }
+        }
+
+        return true;
+    }
+
     // [------ Internal Functions ------] //
     function _unstakeAfter(uint256 unstakeAmount, address unstaker) internal returns(bool){
         totalStaked = totalStaked.sub(unstakeAmount);
@@ -113,16 +146,7 @@ contract QVEstaking is Security {
         return true;
     }
 
-    function _stakeAfter(address staker, uint256 stakeAmount) internal returns(bool){
-        totalStaked = totalStaked.add(stakeAmount);
-        stakeInfo[staker].amount = stakeInfo[staker].amount.add(stakeAmount);
-        stakeInfo[staker].at.push(block.timestamp);
-        stakeCount[staker] = stakeCount[staker].add(1);
-        totalStakeCount.increment();
-        // stakeVault[StakeCount.current()] = StakeDetail({ tokenAmount : stakeAmount , startBlock : block.timestamp, stakeNum : StakeCount.current() });
-        // ownedStake[staker].push( StakeCount.current());
-        return true;
-    }
+  
 
     // function claimStakeReward(uint256 stakeNum) internal NoReEntrancy returns(bool){
     //     uint256 timeFlowed = block.timestamp.sub(stakeVault[stakeNum].startBlock);

@@ -24,35 +24,34 @@ contract ProtocolFee{
     string constant private WARN_RECEIVE = "Warn : Settle From Strategy wallet";
 
     // [------ Events ------] //
-    event meanlessTransfer(address sender, uint256 amount);
+    // event meanlessTransfer(address sender, uint256 amount);
 
-    // [------ Fallback, Receive ------]] //
-    // 데이터 없이 이더를 그냥 돈 보내려고 하면 돌려줌
-    fallback() external payable {
-        payable(msg.sender).transfer(msg.value);
-        emit meanlessTransfer(msg.sender, msg.value);
-    }
+    // // [------ Fallback, Receive ------]] //
+    // // 데이터 없이 이더를 그냥 돈 보내려고 하면 돌려줌
+    // fallback() external payable {
+    //     payable(msg.sender).transfer(msg.value);
+    //     emit meanlessTransfer(msg.sender, msg.value);
+    // }
     
-    receive() external payable {
-        payable(msg.sender).transfer(msg.value);
-        emit meanlessTransfer(msg.sender, msg.value);
-
-    }
+    // receive() external payable {
+    //     payable(msg.sender).transfer(msg.value);
+    //     emit meanlessTransfer(msg.sender, msg.value);
+    // }
 
     // [------ Balances ------] // 
     uint256 private totalBalance;
 
-    struct Strategies{
+    struct StrategySettledAmount{
         uint256 amount; // 쌓인 금액
         uint256 at; // 마지막으로 정산받은 timestamp
     }
 
-    mapping (address => Strategies) StrategiesBalance;
+    mapping (address => StrategySettledAmount) StrategiesBalance;
 
 
     // [------ Settle ------] //
     // bot -> contract 
-    function SettleFromStrategy_(uint256 amount, address sender, address payable strategy) external payable returns(bool){
+    function SettleFromStrategy_(uint256 amount, address sender, uint256 strategy) external payable returns(bool){
         require(msg.sender == qveCore.getstrategyAddress_(strategy), "Warn : invalid strategy Address");
         require(amount == msg.value, WARN_RECEIVE);
         _SettleAfter(msg.value, sender);
@@ -61,8 +60,10 @@ contract ProtocolFee{
     }
 
     // [------ Distribute ------] //
+    // 서버에서 호출하는 함수 : 가스비가 듭니다. 
     function SendToUnstakeAccount() internal returns(bool){
         qveStaking.receiveSettledEth{value: totalBalance}(totalBalance);
+        _unstakeAfter(totalBalance);
         return true;
     }
     
@@ -75,7 +76,8 @@ contract ProtocolFee{
    }
 
    function _unstakeAfter(uint256 sentAmount) internal returns(bool){
-       
+       totalBalance = totalBalance.sub(sentAmount);
+       return true;
    }
 
 

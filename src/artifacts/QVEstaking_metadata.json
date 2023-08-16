@@ -55,6 +55,19 @@
 				"type": "event"
 			},
 			{
+				"inputs": [],
+				"name": "distributeToQVEholders",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -284,11 +297,11 @@
 			]
 		},
 		"src/QVEstaking.sol": {
-			"keccak256": "0x0b49b6f23b09f2425f9781472412d817f206bfd19acb4d0fcbd87deb69b869ff",
+			"keccak256": "0x0dfa8afe4f3e679ed5fd1c334e9d3615cf53701f0fe38245c6d17b5dd3ebe19a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://3ae8b4bac9947d6322bfad9c1c738d27e18e418117f6fa19414b43a3078e532d",
-				"dweb:/ipfs/QmfJ37LL1CWMU31Z69RhgsFAaRMbFUM6tDuoLdrvv65fLH"
+				"bzz-raw://b96ca325fbc829da6fe79cbb5a7419bd4a1ba0be31a09477be547189bfb580fd",
+				"dweb:/ipfs/QmP5WaSnTCp7Bnn78pkwsSGcTaiz9fVdgVamyxtm9hzqUc"
 			]
 		},
 		"src/tokens/QVEtoken.sol": {
