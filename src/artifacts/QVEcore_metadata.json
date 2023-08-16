@@ -18,16 +18,6 @@
 						"type": "address"
 					},
 					{
-						"internalType": "contract QVEescrow",
-						"name": "_qveEscrow",
-						"type": "address"
-					},
-					{
-						"internalType": "contract QVEvesting",
-						"name": "_qveVesting",
-						"type": "address"
-					},
-					{
 						"internalType": "contract QVEstaking",
 						"name": "_qveStaking",
 						"type": "address"
@@ -434,19 +424,6 @@
 			},
 			{
 				"inputs": [],
-				"name": "qveEscrow",
-				"outputs": [
-					{
-						"internalType": "contract QVEescrow",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
 				"name": "qveStaking",
 				"outputs": [
 					{
@@ -464,19 +441,6 @@
 				"outputs": [
 					{
 						"internalType": "contract QVEswap",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "qveVesting",
-				"outputs": [
-					{
-						"internalType": "contract QVEvesting",
 						"name": "",
 						"type": "address"
 					}
@@ -886,11 +850,11 @@
 			]
 		},
 		"src/QVEcore.sol": {
-			"keccak256": "0x316a99b7fc4335c9e10a9b21f7db5e27830bf54c5d55654120a46c928edf4c26",
+			"keccak256": "0xb897c8451f0c679b6caf610892b6f958f47a5a613a1948c2a650a56ed7cbebe5",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://11515b7ab3d39b2671a8a54afed8c515d3ee374299e7b05a5ce62d4c7784a13c",
-				"dweb:/ipfs/QmSbD6D1z37eT7M3XEUSK7AYhE1ENR6YhFMVrGzdwYWP8W"
+				"bzz-raw://2837ca28c9bbd99d8f9495c5596fcb68a1426181ac81abc30fefafeb464229de",
+				"dweb:/ipfs/QmXpNzwUoRbg1cJjCKwvMCCwp18regWztdd1nLkEVKaAv8"
 			]
 		},
 		"src/QVEescrow.sol": {

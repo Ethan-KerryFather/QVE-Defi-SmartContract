@@ -48,8 +48,8 @@ contract QVEcore is Security, Ownable, IERC721Receiver{
     uint8 private constant ESCROWRATIO = 10;
     QVEtoken public qvetoken;
     QVEnft public qvenft;
-    QVEescrow public qveEscrow;
-    QVEvesting public qveVesting;
+    // QVEescrow public qveEscrow;
+    // QVEvesting public qveVesting;
     QVEstaking public qveStaking;
     QVEswap public qveSwap;
 
@@ -109,16 +109,16 @@ contract QVEcore is Security, Ownable, IERC721Receiver{
     constructor(
         QVEtoken _qveTokenAddress, 
         QVEnft _qvenft, 
-        QVEescrow _qveEscrow, 
-        QVEvesting _qveVesting,
+        // QVEescrow _qveEscrow, 
+        // QVEvesting _qveVesting,
         QVEstaking _qveStaking,
         QVEswap _qveSwap
         ) 
         {
             qvetoken = _qveTokenAddress;
             qvenft = _qvenft;
-            qveEscrow = _qveEscrow;
-            qveVesting = _qveVesting;
+            // qveEscrow = _qveEscrow;
+            // qveVesting = _qveVesting;
             qveStaking = _qveStaking;
             qveSwap = _qveSwap;
 
@@ -245,9 +245,9 @@ contract QVEcore is Security, Ownable, IERC721Receiver{
         _addUserMarginVault(msg.sender, stakeAmount, item_id);
         tokenIdForAddress[item_id] = sender;
 
-        if(lockup){
-            require(qveVesting.addVesting(qveEscrow.mintForLockup(msg.sender, stakeAmount.mul(1e18)), msg.sender), WARNING_VESTING);
-        }
+        // if(lockup){
+        //     require(qveVesting.addVesting(qveEscrow.mintForLockup(msg.sender, stakeAmount.mul(1e18)), msg.sender), WARNING_VESTING);
+        // }
         return item_id;
     }
 
@@ -298,11 +298,11 @@ contract QVEcore is Security, Ownable, IERC721Receiver{
     //     return true;
     // }
 
-    function _makeQVEescrowedAndVesting(address sender,uint256 QVEamount) internal returns(bool){
-        require(qveEscrow.makeQVEescrow(sender, QVEamount.mul(1e18)), WARNING_ESCROW);
-        require(qveVesting.addVesting(QVEamount.mul(1e18), sender), WARNING_VESTING);
-        return true;
-    }
+    // function _makeQVEescrowedAndVesting(address sender,uint256 QVEamount) internal returns(bool){
+    //     require(qveEscrow.makeQVEescrow(sender, QVEamount.mul(1e18)), WARNING_ESCROW);
+    //     require(qveVesting.addVesting(QVEamount.mul(1e18), sender), WARNING_VESTING);
+    //     return true;
+    // }
 
 
     // [------ QVE Swap ------] // 
@@ -320,10 +320,12 @@ contract QVEcore is Security, Ownable, IERC721Receiver{
     // [------ Refund Strategies------] // 
  
     function sendIntoContract_(uint256 tokenId) external returns(bool) {
-    // NFT의 현재 소유자가 함수를 호출한 사람인지 확인
+    // NFT의 현재 소유자가 함수를 호출한 사람인지 확인  
+    console.log(qvenft.getApproved(tokenId));  
     require(qvenft.ownerOf(tokenId) == msg.sender, WARNING_NFTOWNER);
-
-    // NFT를 컨트랙트로 전송
+    require(qvenft.getApproved(tokenId) == address(this), "Warn : need approval for this token");
+    
+    // NFT를 컨트랙트로 전송 ( 아직 소유자 안바뀜 )
     qvenft.safeTransferFrom(msg.sender, address(this), tokenId);
 
    
