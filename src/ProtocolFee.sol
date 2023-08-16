@@ -3,18 +3,21 @@ pragma solidity ^0.8.10;
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "./QVEstaking.sol";
+import "./QVEcore.sol";
 
 contract ProtocolFee{
     using SafeMath for uint256;
     using Counters for Counters.Counter;
     
     QVEstaking qveStaking;
+    QVEcore qveCore;
     Counters.Counter public totalSettle;
     uint256 distributePeriod = 7 days;
 
 
-    constructor(QVEstaking _qveStaking) {
+    constructor(QVEstaking _qveStaking, QVEcore _qveCore) {
         qveStaking = _qveStaking;
+        qveCore = _qveCore;
     }
 
     // [------ Warns ------] //
@@ -48,9 +51,10 @@ contract ProtocolFee{
 
 
     // [------ Settle ------] //
-    function SettleFromStrategy_(uint256 amount, address sender) external payable returns(bool){
+    // bot -> contract 
+    function SettleFromStrategy_(uint256 amount, address sender, address payable strategy) external payable returns(bool){
+        require(msg.sender == qveCore.getstrategyAddress_(strategy), "Warn : invalid strategy Address");
         require(amount == msg.value, WARN_RECEIVE);
-
         _SettleAfter(msg.value, sender);
 
         return true;
@@ -68,6 +72,10 @@ contract ProtocolFee{
         totalSettle.increment();
         totalBalance = totalBalance.add(receiveAmount);
         return true;
+   }
+
+   function _unstakeAfter(uint256 sentAmount) internal returns(bool){
+       
    }
 
 

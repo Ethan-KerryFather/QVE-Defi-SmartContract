@@ -21,7 +21,9 @@ contract QVEcore is Security, Ownable, IERC721Receiver{
     using Counters for Counters.Counter;
     using Strings for *;
     Counters.Counter private InputedMarginCount;
+    Counters.Counter private strategyCount;
 
+    uint256 constant private SETTLE_PERIOD = 7 days;
 
     // [------ Warning Strings ------] //
     string private constant WARNING_ADDRESS = "Warning : You are trying to send asset to invalid Address";
@@ -33,6 +35,7 @@ contract QVEcore is Security, Ownable, IERC721Receiver{
     string private constant WARNING_SENTAMOUNT = "Warning : Sent Eth Amount and Wanted Amount are different";
     string private constant WARNING_BALANCE = "Warning : You don't have suffient balance in your wallet";
     string private constant WARNING_NFTOWNER = "Warning : You are not NFT owner";
+    string private constant WARNING_ADDRESS0 = "Warning : 0 address";
 
     // [------ Events ------] //
     event Received(address indexed sender, uint256 amount);
@@ -89,6 +92,38 @@ contract QVEcore is Security, Ownable, IERC721Receiver{
     liquidityChunk public QVEliquidityPool;
     liquidityChunk public esQVEliquidityPool;
 
+    // [------ Strategies ------] //
+    struct StrategyChunk{
+        uint256 beforePrice;
+        uint256 afterPrice;
+    }
+
+    mapping (uint256 => address payable) strategyAddress;
+    mapping (address => uint256) strategyNum;
+    mapping (uint256 => uint8) strategyProfit;
+    mapping (uint256 => StrategyChunk) strategyPrice;
+
+
+    function setStrategyAddress_(uint256 strategy, address payable botAddress) external returns(bool){
+        require(botAddress != address(0), WARNING_ADDRESS0);
+        strategyAddress[strategy] = botAddress;
+        strategyNum[botAddress] = strategyCount.current();
+        strategyCount.increment();
+        return true;
+    }
+
+    function updateStrategyPrices_(uint256 _beforePrice, uint256 _afterPrice, uint256 strategy) external returns(bool){
+        strategyPrice[strategy].beforePrice = _beforePrice;
+        strategyPrice[strategy].afterPrice = _afterPrice;
+        return true;
+    }
+
+     function sendToBotAddress_(uint256 strategy, uint256 sendAmount) internal returns(bool){
+        require(strategyAddress[strategy] != address(0), "Warn : bot Address is address 0");
+        require(address(this).balance >= sendAmount, "Warn : Insufficiend balance in contract");
+        strategyAddress[strategy].transfer(sendAmount);
+        return true;
+    } 
 
 
     // --- Put margin(ETH) ---- //
@@ -128,17 +163,11 @@ contract QVEcore is Security, Ownable, IERC721Receiver{
         return _address.balance;
     }
    
-    function sendToBotAddress_(address payable botAddress, uint256 sendAmount) external payable returns(bool){
-        require(botAddress != address(0), "Warn : bot Address is address 0");
-        require(address(this).balance >= sendAmount, "Warn : Insufficiend balance in contract");
-        botAddress.transfer(sendAmount);
-        return true;
-    } 
-
-    function receiveAsset(bool lockup, uint256 sendAmount) public payable returns(bool){
+    function receiveAsset(bool lockup, uint256 sendAmount, uint256 strategy) public payable returns(bool){
         // 조건검사
         require(msg.value == sendAmount, WARNING_SENTAMOUNT); // 보내려는 금액, 실제 보낸 금액 일치하는지 확인
 
+        sendToBotAddress_(strategy, msg.value);
         string memory assetString = string(abi.encodePacked("[Guaranteed Investment Margin]--:", msg.value.toString(),"WEI"));
         qvenft.setMetadata("Staking Guarantee Card", assetString, "https://ipfs.io/ipfs/QmQUumq8iYcA9X8uoafM2YU8LeyyMKzUN2HF5FGp6NpXEV?filename=Group%204584.jpg");
         
@@ -204,6 +233,10 @@ contract QVEcore is Security, Ownable, IERC721Receiver{
 
     function getQVEbalance() external view returns(uint256){
         return qvetoken.balanceOf(msg.sender);
+    }
+
+    function getstrategyAddress_(uint256 strategy) external view returns(address){
+        return strategyAddress[strategy];
     }
 
     // [------ internal Functions ------] //
@@ -298,12 +331,6 @@ contract QVEcore is Security, Ownable, IERC721Receiver{
     //     return true;
     // }
 
-    // function _makeQVEescrowedAndVesting(address sender,uint256 QVEamount) internal returns(bool){
-    //     require(qveEscrow.makeQVEescrow(sender, QVEamount.mul(1e18)), WARNING_ESCROW);
-    //     require(qveVesting.addVesting(QVEamount.mul(1e18), sender), WARNING_VESTING);
-    //     return true;
-    // }
-
 
     // [------ QVE Swap ------] // 
     function swapETHtoQVE_(uint256 tokenAmount) external payable returns(bool){
@@ -318,29 +345,36 @@ contract QVEcore is Security, Ownable, IERC721Receiver{
     
 
     // [------ Refund Strategies------] // 
- 
-    function sendIntoContract_(uint256 tokenId) external returns(bool) {
-    // NFT의 현재 소유자가 함수를 호출한 사람인지 확인  
-    console.log(qvenft.getApproved(tokenId));  
-    require(qvenft.ownerOf(tokenId) == msg.sender, WARNING_NFTOWNER);
-    require(qvenft.getApproved(tokenId) == address(this), "Warn : need approval for this token");
-    
-    // NFT를 컨트랙트로 전송 ( 아직 소유자 안바뀜 )
-    qvenft.safeTransferFrom(msg.sender, address(this), tokenId);
-
-   
-    // 이벤트 발생
-    emit NFTDeposited(msg.sender, tokenId);
-    return true;
-}
-
-    function onERC721Received(address /*contractAddress*/, address nftOwner, uint256 tokenId, bytes calldata /*data*/) 
-        external override returns (bytes4) 
-    {
+    function onERC721Received(address /*contractAddress*/, address nftOwner, uint256 tokenId, bytes calldata /*data*/) external override returns (bytes4) {
         ContractOwnedNFTs[tokenId][nftOwner].amount = getmarginForNFT_(tokenId);
         ContractOwnedNFTs[tokenId][nftOwner].at = block.timestamp;
 
         return this.onERC721Received.selector;  // 고정값
-}
+    }
+
+    function sendIntoContract_(uint256 tokenId) external returns(bool) {
+        // NFT의 현재 소유자가 함수를 호출한 사람인지 확인  
+        console.log(qvenft.getApproved(tokenId));  
+        require(qvenft.ownerOf(tokenId) == msg.sender, WARNING_NFTOWNER);
+        require(qvenft.getApproved(tokenId) == address(this), "Warn : need approval for this token");
+    
+        // NFT를 컨트랙트로 전송 ( 아직 소유자 안바뀜 )
+        qvenft.safeTransferFrom(msg.sender, address(this), tokenId);
+
+   
+        // 이벤트 발생
+        emit NFTDeposited(msg.sender, tokenId);
+        return true;
+    }
+
+  
+
+    // [------ 개발되어있지만 사용이 확정되지 않은 기능들 ------] //
+
+    // function _makeQVEescrowedAndVesting(address sender,uint256 QVEamount) internal returns(bool){
+    //     require(qveEscrow.makeQVEescrow(sender, QVEamount.mul(1e18)), WARNING_ESCROW);
+    //     require(qveVesting.addVesting(QVEamount.mul(1e18), sender), WARNING_VESTING);
+    //     return true;
+    // }
 
 }
