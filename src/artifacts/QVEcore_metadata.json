@@ -537,6 +537,25 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "strategyId",
+						"type": "uint256"
+					}
+				],
+				"name": "receiveFromAPI",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "renounceOwnership",
 				"outputs": [],
@@ -556,7 +575,7 @@
 						"type": "uint256"
 					}
 				],
-				"name": "sendBotToContract",
+				"name": "sendFromBotToContract",
 				"outputs": [
 					{
 						"internalType": "bool",
@@ -578,12 +597,27 @@
 				"name": "sendNftToContract",
 				"outputs": [
 					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
+						"internalType": "address",
+						"name": "investor",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "investedAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "profit",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "strategyId",
+						"type": "uint256"
 					}
 				],
-				"stateMutability": "view",
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -742,25 +776,6 @@
 				],
 				"name": "updateStrategyBalance",
 				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					}
-				],
-				"name": "withdrawInvestmentAndProfit",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
@@ -991,11 +1006,11 @@
 			]
 		},
 		"src/QVEcore.sol": {
-			"keccak256": "0xed7fee38cf95e4e2534d227f6fb27c2fe42dbe05affb7909f69cb18964672ddd",
+			"keccak256": "0x08137758b725ce2a46d4e4595031b886c47092063367c4c807eed143783ad6d1",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://fcdf91645187f031e49064dbcaa1468af24d99f4b030e2b485c629a39ea90733",
-				"dweb:/ipfs/QmcUo38bboZ4oLp8ef2sJaCWziE9nYGo6tYpjBkGJDWE2k"
+				"bzz-raw://c8bcda1968e83974254f3c8078bc95bb73a14568cf91bcb144dfa7160c166a45",
+				"dweb:/ipfs/QmPSaLA2Xyc3m9Pqs8oyWQcq9Gc533ma9nUj1AWEKwdy7L"
 			]
 		},
 		"src/QVEescrow.sol": {

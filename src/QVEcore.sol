@@ -359,59 +359,68 @@ contract QVEcore is Security, Ownable, IERC721Receiver {
     }
 
     // [------ Refund Strategies------] //
-
     function onERC721Received(address, address nftOwner, uint256 tokenId, bytes calldata) external override returns (bytes4) {
         ContractOwnedNFTs[tokenId][nftOwner] = ContractNFTFragment({amount: marginForNFT[tokenId], at: block.timestamp});
         return this.onERC721Received.selector;
-    }
+    } 
 
-
-    function withdrawInvestmentAndProfit(uint256 tokenId) external returns(bool) {
+    function sendNftToContract(uint256 tokenId) external returns(address investor, uint256 investedAmount, uint256 profit, uint256 strategyId) {
         // 1. NFT의 소유자 확인
         require(tokenIdForAddress[tokenId] == msg.sender, "Warn : You are not the NFT owner");
         require(qvenft.ownerOf(tokenId) == msg.sender, "Warn : You are not the NFT owner");
 
         // 2. 해당 tokenId에 대한 strategyId 가져오기
-        uint256 strategyId = tokenIdToStrategyId[tokenId];
+        strategyId = tokenIdToStrategyId[tokenId];
 
         // 3. 투자자의 원금 및 수익금 계산
-        uint256 investedAmount = marginForNFT[tokenId];
-        uint256 profit = getIndividualProfit(msg.sender, tokenId, strategyId); 
+        investor = msg.sender;
+        investedAmount = marginForNFT[tokenId];
+        profit = getIndividualProfit(msg.sender, tokenId, strategyId); 
 
-        // 4. 봇에게서 사용자에게 원금 및 수익금 전송
-        // 이 부분이 골때림 어카지
-        
+        // NFT를 컨트랙트로 전송
+        qvenft.safeTransferFrom(msg.sender, address(this), tokenId);
 
-        // 5. 전략의 현재 잔액 업데이트
-        strategies[strategyId].currentBalance -= (investedAmount + profit);
-
-        // 6. 투자자의 기록 업데이트
-        _removeIndividualInvestmentRecord(msg.sender, tokenId);
-
-        return true;
-    }   
-
-    function sendNftToContract(uint256 tokenId) external view returns(bool){
-         // 1. NFT의 소유자 확인
-        require(tokenIdForAddress[tokenId] == msg.sender, "Warn : You are not the NFT owner");
-        require(qvenft.ownerOf(tokenId) == msg.sender, "Warn : You are not the NFT owner");
-
-        // 2. 해당 tokenId에 대한 strategyId 가져오기
-        uint256 strategyId = tokenIdToStrategyId[tokenId];
-
-        // 3. 투자자의 원금 및 수익금 계산
-        uint256 investedAmount = marginForNFT[tokenId];
-        uint256 profit = getIndividualProfit(msg.sender, tokenId, strategyId); 
-        return true;
+        return (investor, investedAmount, profit, strategyId);
     }
 
-    function sendBotToContract(uint256 sendAmount, uint256 strategyId) external payable returns(bool){
+
+    function sendFromBotToContract(uint256 sendAmount, uint256 strategyId) external payable returns(bool){
         require(msg.value == sendAmount, "Warn : Send amount is different with msg.value");
         require(msg.sender == getstrategyAddress(strategyId), "Warn : Send trying address is not the strategy Address");
         return true;
     }
 
+    function sendContractToInvestor(uint256 sendAmount) internal returns(bool){
+        payable(msg.sender).transfer(sendAmount);
+        return true;
+    }
 
+        // API가 컨트랙트로 돈을 보낼 때 호출하는 함수
+    function receiveFromAPI(uint256 strategyId) external payable returns(bool) {
+        require(msg.sender == getstrategyAddress(strategyId), "Warn : Send trying address is not the strategy Address");
+    
+        // 사용자에게 투자금과 수익금을 전송
+        sendContractToInvestor(msg.value);
+    
+        // 사용자의 투자 정보와 NFT 정보를 업데이트
+        _updateInvestmentInfo(msg.sender);
+    
+        return true;
+    }
+
+    // 사용자의 투자 정보와 NFT 정보를 업데이트하는 내부 함수
+    function _updateInvestmentInfo(address investor) internal {
+        // 사용자의 투자 정보 업데이트
+        delete individualInvestments[investor];
+    
+        // 사용자의 NFT 정보 업데이트
+        for (uint256 i = 0; i < nftVault[investor].fragment.length; i++) {
+            uint256 tokenId = nftVault[investor].fragment[i].tokenId;
+            delete tokenIdForAddress[tokenId];
+            delete marginForNFT[tokenId];
+        }
+        delete nftVault[investor];
+    }
 }
 
   
