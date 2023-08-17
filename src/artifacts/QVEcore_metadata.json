@@ -128,43 +128,6 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address payable",
-						"name": "destination",
-						"type": "address"
-					}
-				],
-				"name": "_forwardFunds",
-				"outputs": [],
-				"stateMutability": "payable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "_to",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "sendAmount",
-						"type": "uint256"
-					}
-				],
-				"name": "_sendQVEFromLiquidity",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
 						"internalType": "uint256",
 						"name": "tokenId",
 						"type": "uint256"
@@ -198,24 +161,6 @@
 					}
 				],
 				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "esQVEliquidityPool",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "balance",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "at",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -274,6 +219,35 @@
 						"internalType": "struct QVEcore.userMarginData",
 						"name": "",
 						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "investor",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "investmentIndex",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "strategyId",
+						"type": "uint256"
+					}
+				],
+				"name": "getIndividualProfit",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -344,8 +318,14 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "getQVEbalance",
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "strategyId",
+						"type": "uint256"
+					}
+				],
+				"name": "getStrategyProfitPercentage",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -369,6 +349,59 @@
 					{
 						"internalType": "uint256",
 						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "strategy",
+						"type": "uint256"
+					}
+				],
+				"name": "getstrategyAddress_",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "individualInvestments",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "investedAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "strategyInitialBalance",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "at",
 						"type": "uint256"
 					}
 				],
@@ -485,6 +518,11 @@
 						"internalType": "uint256",
 						"name": "sendAmount",
 						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "strategyId",
+						"type": "uint256"
 					}
 				],
 				"name": "receiveAsset",
@@ -509,43 +547,18 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "tokenId",
+						"name": "strategyId",
 						"type": "uint256"
-					}
-				],
-				"name": "sendIntoContract_",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
+					},
 					{
 						"internalType": "address payable",
 						"name": "botAddress",
 						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "sendAmount",
-						"type": "uint256"
 					}
 				],
-				"name": "sendToBotAddress_",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "payable",
+				"name": "setStrategy",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -570,6 +583,35 @@
 					}
 				],
 				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "strategies",
+				"outputs": [
+					{
+						"internalType": "address payable",
+						"name": "botAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "initialBalance",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "currentBalance",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -619,6 +661,24 @@
 					}
 				],
 				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "strategyId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "newBalance",
+						"type": "uint256"
+					}
+				],
+				"name": "updateStrategyBalance",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -850,11 +910,11 @@
 			]
 		},
 		"src/QVEcore.sol": {
-			"keccak256": "0xb897c8451f0c679b6caf610892b6f958f47a5a613a1948c2a650a56ed7cbebe5",
+			"keccak256": "0xc06b5f733152c2ce7ace65d30411d92e2e31b68539d4ce97778a9661c49d2c77",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://2837ca28c9bbd99d8f9495c5596fcb68a1426181ac81abc30fefafeb464229de",
-				"dweb:/ipfs/QmXpNzwUoRbg1cJjCKwvMCCwp18regWztdd1nLkEVKaAv8"
+				"bzz-raw://f5ac4fcfaa32fb66c387e5e96512f3979d4497b4b4a115e981fea6035f52a19f",
+				"dweb:/ipfs/QmezuWhBQ6ExD9fseXDhSFBi2ztz23yLScJSPoMpyvkgKq"
 			]
 		},
 		"src/QVEescrow.sol": {
@@ -874,11 +934,11 @@
 			]
 		},
 		"src/QVEstaking.sol": {
-			"keccak256": "0x0b49b6f23b09f2425f9781472412d817f206bfd19acb4d0fcbd87deb69b869ff",
+			"keccak256": "0x0dfa8afe4f3e679ed5fd1c334e9d3615cf53701f0fe38245c6d17b5dd3ebe19a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://3ae8b4bac9947d6322bfad9c1c738d27e18e418117f6fa19414b43a3078e532d",
-				"dweb:/ipfs/QmfJ37LL1CWMU31Z69RhgsFAaRMbFUM6tDuoLdrvv65fLH"
+				"bzz-raw://b96ca325fbc829da6fe79cbb5a7419bd4a1ba0be31a09477be547189bfb580fd",
+				"dweb:/ipfs/QmP5WaSnTCp7Bnn78pkwsSGcTaiz9fVdgVamyxtm9hzqUc"
 			]
 		},
 		"src/QVEswap.sol": {

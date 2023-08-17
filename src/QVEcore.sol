@@ -120,10 +120,10 @@ contract QVEcore is Security, Ownable, IERC721Receiver {
     mapping(address => IndividualInvestment[]) public individualInvestments;
 
     function getIndividualProfit(address investor, uint256 investmentIndex, uint256 strategyId) public view returns (uint256) {
-    IndividualInvestment memory investment = individualInvestments[investor][investmentIndex];
-    uint256 currentStrategyBalance = strategies[strategyId].currentBalance;
-    uint256 profit = currentStrategyBalance - investment.strategyInitialBalance;
-    return (investment.investedAmount * profit) / investment.strategyInitialBalance;
+        IndividualInvestment memory investment = individualInvestments[investor][investmentIndex];
+        uint256 currentStrategyBalance = strategies[strategyId].currentBalance;
+        uint256 profit = currentStrategyBalance - investment.strategyInitialBalance;
+        return (investment.investedAmount * profit) / investment.strategyInitialBalance;
     }
 
 
@@ -202,16 +202,16 @@ contract QVEcore is Security, Ownable, IERC721Receiver {
     }
 
     function burnInvestmentGuarantee(uint256 tokenId) public returns(bool) {
-    require(tokenIdForAddress[tokenId] == msg.sender, "You are not the NFT owner");
-    require(qvenft.ownerOf(tokenId) == msg.sender, "You are not the NFT owner");
-    qvenft.burnNFT(tokenId);
-    require(qvetoken.normal_mint(msg.sender, marginForNFT[tokenId].mul(1e18)), "Transfer failed");
+        require(tokenIdForAddress[tokenId] == msg.sender, "You are not the NFT owner");
+        require(qvenft.ownerOf(tokenId) == msg.sender, "You are not the NFT owner");
+        qvenft.burnNFT(tokenId);
+        require(qvetoken.normal_mint(msg.sender, marginForNFT[tokenId].mul(1e18)), "Transfer failed");
 
-    // Remove individual investment record
-    _removeIndividualInvestmentRecord(msg.sender, tokenId);
+        // Remove individual investment record
+        _removeIndividualInvestmentRecord(msg.sender, tokenId);
 
-    _removeMarginData(tokenId, msg.sender);
-    return true;
+        _removeMarginData(tokenId, msg.sender);
+        return true;
     }
 
     function _removeIndividualInvestmentRecord(address investor, uint256 tokenId) internal {
