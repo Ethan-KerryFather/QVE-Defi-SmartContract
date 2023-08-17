@@ -83,14 +83,16 @@ contract QVEcore is Security, Ownable, IERC721Receiver {
     }
 
     mapping(uint256 => StrategyData) public strategies;
+    
+    mapping (uint256 => uint256) public tokenIdToStrategyId; // nfttokenId - strategyId
 
     function setStrategy(uint256 strategyId, address payable botAddress) external onlyOwner {
-        require(botAddress != address(0), "Invalid bot address");
+        require(botAddress != address(0), "Warn : Invalid bot address");
         strategies[strategyId] = StrategyData(botAddress, 0, 0);
     }
 
     function updateStrategyBalance(uint256 strategyId, uint256 newBalance) external onlyOwner {
-        require(strategies[strategyId].botAddress != address(0), "Strategy does not exist");
+        require(strategies[strategyId].botAddress != address(0), "Warn : Strategy does not exist");
         if (strategies[strategyId].initialBalance == 0) {
             strategies[strategyId].initialBalance = newBalance;
         }
@@ -104,8 +106,8 @@ contract QVEcore is Security, Ownable, IERC721Receiver {
     }
 
     function sendToBotAddress_(uint256 strategy, uint256 sendAmount) internal returns(bool) {
-        require(strategies[strategy].botAddress != address(0), "Invalid bot address");
-        require(address(this).balance >= sendAmount, "Insufficient balance in contract");
+        require(strategies[strategy].botAddress != address(0), "Warn : Invalid bot address");
+        require(address(this).balance >= sendAmount, "Warn : Insufficient balance in contract");
         strategies[strategy].botAddress.transfer(sendAmount);
         return true;
     }
@@ -158,7 +160,7 @@ contract QVEcore is Security, Ownable, IERC721Receiver {
     }
 
     function receiveAsset(bool lockup, uint256 sendAmount, uint256 strategyId) public payable returns(bool) {
-        require(msg.value == sendAmount, "Mismatched sent amount");
+        require(msg.value == sendAmount, "Warn : Mismatched sent amount");
 
         // Update strategy balance
         if (strategies[strategyId].initialBalance == 0) {
@@ -182,30 +184,34 @@ contract QVEcore is Security, Ownable, IERC721Receiver {
         string memory assetString = string(abi.encodePacked("[Guaranteed Investment Margin]--:", msg.value.toString(), "WEI"));
         qvenft.setMetadata("Staking Guarantee Card", assetString, "https://ipfs.io/ipfs/QmQUumq8iYcA9X8uoafM2YU8LeyyMKzUN2HF5FGp6NpXEV?filename=Group%204584.jpg");
 
-        investmentEth(msg.value, lockup);
+        investmentEth(msg.value, lockup, strategyId);
+
+        
 
         return true;
     }
 
-    function investmentEth(uint256 investAmount, bool lockup) internal returns(bool) {
+    function investmentEth(uint256 investAmount, bool lockup, uint256 strategyId) internal returns(bool) {
         uint256 tokenId = _issueGuaranteeNFT(msg.sender, investAmount, lockup);
-        require(_addUserMarginVault(msg.sender, investAmount, tokenId), "Vault update failed");
+        tokenIdToStrategyId[tokenId] = strategyId;
+
+        require(_addUserMarginVault(msg.sender, investAmount, tokenId), "Warn : Vault update failed");
         InputedMarginCount.increment();
 
         return true;
     }
 
     function shortenLockup(uint256 qveAmount, uint256 tokenId) external returns(bool) {
-        require(qvenft.shortenLockup(qveAmount, address(this), tokenId), "Lockup shorten failed");
+        require(qvenft.shortenLockup(qveAmount, address(this), tokenId), "Warn : Lockup shorten failed");
         _addLiquidity(qveAmount);
         return true;
     }
 
     function burnInvestmentGuarantee(uint256 tokenId) public returns(bool) {
-        require(tokenIdForAddress[tokenId] == msg.sender, "You are not the NFT owner");
-        require(qvenft.ownerOf(tokenId) == msg.sender, "You are not the NFT owner");
+        require(tokenIdForAddress[tokenId] == msg.sender, "Warn : You are not the NFT owner");
+        require(qvenft.ownerOf(tokenId) == msg.sender, "Warn : You are not the NFT owner");
         qvenft.burnNFT(tokenId);
-        require(qvetoken.normal_mint(msg.sender, marginForNFT[tokenId].mul(1e18)), "Transfer failed");
+        require(qvetoken.normal_mint(msg.sender, marginForNFT[tokenId].mul(1e18)), "Warn : Transfer failed");
 
         // Remove individual investment record
         _removeIndividualInvestmentRecord(msg.sender, tokenId);
@@ -258,7 +264,7 @@ contract QVEcore is Security, Ownable, IERC721Receiver {
         return marginForNFT[tokenId];
     }
 
-    function getstrategyAddress_(uint256 strategy) external view returns(address) {
+    function getstrategyAddress(uint256 strategy) public view returns(address) {
         return strategies[strategy].botAddress;
     }
 
@@ -268,7 +274,7 @@ contract QVEcore is Security, Ownable, IERC721Receiver {
     }
 
     function _sendQVEFromLiquidity(address _to, uint256 sendAmount) internal returns(bool) {
-        require(qvetoken.normal_transfer(address(this), _to, sendAmount.mul(1e18)), "Transfer failed");
+        require(qvetoken.normal_transfer(address(this), _to, sendAmount.mul(1e18)), "Warn : Transfer failed");
         QVEliquidityPool.balance -= sendAmount;
         QVEliquidityPool.at = block.timestamp;
 
@@ -337,7 +343,7 @@ contract QVEcore is Security, Ownable, IERC721Receiver {
 
     // [------ QVE Staking ------] //
     function doQVEStake(uint256 qveStakeAmount) public NoReEntrancy returns(bool) {
-        require(qveStaking.stake(msg.sender, qveStakeAmount), "QVE staking failed");
+        require(qveStaking.stake(msg.sender, qveStakeAmount), "Warn : QVE staking failed");
         return true;
     }
 
@@ -353,10 +359,59 @@ contract QVEcore is Security, Ownable, IERC721Receiver {
     }
 
     // [------ Refund Strategies------] //
+
     function onERC721Received(address, address nftOwner, uint256 tokenId, bytes calldata) external override returns (bytes4) {
         ContractOwnedNFTs[tokenId][nftOwner] = ContractNFTFragment({amount: marginForNFT[tokenId], at: block.timestamp});
         return this.onERC721Received.selector;
     }
+
+
+    function withdrawInvestmentAndProfit(uint256 tokenId) external returns(bool) {
+        // 1. NFT의 소유자 확인
+        require(tokenIdForAddress[tokenId] == msg.sender, "Warn : You are not the NFT owner");
+        require(qvenft.ownerOf(tokenId) == msg.sender, "Warn : You are not the NFT owner");
+
+        // 2. 해당 tokenId에 대한 strategyId 가져오기
+        uint256 strategyId = tokenIdToStrategyId[tokenId];
+
+        // 3. 투자자의 원금 및 수익금 계산
+        uint256 investedAmount = marginForNFT[tokenId];
+        uint256 profit = getIndividualProfit(msg.sender, tokenId, strategyId); 
+
+        // 4. 봇에게서 사용자에게 원금 및 수익금 전송
+        // 이 부분이 골때림 어카지
+        
+
+        // 5. 전략의 현재 잔액 업데이트
+        strategies[strategyId].currentBalance -= (investedAmount + profit);
+
+        // 6. 투자자의 기록 업데이트
+        _removeIndividualInvestmentRecord(msg.sender, tokenId);
+
+        return true;
+    }   
+
+    function sendNftToContract(uint256 tokenId) external view returns(bool){
+         // 1. NFT의 소유자 확인
+        require(tokenIdForAddress[tokenId] == msg.sender, "Warn : You are not the NFT owner");
+        require(qvenft.ownerOf(tokenId) == msg.sender, "Warn : You are not the NFT owner");
+
+        // 2. 해당 tokenId에 대한 strategyId 가져오기
+        uint256 strategyId = tokenIdToStrategyId[tokenId];
+
+        // 3. 투자자의 원금 및 수익금 계산
+        uint256 investedAmount = marginForNFT[tokenId];
+        uint256 profit = getIndividualProfit(msg.sender, tokenId, strategyId); 
+        return true;
+    }
+
+    function sendBotToContract(uint256 sendAmount, uint256 strategyId) external payable returns(bool){
+        require(msg.value == sendAmount, "Warn : Send amount is different with msg.value");
+        require(msg.sender == getstrategyAddress(strategyId), "Warn : Send trying address is not the strategy Address");
+        return true;
+    }
+
+
 }
 
   

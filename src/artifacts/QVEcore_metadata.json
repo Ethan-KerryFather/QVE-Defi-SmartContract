@@ -363,7 +363,7 @@
 						"type": "uint256"
 					}
 				],
-				"name": "getstrategyAddress_",
+				"name": "getstrategyAddress",
 				"outputs": [
 					{
 						"internalType": "address",
@@ -547,6 +547,49 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
+						"name": "sendAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "strategyId",
+						"type": "uint256"
+					}
+				],
+				"name": "sendBotToContract",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "sendNftToContract",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
 						"name": "strategyId",
 						"type": "uint256"
 					},
@@ -655,6 +698,25 @@
 			{
 				"inputs": [
 					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "tokenIdToStrategyId",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "address",
 						"name": "newOwner",
 						"type": "address"
@@ -680,6 +742,25 @@
 				],
 				"name": "updateStrategyBalance",
 				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "withdrawInvestmentAndProfit",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
@@ -910,11 +991,11 @@
 			]
 		},
 		"src/QVEcore.sol": {
-			"keccak256": "0x2fa6029de1e112a2e70b9aae4397d6cd9a16ec0e1fcb28a2282f62f2d847569a",
+			"keccak256": "0xed7fee38cf95e4e2534d227f6fb27c2fe42dbe05affb7909f69cb18964672ddd",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://7676b7c9d78727fdd061b2e28c26725f5a8bcd8962c90ce7bd3344223d3d5702",
-				"dweb:/ipfs/QmTaAnmay2EtbRRF1WERyvnKcVVP2zN424eZqYvdsdgKTV"
+				"bzz-raw://fcdf91645187f031e49064dbcaa1468af24d99f4b030e2b485c629a39ea90733",
+				"dweb:/ipfs/QmcUo38bboZ4oLp8ef2sJaCWziE9nYGo6tYpjBkGJDWE2k"
 			]
 		},
 		"src/QVEescrow.sol": {
