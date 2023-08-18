@@ -434,6 +434,7 @@ contract QVEcore is Security, Ownable, IERC721Receiver {
         qvenft.transferFrom(from, address(this), tokenId);
         return true;
     }
+    
 }
 
     // [------ 개발되어있지만 사용이 확정되지 않은 기능들 ------] //

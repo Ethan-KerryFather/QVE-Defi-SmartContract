@@ -56,7 +56,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "distributeToQVEholders",
+				"name": "claimDistribution",
 				"outputs": [
 					{
 						"internalType": "bool",
@@ -64,7 +64,26 @@
 						"type": "bool"
 					}
 				],
-				"stateMutability": "nonpayable",
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "distributedEth",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -99,6 +118,25 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "staker",
+						"type": "address"
+					}
+				],
+				"name": "getStakePercentage",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "getTotalStakeNum",
 				"outputs": [
@@ -114,6 +152,19 @@
 			{
 				"inputs": [],
 				"name": "getTotalStaked",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getTotalStakers",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -178,6 +229,44 @@
 					}
 				],
 				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "stakePercentage",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "stakers",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -297,11 +386,11 @@
 			]
 		},
 		"src/QVEstaking.sol": {
-			"keccak256": "0x0dfa8afe4f3e679ed5fd1c334e9d3615cf53701f0fe38245c6d17b5dd3ebe19a",
+			"keccak256": "0x4c36920c159f3e102b9ff32d7bd2f9999a4fe9dfaf174965ffc61f1d2e0cb464",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b96ca325fbc829da6fe79cbb5a7419bd4a1ba0be31a09477be547189bfb580fd",
-				"dweb:/ipfs/QmP5WaSnTCp7Bnn78pkwsSGcTaiz9fVdgVamyxtm9hzqUc"
+				"bzz-raw://bb5337f92a5103e6032b73adcfe45ea29db199677f41002d211af54150926c57",
+				"dweb:/ipfs/QmRnmCGgo4Qid8K1janBin89Fp31pUBFMLEgfsMTdRN1ep"
 			]
 		},
 		"src/tokens/QVEtoken.sol": {

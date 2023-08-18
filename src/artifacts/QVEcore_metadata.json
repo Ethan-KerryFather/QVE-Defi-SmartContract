@@ -1068,11 +1068,11 @@
 			]
 		},
 		"src/QVEcore.sol": {
-			"keccak256": "0x0a814f986b88128df36459b5ba433268ba30e896224e2d83ec4af4a38f6e958c",
+			"keccak256": "0xad2463a05798d3adc01860817f88bb5250040dcc1625e8578b3ebdfc7c69d859",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ce3534399c7abae26f761bee93611e03781b6d586dfca6dcf7dd48a2da34b581",
-				"dweb:/ipfs/QmbTDdVdHm41KghPVvqwFjTf9eChUrUNYnGVVFthD8fB2d"
+				"bzz-raw://25ad2dbf19b7fb9731d2881afb5efb3d8ed7d61ac71e722b26821baf2f76c46b",
+				"dweb:/ipfs/Qmevkbv5FxkSAfTkRBhpoRQTPejPNw2QN6b56gUzfdMTvC"
 			]
 		},
 		"src/QVEescrow.sol": {

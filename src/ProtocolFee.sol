@@ -8,38 +8,17 @@ import "./QVEcore.sol";
 contract ProtocolFee{
     using SafeMath for uint256;
     using Counters for Counters.Counter;
-    
     QVEstaking qveStaking;
     QVEcore qveCore;
     Counters.Counter public totalSettle;
-    uint256 distributePeriod = 7 days;
-
 
     constructor(QVEstaking _qveStaking, QVEcore _qveCore) {
         qveStaking = _qveStaking;
         qveCore = _qveCore;
     }
 
-    // [------ Warns ------] //
-    string constant private WARN_RECEIVE = "Warn : Settle From Strategy wallet";
-
-    // [------ Events ------] //
-    // event meanlessTransfer(address sender, uint256 amount);
-
-    // // [------ Fallback, Receive ------]] //
-    // // 데이터 없이 이더를 그냥 돈 보내려고 하면 돌려줌
-    // fallback() external payable {
-    //     payable(msg.sender).transfer(msg.value);
-    //     emit meanlessTransfer(msg.sender, msg.value);
-    // }
-    
-    // receive() external payable {
-    //     payable(msg.sender).transfer(msg.value);
-    //     emit meanlessTransfer(msg.sender, msg.value);
-    // }
-
     // [------ Balances ------] // 
-    uint256 private totalBalance;
+    uint256 private totalBalance; // Protocol Fee Contract 가 들고 있는 금액입니다.  
 
     struct StrategySettledAmount{
         uint256 amount; // 쌓인 금액
@@ -48,38 +27,32 @@ contract ProtocolFee{
 
     mapping (address => StrategySettledAmount) StrategiesBalance;
 
-
-    // [------ Settle ------] //
-    // bot -> contract 
-    function SettleFromStrategy_(uint256 amount, address sender, uint256 strategy) external payable returns(bool){
-        require(msg.sender == qveCore.getstrategyAddress_(strategy), "Warn : invalid strategy Address");
-        require(amount == msg.value, WARN_RECEIVE);
-        _SettleAfter(msg.value, sender);
+    // [------ Settle From Stretegy ------] //
+    function SettleFromStrategy_(uint256 strategy) external payable returns(bool){ // 서버에서 호출하는 함수 ( msg.sender는 봇주소로 설정해주세요 )
+        require(msg.sender == qveCore.getstrategyAddress(strategy), "Warn : invalid strategy Address");
+        _SettleAfter(msg.value, msg.sender);
 
         return true;
     }
 
-    // [------ Distribute ------] //
-    // 서버에서 호출하는 함수 : 가스비가 듭니다. 
-    function SendToUnstakeAccount() internal returns(bool){
+
+    // [------ Send To Distribute Contract ------] //
+    function SendToUnstakeAccount_() external returns(bool){    // 서버에서 호출하는 함수
         qveStaking.receiveSettledEth{value: totalBalance}(totalBalance);
-        _unstakeAfter(totalBalance);
+        _sendAfter(totalBalance);
         return true;
     }
     
-   // [------ Internal ------] // 
-   function _SettleAfter(uint256 receiveAmount, address sender) internal returns(bool){
+    function _sendAfter(uint256 sentAmount) internal returns(bool){
+        totalBalance = totalBalance.sub(sentAmount);
+        return true;
+    }
+
+    // [------ Internal ------] // 
+    function _SettleAfter(uint256 receiveAmount, address sender) internal returns(bool){
         StrategiesBalance[sender].amount = StrategiesBalance[sender].amount.add(receiveAmount);
         totalSettle.increment();
         totalBalance = totalBalance.add(receiveAmount);
         return true;
-   }
-
-   function _unstakeAfter(uint256 sentAmount) internal returns(bool){
-       totalBalance = totalBalance.sub(sentAmount);
-       return true;
-   }
-
-
-
+    }
 }
