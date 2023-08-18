@@ -166,6 +166,40 @@
 			{
 				"inputs": [
 					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "getAmountHavetobePayed_",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "investor",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "investedAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "profit",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "strategyId",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "address",
 						"name": "_address",
 						"type": "address"
@@ -331,6 +365,25 @@
 						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "getTokenOwner_",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
 					}
 				],
 				"stateMutability": "view",
@@ -592,29 +645,19 @@
 						"internalType": "uint256",
 						"name": "tokenId",
 						"type": "uint256"
-					}
-				],
-				"name": "sendNftToContract",
-				"outputs": [
+					},
 					{
 						"internalType": "address",
-						"name": "investor",
+						"name": "from",
 						"type": "address"
-					},
+					}
+				],
+				"name": "sendIntoContract",
+				"outputs": [
 					{
-						"internalType": "uint256",
-						"name": "investedAmount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "profit",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "strategyId",
-						"type": "uint256"
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -738,6 +781,25 @@
 					}
 				],
 				"name": "tokenIdToStrategyId",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "totalInvestedAmount",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -1006,11 +1068,11 @@
 			]
 		},
 		"src/QVEcore.sol": {
-			"keccak256": "0x08137758b725ce2a46d4e4595031b886c47092063367c4c807eed143783ad6d1",
+			"keccak256": "0x0a814f986b88128df36459b5ba433268ba30e896224e2d83ec4af4a38f6e958c",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://c8bcda1968e83974254f3c8078bc95bb73a14568cf91bcb144dfa7160c166a45",
-				"dweb:/ipfs/QmPSaLA2Xyc3m9Pqs8oyWQcq9Gc533ma9nUj1AWEKwdy7L"
+				"bzz-raw://ce3534399c7abae26f761bee93611e03781b6d586dfca6dcf7dd48a2da34b581",
+				"dweb:/ipfs/QmbTDdVdHm41KghPVvqwFjTf9eChUrUNYnGVVFthD8fB2d"
 			]
 		},
 		"src/QVEescrow.sol": {

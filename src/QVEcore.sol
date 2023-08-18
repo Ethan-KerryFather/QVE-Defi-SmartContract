@@ -63,7 +63,7 @@ contract QVEcore is Security, Ownable, IERC721Receiver {
 
     mapping(address => NFTs) nftVault;
     mapping(uint256 => uint256) marginForNFT;
-    mapping(uint256 => address) tokenIdForAddress;
+    mapping(uint256 => address) tokenIdForAddress; // tokenId - address(nftOwner)
 
     struct ContractNFTFragment {
         uint256 amount;
@@ -99,10 +99,13 @@ contract QVEcore is Security, Ownable, IERC721Receiver {
         strategies[strategyId].currentBalance = newBalance;
     }
 
+    mapping(uint256 => uint256) public totalInvestedAmount;
+
+
     function getStrategyProfitPercentage(uint256 strategyId) public view returns (uint256) {
-        StrategyData memory strategy = strategies[strategyId];
-        if (strategy.initialBalance == 0) return 0;
-        return (strategy.currentBalance * 100) / strategy.initialBalance;
+        uint256 currentProfit = strategies[strategyId].currentBalance.sub(totalInvestedAmount[strategyId]);
+        if (totalInvestedAmount[strategyId] == 0) return 0;
+        return (currentProfit * 100) / totalInvestedAmount[strategyId];
     }
 
     function sendToBotAddress_(uint256 strategy, uint256 sendAmount) internal returns(bool) {
@@ -180,6 +183,9 @@ contract QVEcore is Security, Ownable, IERC721Receiver {
 
         // Send ETH to strategy address
         sendToBotAddress_(strategyId, msg.value);
+
+        totalInvestedAmount[strategyId] += msg.value;
+
 
         string memory assetString = string(abi.encodePacked("[Guaranteed Investment Margin]--:", msg.value.toString(), "WEI"));
         qvenft.setMetadata("Staking Guarantee Card", assetString, "https://ipfs.io/ipfs/QmQUumq8iYcA9X8uoafM2YU8LeyyMKzUN2HF5FGp6NpXEV?filename=Group%204584.jpg");
@@ -266,6 +272,10 @@ contract QVEcore is Security, Ownable, IERC721Receiver {
 
     function getstrategyAddress(uint256 strategy) public view returns(address) {
         return strategies[strategy].botAddress;
+    }
+
+    function getTokenOwner_(uint256 tokenId) external view returns(address){
+        return tokenIdForAddress[tokenId];
     }
 
     // [------ internal Functions ------] //
@@ -364,10 +374,10 @@ contract QVEcore is Security, Ownable, IERC721Receiver {
         return this.onERC721Received.selector;
     } 
 
-    function sendNftToContract(uint256 tokenId) external returns(address investor, uint256 investedAmount, uint256 profit, uint256 strategyId) {
+    function getAmountHavetobePayed_(uint256 tokenId) external view returns(address investor, uint256 investedAmount, uint256 profit, uint256 strategyId) {
         // 1. NFT의 소유자 확인
-        require(tokenIdForAddress[tokenId] == msg.sender, "Warn : You are not the NFT owner");
-        require(qvenft.ownerOf(tokenId) == msg.sender, "Warn : You are not the NFT owner");
+        //require(tokenIdForAddress[tokenId] == msg.sender, "Warn : You are not the NFT owner");
+        //require(qvenft.ownerOf(tokenId) == msg.sender, "Warn : You are not the NFT owner");
 
         // 2. 해당 tokenId에 대한 strategyId 가져오기
         strategyId = tokenIdToStrategyId[tokenId];
@@ -376,13 +386,11 @@ contract QVEcore is Security, Ownable, IERC721Receiver {
         investor = msg.sender;
         investedAmount = marginForNFT[tokenId];
         profit = getIndividualProfit(msg.sender, tokenId, strategyId); 
-
-        // NFT를 컨트랙트로 전송
-        qvenft.safeTransferFrom(msg.sender, address(this), tokenId);
-
+        
         return (investor, investedAmount, profit, strategyId);
     }
 
+  
 
     function sendFromBotToContract(uint256 sendAmount, uint256 strategyId) external payable returns(bool){
         require(msg.value == sendAmount, "Warn : Send amount is different with msg.value");
@@ -421,9 +429,12 @@ contract QVEcore is Security, Ownable, IERC721Receiver {
         }
         delete nftVault[investor];
     }
-}
 
-  
+    function sendIntoContract(uint256 tokenId, address from) public returns(bool){
+        qvenft.transferFrom(from, address(this), tokenId);
+        return true;
+    }
+}
 
     // [------ 개발되어있지만 사용이 확정되지 않은 기능들 ------] //
 
