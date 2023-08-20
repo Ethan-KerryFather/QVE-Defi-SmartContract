@@ -1092,11 +1092,11 @@
 			]
 		},
 		"src/QVEstaking.sol": {
-			"keccak256": "0x0dfa8afe4f3e679ed5fd1c334e9d3615cf53701f0fe38245c6d17b5dd3ebe19a",
+			"keccak256": "0xec9c28b348fe5ed30a52b499be2534620567537f0c201f9784e45adedd045021",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b96ca325fbc829da6fe79cbb5a7419bd4a1ba0be31a09477be547189bfb580fd",
-				"dweb:/ipfs/QmP5WaSnTCp7Bnn78pkwsSGcTaiz9fVdgVamyxtm9hzqUc"
+				"bzz-raw://1716312fbe99b96282956fdc896eb1e266d136a823ec24e8b1ece27be10576f5",
+				"dweb:/ipfs/QmbU3BPwbwnZidFWHoM3knNQtJ5yATCFoAFW7avGqBeAj1"
 			]
 		},
 		"src/QVEswap.sol": {

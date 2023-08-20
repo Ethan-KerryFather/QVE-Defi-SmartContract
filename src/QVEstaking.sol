@@ -48,11 +48,12 @@ contract QVEstaking is Security {
         uint256 amount;
         uint256[] at;
     }
-    mapping (address => StakeInfo) stakeInfo;   // 스테이킹 액수 관리 ( 총 )
-    mapping (address => uint256 count) stakeCount; // 스테이킹 카운더 ( 사람 당 )
+
+    mapping (address => StakeInfo) stakeInfo;   // 스테이킹 액수 - 토탈 (전체)
+    mapping (address => uint256 count) stakeCount; // 어떤 사람이 몇 번 스테이킹 했는지
 
     // Settle balance
-    mapping(uint256 => uint256) SettlementLog; // block.timestamp => amount
+    mapping(uint256 => uint256) SettlementLog; // block.timestamp => amount 언제 얼마 settlement 되었는지
     uint256 private totalSettlement;
     
 
@@ -61,7 +62,7 @@ contract QVEstaking is Security {
     }
 
     // [------ Getters ------] //
-    function getTotalStaked() external view returns(uint256){
+    function getTotalStaked() public view returns(uint256){
         return totalStaked;
     }
 
@@ -106,57 +107,40 @@ contract QVEstaking is Security {
     // [------ distribute profit to stakers ------] // 
     address[] public stakers;
 
-    // 스테이킹 함수 내에서
-  function _stakeAfter(address staker, uint256 stakeAmount) internal returns(bool){
-    if (stakeInfo[staker].amount == 0) { // 이 조건은 처음 스테이킹하는 경우에만 true가 된당
-        stakers.push(staker);
-    }
-    totalStaked = totalStaked.add(stakeAmount);
-    stakeInfo[staker].amount = stakeInfo[staker].amount.add(stakeAmount);
-    stakeInfo[staker].at.push(block.timestamp);
-    stakeCount[staker] = stakeCount[staker].add(1);
+    function _stakeAfter(address staker, uint256 stakeAmount) internal returns(bool){
+        if (stakeInfo[staker].amount == 0) { // 이 조건은 처음 스테이킹하는 경우에만 true가 된당
+            stakers.push(staker);
+        }
+        totalStaked = totalStaked.add(stakeAmount);
+        stakeInfo[staker].amount = stakeInfo[staker].amount.add(stakeAmount);
+        stakeInfo[staker].at.push(block.timestamp);
+        stakeCount[staker] = stakeCount[staker].add(1);
 
-    // Update stake percentage for all stakers
-    for (uint256 i = 0; i < stakers.length; i++) {
-        address currentStaker = stakers[i];
-        stakePercentage[currentStaker] = stakeInfo[currentStaker].amount.mul(100).div(totalStaked);
-    }
+        // 모든 스테이커의 비율을 업데이트
+        for (uint256 i = 0; i < stakers.length; i++) {
+            address currentStaker = stakers[i];
+            stakePercentage[currentStaker] = stakeInfo[currentStaker].amount.mul(100).div(totalStaked);
+        }
 
-    totalStakeCount.increment();
-    return true;
-}
-
-    // [------ Distribute ------] //
-    mapping(address => uint256) public distributedEth;
-
-    function claimDistribution() external payable returns(bool) {
-    // 1. 컨트랙트에 이더리움 잔액이 있는지 확인
-    require(address(this).balance > 0, "No ETH in the contract");
-
-    uint256 totalDistributed = 0;
-
-    // 2. 먼저 전체 분배할 이더리움의 총량을 계산
-    uint256 totalDistributeAmount = address(this).balance.mul(9).div(10);
-
-    // 3. 각 스테이커에게 분배할 이더리움 계산 및 전송
-    for (uint256 i = 0; i < stakers.length; i++) {
-        address staker = stakers[i];
-        uint256 stakerShare = (stakeInfo[staker].amount.mul(totalDistributeAmount)).div(totalStaked);
-
-        require(stakerShare <= address(this).balance - totalDistributed, "Not enough ETH in the contract");
-
-        // 분배된 이더리움 기록
-        distributedEth[staker] = distributedEth[staker].add(stakerShare);
-
-        // 이더리움 전송
-        payable(staker).transfer(1000000000000000);
-        //payable(staker).transfer(stakerShare);
-
-        totalDistributed = totalDistributed.add(stakerShare);
+        totalStakeCount.increment();
+        return true;
     }
 
-    return true;
-}
+
+    function claimDistribution() external returns(bool) {
+        require(address(this).balance > 0, "No ETH in the contract");
+    
+        uint256 totalDistributeAmount = address(this).balance.mul(9).div(10);   // 10%는 플랫폼 이익으로 또 땐다고 치겠습니다 (조절가능)
+        uint256 totalDistributed = 0;  // 이미 배분된 금액을 추적하기 위한 변수
+    
+        for (uint256 i = 0; i < stakers.length; i++) {
+            address staker = stakers[i];    // 계산을 편하게 하기 위해서 일단 스테이커를 지정해둡니다.
+            uint256 giveAmount = totalDistributeAmount.mul(stakeInfo[staker].amount).div(getTotalStaked()); // 각자의 셰어(?)는 분배할 이더리움의 총액 / 개별 스테이킹 큐브 개수 / 총 스테이킹 큐브 개수
+            payable(staker).transfer(giveAmount);
+            totalDistributed = totalDistributed.add(giveAmount);
+        }
+        return true;
+    }
 
 
 
@@ -195,10 +179,5 @@ contract QVEstaking is Security {
     function getTotalStakers() external view returns(uint256) {
     return stakers.length;
 }
-
-    // function claimStakeReward(uint256 stakeNum) internal NoReEntrancy returns(bool){
-    //     uint256 timeFlowed = block.timestamp.sub(stakeVault[stakeNum].startBlock);
-    //     return true;
-    // }
 
 }

@@ -64,26 +64,7 @@
 						"type": "bool"
 					}
 				],
-				"stateMutability": "payable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"name": "distributedEth",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -386,11 +367,11 @@
 			]
 		},
 		"src/QVEstaking.sol": {
-			"keccak256": "0x4c36920c159f3e102b9ff32d7bd2f9999a4fe9dfaf174965ffc61f1d2e0cb464",
+			"keccak256": "0xbd553189bf5ce24c8768fad697e720c03173b07e7fe20bc9a05d92ab9af76542",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://bb5337f92a5103e6032b73adcfe45ea29db199677f41002d211af54150926c57",
-				"dweb:/ipfs/QmRnmCGgo4Qid8K1janBin89Fp31pUBFMLEgfsMTdRN1ep"
+				"bzz-raw://c7e48b4705df11b266ea5d7ccfdceca64e31a15b0c2fd2cc7b78e1250880a18e",
+				"dweb:/ipfs/QmagyfZVFFYC1xzGVXnvtNtWQo4rERAzuLMBdzNQTFRgXB"
 			]
 		},
 		"src/tokens/QVEtoken.sol": {

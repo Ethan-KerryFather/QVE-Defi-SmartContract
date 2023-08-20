@@ -38,16 +38,6 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "address",
-						"name": "sender",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
 						"name": "strategy",
 						"type": "uint256"
 					}
@@ -289,11 +279,11 @@
 			]
 		},
 		"src/ProtocolFee.sol": {
-			"keccak256": "0x6220a5558aeb7e3463e7dcf2710042e9c3b4942290ebe3ddd05988b6e774fec7",
+			"keccak256": "0x1e3963d9947a407e2b4f75e54417eeb3146445b51e5223d402d416f19ea7963b",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://d7c4b355d1cf6ae48ea76ae8dc1930e6ad1395c09aeb1f039a89a30c976e161f",
-				"dweb:/ipfs/QmSJUqunbnWx11hXAtkjgJsEVaoyBTpCiymEonkE44Rcua"
+				"bzz-raw://a89d9dc118792b8e0ee3f4592271cd1b70ff963437db11ccb8742ead5593e920",
+				"dweb:/ipfs/QmaJsfsSx5WhzkMvecC6sjQycqY8qWiXiK4G9B3yTfEEi3"
 			]
 		},
 		"src/QVEcore.sol": {
@@ -321,11 +311,11 @@
 			]
 		},
 		"src/QVEstaking.sol": {
-			"keccak256": "0xad9a789c1af91c012896076153a19385fd1c500077224d82032564eedcd96811",
+			"keccak256": "0xec9c28b348fe5ed30a52b499be2534620567537f0c201f9784e45adedd045021",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://f59b9fd4a6b31add610f7a30c8c22760201d3e7941678d093e36f6f631064951",
-				"dweb:/ipfs/QmekQJTvZXUV9LD3bboqyFSsqDUF4vGn2guqByf3EubKQC"
+				"bzz-raw://1716312fbe99b96282956fdc896eb1e266d136a823ec24e8b1ece27be10576f5",
+				"dweb:/ipfs/QmbU3BPwbwnZidFWHoM3knNQtJ5yATCFoAFW7avGqBeAj1"
 			]
 		},
 		"src/QVEswap.sol": {
