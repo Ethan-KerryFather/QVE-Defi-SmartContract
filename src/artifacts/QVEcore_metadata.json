@@ -198,6 +198,19 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "getBalanceOfStakingContract",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -218,7 +231,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "getEthMarginVault_",
+				"name": "getEthMarginVault",
 				"outputs": [
 					{
 						"components": [
@@ -302,7 +315,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "getNFTbalance_",
+				"name": "getNFTbalance",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -315,7 +328,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "getNfts_",
+				"name": "getNfts",
 				"outputs": [
 					{
 						"components": [
@@ -339,8 +352,77 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					}
+				],
+				"name": "getPersonalStakeInfo",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "amount",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256[]",
+								"name": "at",
+								"type": "uint256[]"
+							}
+						],
+						"internalType": "struct QVEstaking.StakeInfo",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [],
-				"name": "getQVELiquidityAmount_",
+				"name": "getQVELiquidityAmount",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					}
+				],
+				"name": "getQVEbalance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "staker",
+						"type": "address"
+					}
+				],
+				"name": "getStakePercentage",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -390,6 +472,58 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "getTotalSettlement",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getTotalStakeNum",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getTotalStaked",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getTotalStakers",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "uint256",
@@ -397,7 +531,7 @@
 						"type": "uint256"
 					}
 				],
-				"name": "getmarginForNFT_",
+				"name": "getmarginForNFT",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -1068,11 +1202,11 @@
 			]
 		},
 		"src/QVEcore.sol": {
-			"keccak256": "0xad2463a05798d3adc01860817f88bb5250040dcc1625e8578b3ebdfc7c69d859",
+			"keccak256": "0xa1aa5d703b64ec3f8cc895d3782f3786665348b3a91c7c69e05ff09b282333f0",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://25ad2dbf19b7fb9731d2881afb5efb3d8ed7d61ac71e722b26821baf2f76c46b",
-				"dweb:/ipfs/Qmevkbv5FxkSAfTkRBhpoRQTPejPNw2QN6b56gUzfdMTvC"
+				"bzz-raw://5e7f7ffee210c2d0295bfc2771156d727bf7280d38e0bb16891df1f38bd6a7d0",
+				"dweb:/ipfs/QmbkrbG5PpkoiedGyTxZTgYntLKLMkdmu4LwsqMb3rpTu4"
 			]
 		},
 		"src/QVEescrow.sol": {
@@ -1092,11 +1226,11 @@
 			]
 		},
 		"src/QVEstaking.sol": {
-			"keccak256": "0xec9c28b348fe5ed30a52b499be2534620567537f0c201f9784e45adedd045021",
+			"keccak256": "0x26f77f3f92b76068847d9f8b1c866a0ce55066dd12cb870510e3e19266a11cc1",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1716312fbe99b96282956fdc896eb1e266d136a823ec24e8b1ece27be10576f5",
-				"dweb:/ipfs/QmbU3BPwbwnZidFWHoM3knNQtJ5yATCFoAFW7avGqBeAj1"
+				"bzz-raw://5d38a9b60743b03ce69b6e954078e462ea3ce7386a129ebcbf5534db446a893a",
+				"dweb:/ipfs/QmNtTdFeBnVCAFvXywafbUzRSsxt8MxEHMSnSAtZEX1jgL"
 			]
 		},
 		"src/QVEswap.sol": {
@@ -1116,11 +1250,11 @@
 			]
 		},
 		"src/tokens/QVEtoken.sol": {
-			"keccak256": "0x4b0de3d888800fe1613f8d637cf0dae925f03acb2ff1a5e3209545ee73259dad",
+			"keccak256": "0xb717c035a8009ae6284e22dc22cd4d8a961985efd65e46036b7edbabfc7eb12c",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://8cfc3b033444ae9144046d1abb0f157acb642198b7baa0445efbca4b317804f8",
-				"dweb:/ipfs/QmWDRhfAihoJZg97hw8KbGDxzcGDo5Tu6DPaRixmGmZ9Ga"
+				"bzz-raw://af1e07a8cdf806f48c77bc834543df1eb6f86c8452ad06748ad7980795f85632",
+				"dweb:/ipfs/QmNrJDTsLYHKeL73wyULaUtbgEm7XDKXsSK5ddGkmUDTtU"
 			]
 		},
 		"src/tokens/stQVEtoken.sol": {

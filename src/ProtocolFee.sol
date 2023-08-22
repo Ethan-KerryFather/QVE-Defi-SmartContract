@@ -28,7 +28,7 @@ contract ProtocolFee{
     mapping (address => StrategySettledAmount) StrategiesBalance;
 
     // [------ Settle From Stretegy ------] //
-    function SettleFromStrategy_(uint256 strategy) external payable returns(bool){ // 서버에서 호출하는 함수 ( msg.sender는 봇주소로 설정해주세요 )
+    function SettleFromStrategy(uint256 strategy) external payable returns(bool){ // 서버에서 호출하는 함수 ( msg.sender는 봇주소로 설정해주세요 )
         require(msg.sender == qveCore.getstrategyAddress(strategy), "Warn : invalid strategy Address");
         _SettleAfter(msg.value, msg.sender);
 
@@ -37,7 +37,7 @@ contract ProtocolFee{
 
 
     // [------ Send To Distribute Contract ------] //
-    function SendToUnstakeAccount_() external returns(bool){    // 서버에서 호출하는 함수
+    function SendToUnstakeAccount() external returns(bool){    // 서버에서 호출하는 함수
         qveStaking.receiveSettledEth{value: totalBalance}(totalBalance);
         _sendAfter(totalBalance);
         return true;

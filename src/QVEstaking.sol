@@ -13,16 +13,16 @@ contract QVEstaking is Security {
     using SafeMath for uint256;
     QVEtoken public qveToken;
     //stQVEtoken public stqveToken;
-    uint24 private REWARD_PERIOD = 1 days;
-    uint256 private MINIMAL_PERIOD = 90 days;
+    uint24 public REWARD_PERIOD = 1 days;
+    uint256 public MINIMAL_PERIOD = 90 days;
 
-    Counters.Counter private totalStakeCount;   // 총 스테이킹 횟수
-    Counters.Counter private totalSettlementCount;  // 정산 컨트랙트에서 정산된 횟수
+    Counters.Counter public totalStakeCount;   // 총 스테이킹 횟수
+    Counters.Counter public totalSettlementCount;  // 정산 컨트랙트에서 정산된 횟수
     mapping(address => uint256) public stakePercentage; // 주소별 스테이킹 비율
 
     // [----- Warning Strings ------] //
-    string constant private WARN_TRANSFER = "Transfer Error";
-    string constant private WARN_MINT_TRANSFER ="Mint, Transfer Error";
+    string constant public WARN_TRANSFER = "Transfer Error";
+    string constant public WARN_MINT_TRANSFER ="Mint, Transfer Error";
 
     // [------ Events ------] // 
     event StakeEvent(address stakerAddress, uint256 stakeAmount);
@@ -40,7 +40,7 @@ contract QVEstaking is Security {
         // Sum is 32 byte (word)
     }
     
-    uint256 private totalStaked;
+    uint256 public totalStaked;
     // wei 단위로 관리
 
     
@@ -54,7 +54,7 @@ contract QVEstaking is Security {
 
     // Settle balance
     mapping(uint256 => uint256) SettlementLog; // block.timestamp => amount 언제 얼마 settlement 되었는지
-    uint256 private totalSettlement;
+    uint256 public totalSettlement;
     
 
     constructor(QVEtoken _qveToken) {
@@ -72,6 +72,14 @@ contract QVEstaking is Security {
 
     function getPersonalStakeInfo(address sender) external view returns(StakeInfo memory){
         return stakeInfo[sender];
+    }
+
+    function getBalanceOfStakingContract() external view returns(uint256){
+        return address(this).balance;
+    }
+
+    function getTotalSettlement() external view returns(uint256){
+        return totalSettlement;
     }
 
     // [------ functions ------] //

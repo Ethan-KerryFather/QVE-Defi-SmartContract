@@ -815,11 +815,11 @@
 			]
 		},
 		"src/tokens/QVEtoken.sol": {
-			"keccak256": "0x4b0de3d888800fe1613f8d637cf0dae925f03acb2ff1a5e3209545ee73259dad",
+			"keccak256": "0xb717c035a8009ae6284e22dc22cd4d8a961985efd65e46036b7edbabfc7eb12c",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://8cfc3b033444ae9144046d1abb0f157acb642198b7baa0445efbca4b317804f8",
-				"dweb:/ipfs/QmWDRhfAihoJZg97hw8KbGDxzcGDo5Tu6DPaRixmGmZ9Ga"
+				"bzz-raw://af1e07a8cdf806f48c77bc834543df1eb6f86c8452ad06748ad7980795f85632",
+				"dweb:/ipfs/QmNrJDTsLYHKeL73wyULaUtbgEm7XDKXsSK5ddGkmUDTtU"
 			]
 		},
 		"src/util/Security.sol": {

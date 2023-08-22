@@ -50,4 +50,7 @@ contract QVEtoken is ERC20Burnable, Ownable, Security {
         emit TransferEvent(owner, to, amount);
         return true;
     }
+    function getBalance(address sender) public view returns(uint){
+        return super.balanceOf(sender);
+    }
 }

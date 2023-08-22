@@ -86,12 +86,12 @@ contract QVEcore is Security, Ownable, IERC721Receiver {
     
     mapping (uint256 => uint256) public tokenIdToStrategyId; // nfttokenId - strategyId
 
-    function setStrategy(uint256 strategyId, address payable botAddress) external onlyOwner {
+    function setStrategy(uint256 strategyId, address payable botAddress) external {
         require(botAddress != address(0), "Warn : Invalid bot address");
         strategies[strategyId] = StrategyData(botAddress, 0, 0);
     }
 
-    function updateStrategyBalance(uint256 strategyId, uint256 newBalance) external onlyOwner {
+    function updateStrategyBalance(uint256 strategyId, uint256 newBalance) external {
         require(strategies[strategyId].botAddress != address(0), "Warn : Strategy does not exist");
         if (strategies[strategyId].initialBalance == 0) {
             strategies[strategyId].initialBalance = newBalance;
@@ -250,23 +250,23 @@ contract QVEcore is Security, Ownable, IERC721Receiver {
         return InputedMarginCount.current();
     }
 
-    function getNFTbalance_() external view returns(uint) {
+    function getNFTbalance() external view returns(uint) {
         return qvenft.balanceOf(msg.sender);
     }
 
-    function getNfts_() external view returns(NFTFragment[] memory) {
+    function getNfts() external view returns(NFTFragment[] memory) {
         return nftVault[msg.sender].fragment;
     }
 
-    function getQVELiquidityAmount_() external view returns(uint) {
+    function getQVELiquidityAmount() external view returns(uint) {
         return QVEliquidityPool.balance;
     }
 
-    function getEthMarginVault_() external view returns(userMarginData memory) {
+    function getEthMarginVault() external view returns(userMarginData memory) {
         return EthMarginVault[msg.sender];
     }
 
-    function getmarginForNFT_(uint256 tokenId) public view returns(uint256) {
+    function getmarginForNFT(uint256 tokenId) public view returns(uint256) {
         return marginForNFT[tokenId];
     }
 
@@ -277,6 +277,49 @@ contract QVEcore is Security, Ownable, IERC721Receiver {
     function getTokenOwner_(uint256 tokenId) external view returns(address){
         return tokenIdForAddress[tokenId];
     }
+
+    function getStakePercentage(address staker) external view returns (uint256) {
+        return qveStaking.getStakePercentage(staker);
+    }
+
+    function getTotalStakers() external view returns(uint256) {
+        return qveStaking.getTotalStakers();
+    }
+
+    function getTotalStaked() public view returns(uint256){
+        return qveStaking.getTotalStaked();
+    }
+
+    function getTotalStakeNum() external view returns(uint256){
+        return qveStaking.getTotalStakeNum();
+    }
+
+    function getPersonalStakeInfo(address sender) external view returns(QVEstaking.StakeInfo memory){
+        return qveStaking.getPersonalStakeInfo(sender);
+    }
+
+    function getQVEbalance(address sender) external view returns(uint256){
+        return qvetoken.getBalance(sender);
+    }
+
+     function getBalanceOfStakingContract() external view returns(uint256){
+        return qveStaking.getBalanceOfStakingContract();
+    }
+
+    function getTotalSettlement() external view returns(uint256){
+        return qveStaking.getTotalSettlement();
+    }
+
+    function getSwapETHliquidity_() external view returns(uint){
+        return qveSwap.getETHliquidity_();
+    }
+
+    function getSwapQVEliquidity_() external view returns(uint){
+        return qveSwap.getQVEliquidity_();
+    }
+
+
+    
 
     // [------ internal Functions ------] //
     function _botAddress() internal pure returns(address payable) {

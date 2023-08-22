@@ -23,7 +23,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "SendToUnstakeAccount_",
+				"name": "SendToUnstakeAccount",
 				"outputs": [
 					{
 						"internalType": "bool",
@@ -42,7 +42,7 @@
 						"type": "uint256"
 					}
 				],
-				"name": "SettleFromStrategy_",
+				"name": "SettleFromStrategy",
 				"outputs": [
 					{
 						"internalType": "bool",
@@ -279,19 +279,19 @@
 			]
 		},
 		"src/ProtocolFee.sol": {
-			"keccak256": "0x63075d89de049bdbefc3427e6d2ddc6e3635731dd17356fa168ed21b66627fa6",
+			"keccak256": "0x1e290eca3d3fd5ec0e0c130cfabf6c1d6b994cef104e85857c2bb0af5ae98a77",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://25b59505f6878b51ccaca41fdef3fea0697ff8f8ed0d073d69c7e021e6da2837",
-				"dweb:/ipfs/QmZRaX2NFhTsq4WQUUFobgP9iw8GvGZYVWGaDJ1LscWXJh"
+				"bzz-raw://3dccc0181e06d0cad112c2c72a5ff7db37f6278bf7af7773649104ce7e5ea26e",
+				"dweb:/ipfs/QmaD5RtBzKVTF8o3VmiXvWgTUGY9rp74b6f8M7pLDHxmT3"
 			]
 		},
 		"src/QVEcore.sol": {
-			"keccak256": "0xad2463a05798d3adc01860817f88bb5250040dcc1625e8578b3ebdfc7c69d859",
+			"keccak256": "0xe5a820b8d9dee89c27f96e23fd3dce889886179a99cdfb53f5532a051ad24b37",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://25ad2dbf19b7fb9731d2881afb5efb3d8ed7d61ac71e722b26821baf2f76c46b",
-				"dweb:/ipfs/Qmevkbv5FxkSAfTkRBhpoRQTPejPNw2QN6b56gUzfdMTvC"
+				"bzz-raw://7389c732bf775487d869ed1dbd0d7acf1583a0858e395f3748b4ca7da7ec6d96",
+				"dweb:/ipfs/QmUkBBBUgkoQevfqNF5ETPKsapfy97vpPRJM9BLYcRiKNR"
 			]
 		},
 		"src/QVEescrow.sol": {
@@ -311,11 +311,11 @@
 			]
 		},
 		"src/QVEstaking.sol": {
-			"keccak256": "0xbd553189bf5ce24c8768fad697e720c03173b07e7fe20bc9a05d92ab9af76542",
+			"keccak256": "0x67282dd6aacdcdc3ada43ddb99f25824b352d749ca0d8d3e28ddb5a6abfa06d3",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://c7e48b4705df11b266ea5d7ccfdceca64e31a15b0c2fd2cc7b78e1250880a18e",
-				"dweb:/ipfs/QmagyfZVFFYC1xzGVXnvtNtWQo4rERAzuLMBdzNQTFRgXB"
+				"bzz-raw://a289cfc1085f90e9a153aa5af145004867864be71192599fd3dea96431ae9920",
+				"dweb:/ipfs/QmZWY2AFeucJ6vR9pqjVts9rGBjK5D6T33fsR7GAPUKuYc"
 			]
 		},
 		"src/QVEswap.sol": {
