@@ -34,10 +34,8 @@ contract QVEstaking is Security {
     // [------ Variables, Mappings ------] //
     struct StakeDetail {       
         uint256 stakeNum;
-        uint256 tokenAmount;                   // 스테이킹에 락된 물량
-        // ether 단위로 관리                                                            
-        uint256 startBlock;                    // 스테이킹 시작 시간                                                                           
-        // Sum is 32 byte (word)
+        uint256 tokenAmount;                                                 
+        uint256 startBlock;                                                                    
     }
     
     uint256 public totalStaked;
