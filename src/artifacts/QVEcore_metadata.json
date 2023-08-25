@@ -437,11 +437,75 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "getStrategyNumFromTokenId",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
 						"name": "strategyId",
 						"type": "uint256"
 					}
 				],
 				"name": "getStrategyProfitPercentage",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getSwapETHliquidity_",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getSwapQVEliquidity_",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "getTokenCreationTime",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -1202,11 +1266,11 @@
 			]
 		},
 		"src/QVEcore.sol": {
-			"keccak256": "0xa1aa5d703b64ec3f8cc895d3782f3786665348b3a91c7c69e05ff09b282333f0",
+			"keccak256": "0x188031b95a8858fcedefaf7539f0e828176ddf143794131a97c16cd98eca73a6",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5e7f7ffee210c2d0295bfc2771156d727bf7280d38e0bb16891df1f38bd6a7d0",
-				"dweb:/ipfs/QmbkrbG5PpkoiedGyTxZTgYntLKLMkdmu4LwsqMb3rpTu4"
+				"bzz-raw://63081df1f71ef9bcef7ed510d262ca1202bb55f7194ad03aef17a9a240a1d8b3",
+				"dweb:/ipfs/QmdKyTSepzYRjUJgv3UCN9nhLs9sBifJcGbe9WGDt9QURa"
 			]
 		},
 		"src/QVEescrow.sol": {
@@ -1226,11 +1290,11 @@
 			]
 		},
 		"src/QVEstaking.sol": {
-			"keccak256": "0x26f77f3f92b76068847d9f8b1c866a0ce55066dd12cb870510e3e19266a11cc1",
+			"keccak256": "0x478040ff1221bfe5720745e5db4b8c0d0813f4ecdc4efbe94bc36b3cc20a4061",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5d38a9b60743b03ce69b6e954078e462ea3ce7386a129ebcbf5534db446a893a",
-				"dweb:/ipfs/QmNtTdFeBnVCAFvXywafbUzRSsxt8MxEHMSnSAtZEX1jgL"
+				"bzz-raw://585566acc3f2f5a635092530c17b2d7a2f529e06a5d9a4e945ecf8c8cdfe173a",
+				"dweb:/ipfs/Qmd1dEktScmUg2p9znL1unvqpt5RzKeTVwh7q4WVSPvteL"
 			]
 		},
 		"src/QVEswap.sol": {

@@ -318,8 +318,27 @@ contract QVEcore is Security, Ownable, IERC721Receiver {
         return qveSwap.getQVEliquidity_();
     }
 
+    // 추가 0825
+   function getStrategyNumFromTokenId(uint256 tokenId) external view returns (uint256) {
+        return tokenIdToStrategyId[tokenId];
+    }
 
+    function getTokenCreationTime(uint256 tokenId) external view returns (uint256) {
+    address ownerAddress = tokenIdForAddress[tokenId];
+    require(ownerAddress != address(0), "Token ID does not exist");
     
+    // nftVault에서 tokenId와 일치하는 항목을 순회하여 찾기
+    NFTFragment[] storage fragments = nftVault[ownerAddress].fragment;
+    for (uint256 i = 0; i < fragments.length; i++) {
+        if (fragments[i].tokenId == tokenId) {
+            return fragments[i].at;
+        }
+    }
+    
+    revert("Token ID not found in vault");
+}
+
+
 
     // [------ internal Functions ------] //
     function _botAddress() internal pure returns(address payable) {
@@ -461,17 +480,18 @@ contract QVEcore is Security, Ownable, IERC721Receiver {
 
     // 사용자의 투자 정보와 NFT 정보를 업데이트하는 내부 함수
     function _updateInvestmentInfo(address investor) internal {
-        // 사용자의 투자 정보 업데이트
-        delete individualInvestments[investor];
-    
-        // 사용자의 NFT 정보 업데이트
-        for (uint256 i = 0; i < nftVault[investor].fragment.length; i++) {
-            uint256 tokenId = nftVault[investor].fragment[i].tokenId;
-            delete tokenIdForAddress[tokenId];
-            delete marginForNFT[tokenId];
-        }
-        delete nftVault[investor];
+    // 사용자의 투자 정보 업데이트
+    delete individualInvestments[investor];
+
+    // 사용자의 NFT 정보 업데이트
+    while (nftVault[investor].fragment.length > 0) {
+        uint256 tokenId = nftVault[investor].fragment[nftVault[investor].fragment.length - 1].tokenId;
+        delete tokenIdForAddress[tokenId];
+        delete marginForNFT[tokenId];
+        nftVault[investor].fragment.pop();
     }
+}
+
 
     function sendIntoContract(uint256 tokenId, address from) public returns(bool){
         qvenft.transferFrom(from, address(this), tokenId);
